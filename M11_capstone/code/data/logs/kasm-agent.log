@@ -1,0 +1,3 @@
+2026-09-19 02:10:01 INFO  agent check-in ok
+2026-09-19 02:11:44 WARN  workspace image pull slow: 12.4 MB/s
+2026-09-19 02:12:02 ERROR session start failed: agent not enabled in UI

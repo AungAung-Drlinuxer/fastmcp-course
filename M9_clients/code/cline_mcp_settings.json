@@ -1,0 +1,45 @@
+{
+  "_comment": [
+    "Lesson 3.2 (part 3) — how VS Code Cline is told about a server.",
+    "Copy this into the Cline MCP settings file (Cline -> MCP Servers -> Configure).",
+    "The `command` + `args` pair is the stdio transport: Cline runs this program and speaks",
+    "JSON-RPC over its stdin/stdout. Nothing listens on a port.",
+    "`disabled: false` and an explicit `autoApprove` list are deliberate: a tool that is not",
+    "named there still prompts the human. Do NOT copy a wildcard autoApprove into a real",
+    "deployment — approving every tool automatically removes the review step that M10 is about."
+  ],
+  "mcpServers": {
+    "course-hello": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "D:/fastmcp-course",
+        "python",
+        "-m",
+        "M4_fastmcp_basics.code.hello_server"
+      ],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "ping"
+      ]
+    },
+    "course-hardened": {
+      "_comment": "The M10 server: read-only tools over an allowlisted directory.",
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "D:/fastmcp-course",
+        "python",
+        "-m",
+        "M10_security.code.path_validation"
+      ],
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}

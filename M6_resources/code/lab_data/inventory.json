@@ -1,0 +1,14 @@
+{
+  "hosts": [
+    {
+      "name": "pve01",
+      "role": "hypervisor",
+      "cpu": 72
+    },
+    {
+      "name": "kasm-agent1",
+      "role": "lab-agent",
+      "cpu": 16
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+[project]
+name = "fastmcp-agents-course"
+version = "0.1.0"
+description = "Python & FastMCP for AI Agents — course materials and runnable examples"
+requires-python = ">=3.11"
+dependencies = [
+    # PINNED ON PURPOSE. FastMCP's API has moved fast between major versions: the 2.x
+    # `ElicitationResult` and camelCase model fields (`inputSchema`, `uriTemplate`) do not
+    # exist in 4.x. A course that says "install fastmcp" and then teaches 2.x field names
+    # produces students whose first hands-on task fails. Everything in this repository was
+    # executed against the version below (see VERIFIED.md).
+    "fastmcp>=4.0.5,<5",
+    "pydantic>=2.13,<3",
+    "httpx>=0.28,<1",
+    # M9 builds an orchestrating client. langgraph + the MCP adapter are taught there, so they
+    # are declared here: a course that tells students to "install langgraph" mid-lesson makes
+    # the environment drift from the lockfile that was verified.
+    "langgraph>=0.2",
+    "langchain-mcp-adapters>=0.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.uv]
+package = false

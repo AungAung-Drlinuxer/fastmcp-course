@@ -1,0 +1,6 @@
+host: kasm-agent1
+role: lab-agent
+cpu_cores: 16
+memory_gb: 48
+runtime: docker
+sessions_max: 20

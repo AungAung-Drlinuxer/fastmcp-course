@@ -1,0 +1,10 @@
+{"actor": "lab-student", "args": {}, "event": "tool_call", "host_context": {"api_token": {"length": 24, "redacted": true, "sha256_16": "752d43f5a8581fd2"}}, "session": "m10-lab-11", "tool": "list_logs", "ts": "2026-09-19T15:38:20.776+00:00"}
+{"actor": "lab-student", "event": "tool_result", "is_error": false, "ms": 69.5, "session": "m10-lab-11", "tool": "list_logs", "ts": "2026-09-19T15:38:20.846+00:00", "verdict": "ok"}
+{"actor": "lab-student", "args": {"max_lines": 2, "name": "postgres.log"}, "event": "tool_call", "host_context": {}, "session": "m10-lab-11", "tool": "read_log", "ts": "2026-09-19T15:38:20.846+00:00"}
+{"actor": "lab-student", "event": "tool_result", "is_error": false, "ms": 5.4, "session": "m10-lab-11", "tool": "read_log", "ts": "2026-09-19T15:38:20.850+00:00", "verdict": "ok"}
+{"actor": "lab-student", "args": {"name": "../../etc/shadow"}, "event": "tool_call", "host_context": {}, "session": "m10-lab-11", "tool": "read_log", "ts": "2026-09-19T15:38:20.853+00:00"}
+{"actor": "lab-student", "event": "tool_result", "is_error": false, "ms": 5.2, "session": "m10-lab-11", "tool": "read_log", "ts": "2026-09-19T15:38:20.858+00:00", "verdict": "refused:path_not_allowed"}
+{"actor": "lab-student", "args": {"name": "postgres.log", "pattern": "ERROR"}, "event": "tool_call", "host_context": {}, "session": "m10-lab-11", "tool": "grep_log", "ts": "2026-09-19T15:38:20.858+00:00"}
+{"actor": "lab-student", "event": "tool_result", "is_error": false, "ms": 5.1, "session": "m10-lab-11", "tool": "grep_log", "ts": "2026-09-19T15:38:20.864+00:00", "verdict": "ok"}
+{"actor": "lab-student", "args": {"name": "postgres.log", "password": {"length": 22, "redacted": true, "sha256_16": "8b503cb9c94107b3"}}, "event": "tool_call", "host_context": {}, "session": "m10-lab-11", "tool": "read_log", "ts": "2026-09-19T15:38:20.864+00:00"}
+{"actor": "lab-student", "event": "tool_exception", "kind": "ToolError", "ms": 8.8, "session": "m10-lab-11", "tool": "read_log", "ts": "2026-09-19T15:38:20.872+00:00"}

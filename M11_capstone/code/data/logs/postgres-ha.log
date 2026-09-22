@@ -1,0 +1,8 @@
+2026-09-19 02:00:00 INFO  checkpoint starting: time
+2026-09-19 02:00:04 INFO  checkpoint complete: wrote 1,204 buffers
+2026-09-19 02:01:50 WARN  replication lag 3.1s on postgres-ha-3
+2026-09-19 02:02:12 ERROR could not connect to host kasm-app:5432
+2026-09-19 02:02:13 ERROR connection retry 1 of 3
+2026-09-19 02:02:19 ERROR could not connect to host kasm-app:5432
+2026-09-19 02:02:20 ERROR connection retry 2 of 3
+2026-09-19 02:02:31 WARN  failover candidate withheld: sync standby missing

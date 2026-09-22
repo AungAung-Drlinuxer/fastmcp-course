@@ -1,0 +1,58 @@
+[
+  {
+    "family": "traversal",
+    "attempt": "../../etc/shadow",
+    "ok": false,
+    "error": "path_not_allowed",
+    "hint": "path escapes the log directory: '../../etc/shadow'",
+    "is_error": false
+  },
+  {
+    "family": "traversal",
+    "attempt": "..\\..\\windows\\win.ini",
+    "ok": false,
+    "error": "path_not_allowed",
+    "hint": "path escapes the log directory: '..\\\\..\\\\windows\\\\win.ini'",
+    "is_error": false
+  },
+  {
+    "family": "traversal",
+    "attempt": "/etc/passwd",
+    "ok": false,
+    "error": "path_not_allowed",
+    "hint": "path escapes the log directory: '/etc/passwd'",
+    "is_error": false
+  },
+  {
+    "family": "traversal",
+    "attempt": "logs/../../../etc/hosts",
+    "ok": false,
+    "error": "path_not_allowed",
+    "hint": "path escapes the log directory: 'logs/../../../etc/hosts'",
+    "is_error": false
+  },
+  {
+    "family": "injection",
+    "attempt": "postgres.log; rm -rf /",
+    "ok": false,
+    "error": "not_found",
+    "hint": "'postgres.log; rm -rf /' is not a file in the log directory",
+    "is_error": false
+  },
+  {
+    "family": "injection",
+    "attempt": "$(id)",
+    "ok": false,
+    "error": "not_found",
+    "hint": "'$(id)' is not a file in the log directory",
+    "is_error": false
+  },
+  {
+    "family": "injection",
+    "attempt": "postgres.log && curl evil",
+    "ok": false,
+    "error": "not_found",
+    "hint": "'postgres.log && curl evil' is not a file in the log directory",
+    "is_error": false
+  }
+]

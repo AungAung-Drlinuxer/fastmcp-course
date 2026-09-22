@@ -1,0 +1,849 @@
+{
+  "clamped_lines": {
+    "ok": true,
+    "name": "huge.log",
+    "lines": 1000,
+    "truncated_bytes": true,
+    "content": "2026-09-19 03:00:00 INFO line 3000 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\n2026-09-19 03:01:00 INFO line 3001 zzzzzzzzz"
+  },
+  "clamped_low": {
+    "ok": true,
+    "name": "huge.log",
+    "lines": 1,
+    "truncated_bytes": false,
+    "content": "2026-09-19 03:39:00 INFO line 3999 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+  },
+  "byte_capped": {
+    "ok": true,
+    "name": "wide.log",
+    "lines": 400,
+    "truncated_bytes": true,
+    "content": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+  },
+  "grep_clamped": {
+    "ok": true,
+    "name": "huge.log",
+    "matches": 200,
+    "results": [
+      {
+        "line": 1,
+        "text": "2026-09-19 03:00:00 INFO line 0 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 2,
+        "text": "2026-09-19 03:01:00 INFO line 1 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 3,
+        "text": "2026-09-19 03:02:00 INFO line 2 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 4,
+        "text": "2026-09-19 03:03:00 INFO line 3 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 5,
+        "text": "2026-09-19 03:04:00 INFO line 4 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 6,
+        "text": "2026-09-19 03:05:00 INFO line 5 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 7,
+        "text": "2026-09-19 03:06:00 INFO line 6 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 8,
+        "text": "2026-09-19 03:07:00 INFO line 7 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 9,
+        "text": "2026-09-19 03:08:00 INFO line 8 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 10,
+        "text": "2026-09-19 03:09:00 INFO line 9 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 11,
+        "text": "2026-09-19 03:10:00 INFO line 10 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 12,
+        "text": "2026-09-19 03:11:00 INFO line 11 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 13,
+        "text": "2026-09-19 03:12:00 INFO line 12 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 14,
+        "text": "2026-09-19 03:13:00 INFO line 13 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 15,
+        "text": "2026-09-19 03:14:00 INFO line 14 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 16,
+        "text": "2026-09-19 03:15:00 INFO line 15 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 17,
+        "text": "2026-09-19 03:16:00 INFO line 16 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 18,
+        "text": "2026-09-19 03:17:00 INFO line 17 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 19,
+        "text": "2026-09-19 03:18:00 INFO line 18 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 20,
+        "text": "2026-09-19 03:19:00 INFO line 19 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 21,
+        "text": "2026-09-19 03:20:00 INFO line 20 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 22,
+        "text": "2026-09-19 03:21:00 INFO line 21 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 23,
+        "text": "2026-09-19 03:22:00 INFO line 22 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 24,
+        "text": "2026-09-19 03:23:00 INFO line 23 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 25,
+        "text": "2026-09-19 03:24:00 INFO line 24 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 26,
+        "text": "2026-09-19 03:25:00 INFO line 25 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 27,
+        "text": "2026-09-19 03:26:00 INFO line 26 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 28,
+        "text": "2026-09-19 03:27:00 INFO line 27 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 29,
+        "text": "2026-09-19 03:28:00 INFO line 28 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 30,
+        "text": "2026-09-19 03:29:00 INFO line 29 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 31,
+        "text": "2026-09-19 03:30:00 INFO line 30 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 32,
+        "text": "2026-09-19 03:31:00 INFO line 31 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 33,
+        "text": "2026-09-19 03:32:00 INFO line 32 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 34,
+        "text": "2026-09-19 03:33:00 INFO line 33 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 35,
+        "text": "2026-09-19 03:34:00 INFO line 34 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 36,
+        "text": "2026-09-19 03:35:00 INFO line 35 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 37,
+        "text": "2026-09-19 03:36:00 INFO line 36 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 38,
+        "text": "2026-09-19 03:37:00 INFO line 37 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 39,
+        "text": "2026-09-19 03:38:00 INFO line 38 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 40,
+        "text": "2026-09-19 03:39:00 INFO line 39 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 41,
+        "text": "2026-09-19 03:40:00 INFO line 40 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 42,
+        "text": "2026-09-19 03:41:00 INFO line 41 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 43,
+        "text": "2026-09-19 03:42:00 INFO line 42 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 44,
+        "text": "2026-09-19 03:43:00 INFO line 43 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 45,
+        "text": "2026-09-19 03:44:00 INFO line 44 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 46,
+        "text": "2026-09-19 03:45:00 INFO line 45 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 47,
+        "text": "2026-09-19 03:46:00 INFO line 46 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 48,
+        "text": "2026-09-19 03:47:00 INFO line 47 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 49,
+        "text": "2026-09-19 03:48:00 INFO line 48 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 50,
+        "text": "2026-09-19 03:49:00 INFO line 49 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 51,
+        "text": "2026-09-19 03:50:00 INFO line 50 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 52,
+        "text": "2026-09-19 03:51:00 INFO line 51 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 53,
+        "text": "2026-09-19 03:52:00 INFO line 52 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 54,
+        "text": "2026-09-19 03:53:00 INFO line 53 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 55,
+        "text": "2026-09-19 03:54:00 INFO line 54 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 56,
+        "text": "2026-09-19 03:55:00 INFO line 55 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 57,
+        "text": "2026-09-19 03:56:00 INFO line 56 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 58,
+        "text": "2026-09-19 03:57:00 INFO line 57 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 59,
+        "text": "2026-09-19 03:58:00 INFO line 58 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 60,
+        "text": "2026-09-19 03:59:00 INFO line 59 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 61,
+        "text": "2026-09-19 03:00:00 INFO line 60 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 62,
+        "text": "2026-09-19 03:01:00 INFO line 61 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 63,
+        "text": "2026-09-19 03:02:00 INFO line 62 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 64,
+        "text": "2026-09-19 03:03:00 INFO line 63 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 65,
+        "text": "2026-09-19 03:04:00 INFO line 64 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 66,
+        "text": "2026-09-19 03:05:00 INFO line 65 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 67,
+        "text": "2026-09-19 03:06:00 INFO line 66 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 68,
+        "text": "2026-09-19 03:07:00 INFO line 67 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 69,
+        "text": "2026-09-19 03:08:00 INFO line 68 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 70,
+        "text": "2026-09-19 03:09:00 INFO line 69 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 71,
+        "text": "2026-09-19 03:10:00 INFO line 70 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 72,
+        "text": "2026-09-19 03:11:00 INFO line 71 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 73,
+        "text": "2026-09-19 03:12:00 INFO line 72 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 74,
+        "text": "2026-09-19 03:13:00 INFO line 73 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 75,
+        "text": "2026-09-19 03:14:00 INFO line 74 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 76,
+        "text": "2026-09-19 03:15:00 INFO line 75 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 77,
+        "text": "2026-09-19 03:16:00 INFO line 76 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 78,
+        "text": "2026-09-19 03:17:00 INFO line 77 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 79,
+        "text": "2026-09-19 03:18:00 INFO line 78 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 80,
+        "text": "2026-09-19 03:19:00 INFO line 79 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 81,
+        "text": "2026-09-19 03:20:00 INFO line 80 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 82,
+        "text": "2026-09-19 03:21:00 INFO line 81 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 83,
+        "text": "2026-09-19 03:22:00 INFO line 82 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 84,
+        "text": "2026-09-19 03:23:00 INFO line 83 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 85,
+        "text": "2026-09-19 03:24:00 INFO line 84 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 86,
+        "text": "2026-09-19 03:25:00 INFO line 85 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 87,
+        "text": "2026-09-19 03:26:00 INFO line 86 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 88,
+        "text": "2026-09-19 03:27:00 INFO line 87 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 89,
+        "text": "2026-09-19 03:28:00 INFO line 88 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 90,
+        "text": "2026-09-19 03:29:00 INFO line 89 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 91,
+        "text": "2026-09-19 03:30:00 INFO line 90 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 92,
+        "text": "2026-09-19 03:31:00 INFO line 91 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 93,
+        "text": "2026-09-19 03:32:00 INFO line 92 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 94,
+        "text": "2026-09-19 03:33:00 INFO line 93 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 95,
+        "text": "2026-09-19 03:34:00 INFO line 94 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 96,
+        "text": "2026-09-19 03:35:00 INFO line 95 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 97,
+        "text": "2026-09-19 03:36:00 INFO line 96 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 98,
+        "text": "2026-09-19 03:37:00 INFO line 97 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 99,
+        "text": "2026-09-19 03:38:00 INFO line 98 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 100,
+        "text": "2026-09-19 03:39:00 INFO line 99 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 101,
+        "text": "2026-09-19 03:40:00 INFO line 100 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 102,
+        "text": "2026-09-19 03:41:00 INFO line 101 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 103,
+        "text": "2026-09-19 03:42:00 INFO line 102 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 104,
+        "text": "2026-09-19 03:43:00 INFO line 103 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 105,
+        "text": "2026-09-19 03:44:00 INFO line 104 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 106,
+        "text": "2026-09-19 03:45:00 INFO line 105 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 107,
+        "text": "2026-09-19 03:46:00 INFO line 106 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 108,
+        "text": "2026-09-19 03:47:00 INFO line 107 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 109,
+        "text": "2026-09-19 03:48:00 INFO line 108 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 110,
+        "text": "2026-09-19 03:49:00 INFO line 109 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 111,
+        "text": "2026-09-19 03:50:00 INFO line 110 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 112,
+        "text": "2026-09-19 03:51:00 INFO line 111 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 113,
+        "text": "2026-09-19 03:52:00 INFO line 112 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 114,
+        "text": "2026-09-19 03:53:00 INFO line 113 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 115,
+        "text": "2026-09-19 03:54:00 INFO line 114 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 116,
+        "text": "2026-09-19 03:55:00 INFO line 115 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 117,
+        "text": "2026-09-19 03:56:00 INFO line 116 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 118,
+        "text": "2026-09-19 03:57:00 INFO line 117 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 119,
+        "text": "2026-09-19 03:58:00 INFO line 118 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 120,
+        "text": "2026-09-19 03:59:00 INFO line 119 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 121,
+        "text": "2026-09-19 03:00:00 INFO line 120 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 122,
+        "text": "2026-09-19 03:01:00 INFO line 121 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 123,
+        "text": "2026-09-19 03:02:00 INFO line 122 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 124,
+        "text": "2026-09-19 03:03:00 INFO line 123 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 125,
+        "text": "2026-09-19 03:04:00 INFO line 124 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 126,
+        "text": "2026-09-19 03:05:00 INFO line 125 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 127,
+        "text": "2026-09-19 03:06:00 INFO line 126 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 128,
+        "text": "2026-09-19 03:07:00 INFO line 127 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 129,
+        "text": "2026-09-19 03:08:00 INFO line 128 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 130,
+        "text": "2026-09-19 03:09:00 INFO line 129 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 131,
+        "text": "2026-09-19 03:10:00 INFO line 130 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 132,
+        "text": "2026-09-19 03:11:00 INFO line 131 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 133,
+        "text": "2026-09-19 03:12:00 INFO line 132 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 134,
+        "text": "2026-09-19 03:13:00 INFO line 133 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 135,
+        "text": "2026-09-19 03:14:00 INFO line 134 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 136,
+        "text": "2026-09-19 03:15:00 INFO line 135 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 137,
+        "text": "2026-09-19 03:16:00 INFO line 136 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 138,
+        "text": "2026-09-19 03:17:00 INFO line 137 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 139,
+        "text": "2026-09-19 03:18:00 INFO line 138 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 140,
+        "text": "2026-09-19 03:19:00 INFO line 139 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 141,
+        "text": "2026-09-19 03:20:00 INFO line 140 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 142,
+        "text": "2026-09-19 03:21:00 INFO line 141 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 143,
+        "text": "2026-09-19 03:22:00 INFO line 142 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 144,
+        "text": "2026-09-19 03:23:00 INFO line 143 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 145,
+        "text": "2026-09-19 03:24:00 INFO line 144 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 146,
+        "text": "2026-09-19 03:25:00 INFO line 145 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 147,
+        "text": "2026-09-19 03:26:00 INFO line 146 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 148,
+        "text": "2026-09-19 03:27:00 INFO line 147 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 149,
+        "text": "2026-09-19 03:28:00 INFO line 148 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 150,
+        "text": "2026-09-19 03:29:00 INFO line 149 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 151,
+        "text": "2026-09-19 03:30:00 INFO line 150 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 152,
+        "text": "2026-09-19 03:31:00 INFO line 151 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 153,
+        "text": "2026-09-19 03:32:00 INFO line 152 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 154,
+        "text": "2026-09-19 03:33:00 INFO line 153 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 155,
+        "text": "2026-09-19 03:34:00 INFO line 154 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 156,
+        "text": "2026-09-19 03:35:00 INFO line 155 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 157,
+        "text": "2026-09-19 03:36:00 INFO line 156 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 158,
+        "text": "2026-09-19 03:37:00 INFO line 157 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 159,
+        "text": "2026-09-19 03:38:00 INFO line 158 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 160,
+        "text": "2026-09-19 03:39:00 INFO line 159 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 161,
+        "text": "2026-09-19 03:40:00 INFO line 160 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 162,
+        "text": "2026-09-19 03:41:00 INFO line 161 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 163,
+        "text": "2026-09-19 03:42:00 INFO line 162 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 164,
+        "text": "2026-09-19 03:43:00 INFO line 163 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 165,
+        "text": "2026-09-19 03:44:00 INFO line 164 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 166,
+        "text": "2026-09-19 03:45:00 INFO line 165 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 167,
+        "text": "2026-09-19 03:46:00 INFO line 166 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 168,
+        "text": "2026-09-19 03:47:00 INFO line 167 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 169,
+        "text": "2026-09-19 03:48:00 INFO line 168 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 170,
+        "text": "2026-09-19 03:49:00 INFO line 169 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 171,
+        "text": "2026-09-19 03:50:00 INFO line 170 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 172,
+        "text": "2026-09-19 03:51:00 INFO line 171 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 173,
+        "text": "2026-09-19 03:52:00 INFO line 172 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 174,
+        "text": "2026-09-19 03:53:00 INFO line 173 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 175,
+        "text": "2026-09-19 03:54:00 INFO line 174 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 176,
+        "text": "2026-09-19 03:55:00 INFO line 175 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 177,
+        "text": "2026-09-19 03:56:00 INFO line 176 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 178,
+        "text": "2026-09-19 03:57:00 INFO line 177 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 179,
+        "text": "2026-09-19 03:58:00 INFO line 178 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 180,
+        "text": "2026-09-19 03:59:00 INFO line 179 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 181,
+        "text": "2026-09-19 03:00:00 INFO line 180 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 182,
+        "text": "2026-09-19 03:01:00 INFO line 181 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 183,
+        "text": "2026-09-19 03:02:00 INFO line 182 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 184,
+        "text": "2026-09-19 03:03:00 INFO line 183 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 185,
+        "text": "2026-09-19 03:04:00 INFO line 184 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 186,
+        "text": "2026-09-19 03:05:00 INFO line 185 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 187,
+        "text": "2026-09-19 03:06:00 INFO line 186 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 188,
+        "text": "2026-09-19 03:07:00 INFO line 187 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 189,
+        "text": "2026-09-19 03:08:00 INFO line 188 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 190,
+        "text": "2026-09-19 03:09:00 INFO line 189 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 191,
+        "text": "2026-09-19 03:10:00 INFO line 190 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 192,
+        "text": "2026-09-19 03:11:00 INFO line 191 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 193,
+        "text": "2026-09-19 03:12:00 INFO line 192 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 194,
+        "text": "2026-09-19 03:13:00 INFO line 193 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 195,
+        "text": "2026-09-19 03:14:00 INFO line 194 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 196,
+        "text": "2026-09-19 03:15:00 INFO line 195 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 197,
+        "text": "2026-09-19 03:16:00 INFO line 196 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 198,
+        "text": "2026-09-19 03:17:00 INFO line 197 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 199,
+        "text": "2026-09-19 03:18:00 INFO line 198 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      {
+        "line": 200,
+        "text": "2026-09-19 03:19:00 INFO line 199 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      }
+    ]
+  },
+  "grep_cut_line": {
+    "ok": true,
+    "name": "wide.log",
+    "matches": 3,
+    "results": [
+      {
+        "line": 1,
+        "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+      },
+      {
+        "line": 2,
+        "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+      },
+      {
+        "line": 3,
+        "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+      }
+    ]
+  }
+}

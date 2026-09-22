@@ -1,0 +1,3 @@
+server_name chat.drlinuxer.com;
+upstream api { server 10.0.0.11:8000; }
+listen 443 ssl;

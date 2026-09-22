@@ -1,0 +1,8 @@
+host: pve01
+role: hypervisor
+cpu_cores: 72
+memory_gb: 270
+storage:
+  - name: data
+    type: lvmthin
+    free_tb: 6.1
