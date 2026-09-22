@@ -68,7 +68,7 @@ def system_metrics(host: str) -> dict:
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-LAB 2 (metrics audit) တွင် declared ၊ measured နှင့် honest null တို့ကို နှိုင်းယှဉ်စစ်ဆေးရသည်။ Automation ပေါ်တွင် အခြေခံထားသော DevOps စနစ်တွင် မှားနေသောတန်ဖိုးတစ်ခုသည် အမှားဆုံး ဆုံးဖြတ်ချက်များစွာကို ဖန်တီးနိုင်သည်။
+LAB 2 (metrics audit) တွင် declared၊ measured နှင့် honest null တို့ကို နှိုင်းယှဉ်စစ်ဆေးရသည်။ Automation ပေါ်တွင် အခြေခံထားသော DevOps စနစ်တွင် မှားနေသောတန်ဖိုးတစ်ခုသည် အမှားဆုံး ဆုံးဖြတ်ချက်များစွာကို ဖန်တီးနိုင်သည်။
 
 ## ခေါင်းစဉ် ၃ — Protected-service guard နှင့် elicitation
 

@@ -4,17 +4,27 @@
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-FastMCP သည် Python code ကို MCP server အဖြစ် ပြောင်းပေးသည့် framework ဖြစ်သည်။ `FastMCP("name")` ဖြင့် server object တစ်ခု ဖန်တီးပြီး `@mcp.tool` decorator ဖြင့် ကျွန်ုပ််တို့၏ function များကို client များ ခေါ်ဆိုနိုင်သည့် tool များအဖြစ် မှတ်ပုံတင်ပေးသည်။ Server နာမည်သည် client ဘက်မှ တွေ့ရမည့် အချက်အလက်တစ်ခု ဖြစ်သည်။
+FastMCP ဆိုတာ — Python code ကို MCP server အဖြစ် အလိုအလျောက် ပြောင်းပေးတဲ့ framework ပါ။ `FastMCP("name")` နဲ့ server object တစ်ခု ဆောက်ပြီး `@mcp.tool` decorator နဲ့ function တွေကို tool အဖြစ် မှတ်ပုံတင်တယ်။ Decorator ဆိုတာ — function ရဲ့ အပေါ်မှာ တပ်ပြီး အဲဒီ function ကို အလိုအလျောက် ခြုံပေးထားတဲ့ အလွှာလေးပါ။ Server နာမည်က client ဘက်က မြင်ရမယ့် အချက်အလက်တစ်ခု ဖြစ်ပါတယ်။ စားသောက်ဆိုင် တစ်ခုနဲ့ တူတယ် — FastMCP က ဆိုင်အိမ်၊ `@mcp.tool` တွေက မီနူးစာရင်း သဘောပါ။
 
 ### ဘာကြောင့် လဲ
 
-MCP protocol သည် JSON-RPC 2.0 အပေါ် အခြေခံသည်။ protocol အရ ဆိုလျှင် host, client, server ဟူ၍ အခန်းကဏ္ဍ သုံးမျိုး ရှိပြီး၊ server က tools, prompts, resources ဟူ၍ သုံးမျိုး ထုတ်ပြနိုင်သည်။ ဤ handshake နှင့် message format အားလုံးကို FastMCP က ကိုယ်စားလုပ်ပေး၍၊ ကျွန်ုပ််တို့သည် စီးပွားရေး logic ကိုသာ ရေးရမည်။
+MCP protocol က JSON-RPC 2.0 အပေါ် အခြေခံထားပါတယ်။ JSON-RPC 2.0 ဆိုတာ — program တွေက တစ်ခုနဲ့တစ်ခု စာပို့ပေးပြီး စကားပြောနိုင်အောင် လုပ်ပေးတဲ့ စည်းမျဉ်းလေးပါ။ ဒီ protocol အရ host, client, server ဆိုပြီး အခန်းကဏ္ဍ သုံးမျိုး ရှိပါတယ်။ ဒီလို handshake နဲ့ message format အားလုံးကို ကိုယ်တိုင် ရေးရင် အချိန်ကုန်ပြီး မှားလွယ်ပါတယ်။ FastMCP က အဲဒါတွေကို ကိုယ်စားလုပ်ပေးလို့ ကျွန်ုပ်တို့က စီးပွားရေး logic ကိုသာ ရေးရတယ်။ Handshake ဆိုတာ — server နဲ့ client ပထမဆုံးမှ တစ်ခုကိုတစ်ခု အသိအမှတ်ပြုတဲ့ အဆင့်ပါ။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Server object ကို ဖန်တီးသည့်အခါ FastMCP က အတွင်းပိုင်း registry တစ်ခု ထားသည်။ `@mcp.tool` ကို function တစ်ခုပေါ်တွင် တပ်သည့်အခါ FastMCP က function ၏ signature နှင့် type hints များကို ဖတ်ပြီး JSON Schema အဖြစ် ပြောင်းသည်။ ထို schema သည် `initialize` handshake အပြီးတွင် client ထံ ရောက်သွားသည်။
+၁။ `FastMCP("name")` နဲ့ server object ဆောက်တဲ့အခါ အတွင်းပိုင်းမှာ tool registry တစ်ခု ထားပါတယ်။ Registry ဆိုတာ — tool တွေရဲ့ စာရင်းမှတ်စာအုပ်လေးပါ။
+
+၂။ `@mcp.tool` ကို function တစ်ခုပေါ်မှာ တပ်တယ်။
+
+၃။ FastMCP က function ရဲ့ signature နဲ့ type hints တွေကို ဖတ်ပြီး JSON Schema အဖြစ် ပြောင်းပါတယ်။ Signature ဆိုတာ — function နာမည်၊ လက်ခံတဲ့ အကြောင်းအရာတွေရဲ့ ပုံစံပါ။
+
+၄။ အဲဒီ schema က `initialize` handshake အပြီးမှာ client ဆီ ရောက်သွားပါတယ်။
+
+၅။ ဒါနဲ့ client က ဘယ် tool တွေ ရှိလဲ၊ ဘယ် data ပို့ရမလဲ ဆိုတာ သိသွားပါတယ်။
 
 ### ဥပမာ
+
+အောက်မှာ code snippet ပြထားပါတယ် — server တစ်ခု ဆောက်ပြီး tool တစ်ခု မှတ်ပုံတင်တဲ့ ပုံစံပါ။ `@mcp.tool` အောက်က function ရဲ့ docstring နဲ့ type hints တွေကို ဂရုစိုက်ကြည့်ပါနော် — အဲဒါတွေကပဲ client ဆီ ရောက်မယ့် schema ဖြစ်လာတယ်။
 
 ```python
 from fastmcp import FastMCP
@@ -31,27 +41,34 @@ def add(a: int, b: int) -> int:
 # Inspect what the server publishes
 print(mcp.name)
 # Expected output: course-hello
+
 ```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-Server နာမည်နှင့် tool စာရင်းသည် client များက server ကို မှန်ကန်စွာ ရှာဖွေနိုင်ရန် အခြေခံ ဖြစ်သည်။ `main()` function အတွင်းတွင် transport ကို ရွေးချယ်ပြီး `mcp.run()` ဖြင့် စတင်သည်။ နာမည်မှားလျှင် client ဘက်တွင် server ကို ခွဲခြားရ ခက်သည်။
+Server နာမည်နဲ့ tool စာရင်းက client တွေက server ကို ရှာဖို့ အခြေခံ အချက်အလက်တွေ ပါတယ်။ `main()` function ထဲမှာ transport ရွေးပြီး `mcp.run()` နဲ့ server ကို စတင်ရတယ်။ နာမည်မှားရင် client ဘက်က ဘယ် server ဘယ် tool လဲဆိုတာ မှန်ကန်စွာ ခွဲမရတော့ပါဘူး။ ဒါကြောင့် debug လုပ်ဖို့ အချိန် ပိုကုန်တယ်၊ မှားတဲ့ tool ကို ခေါ်မိလည်း ဖြစ်နိုင်ပါတယ်။
 
 ## အပိုင်း ၂ — stdio Transport
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-stdio transport သည် client က server ကို child process တစ်ခုအဖြစ် ဖွင့်ပြီး `stdin` / `stdout` လိုင်းများဖြင့် JSON-RPC message များ ဖလှယ်သည့် နည်းလမ်း ဖြစ်သည်။ Client က `Client(Path)` ကို server ဖိုင် path ဖြင့် ဖန်တီးလျှင် အလိုအလျောက် ထို process ကို စတင်ပေးသည်။
+stdio transport ဆိုတာ — client က server ကို process သေးသေးလေးတစ်ခုအဖြစ် ဖွင့်ပြီး `stdin` / `stdout` လိုင်းတွေနဲ့ စကားပြောတဲ့ နည်းလေး ပါတယ်။ process ဆိုတာ computer ထဲမှာ အလုပ်လုပ်နေတဲ့ program တစ်ခုချင်းစီကို ဆိုလိုတာနော်။ Client က `Client(Path)` ကို server file path နဲ့ ဖန်တီးရင် အလိုအလျောက် server process စတင်သွားတယ်။ အခန်းနှစ်ခုကြားက တိုက်ရိုက် စကားပြောသလိုမျိုး တိုက်ရိုက် ဆက်တာပါ။
 
 ### ဘာကြောင့် လဲ
 
-Editor များသည် server ကို process တစ်ခုအဖြစ် တိုက်ရိုက် ဖွင့်လိုသည်။ stdio တွင် ဆက်သွယ်ရန် port သို့မဟုတ် network မလိုဘဲ OS ၏ process pipe များသာ အသုံးပြုသည်။ ထို့ကြောင့် local tool များအတွက် အလွယ်ကျဆုံး ဖြစ်သည်။
+stdio မသုံးရင် server ကို ချိတ်ဖို့ port နဲ့ network လိုတယ်။ ဒါက local tool တွေအတွက် ရှုပ်ထွေးတယ်၊ လုံခြုံမှုလည်း စဉ်းစားရတယ်။ stdio က port နဲ့ network မလိုဘဲ OS process pipe လေးတွေနဲ့ပဲ ဆက်ပါတယ်။ ဒါကြောင့် local tool တွေအတွက် အလွယ်ကျဆုံး ဖြစ်ပါတယ်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Client က server command ကို ဖွင့်သည်။ Server ၏ `stdin` တွင် client က request ရေးသည်။ Server က `stdout` တွင် response ပြန်ရေးသည်။ `stderr` တွင်မူ log များသာ ရေးရသည်။ ဆက်သွယ်မှု အဆုံးတွင် child process လည်း ပိတ်သွားသည်။
+၁။ Client က server command ကို ဖွင့်တယ်။
+၂။ Client က server ရဲ့ `stdin` ထဲကို request ရေးတယ်။
+၃။ Server က `stdout` ထဲကို response ပြန်ရေးတယ်။
+၄။ `stderr` ထဲမှာတော့ log တွေပဲ ရေးရတယ်။
+၅။ ဆက်သွယ်မှု ပြီးတာနဲ့ child process လည်း ပိတ်သွားတယ်။
 
 ### ဥပမာ
+
+အောက်မှာ `Client(Path)` နဲ့ stdio server ကို ချိတ်ပြတဲ့ snippet ပါတယ်။ client က server file path ပေးလိုက်တာနဲ့ process အလိုအလျောက် စတင်သွားတာကို သတိထားကြည့်ပါနော်။
 
 ```python
 from pathlib import Path
@@ -63,27 +80,34 @@ async def main():
         tools = await client.list_tools()
         print([t.name for t in tools])
 # Expected output: ['add']
+
 ```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-stdio တွင် `stdout` သည် protocol လိုင်း ဖြစ်သည်။ ထို့ကြောင့် server code ထဲတွင် `print()` တစ်ကြောင်း ရေးလိုက်လျှင် protocol message ကို ဖျက်၍ client ကို ထောင်ချောက်တွင် ကျစေသည်။ stdout ထဲ ဘာမှ မရေးရန် တင်းကျပ်စွာ သတိထားရမည်။
+stdio မှာ `stdout` က protocol လိုင်းပါ။ ဒါကြောင့် server code ထဲမှာ `print()` တစ်ကြောင်း ရေးမိရင် protocol message ပျက်သွားပြီး client ကို ထောင်ချောက်ထဲ ကျစေတယ်။ ဘာဖြစ်လဲဆိုတာ မသိဘဲနဲ့ debug အချိန် ကြာရှယ်၊ server ကလည်း အလုပ်မလုပ်တော့ပါဘူး။ ဒါကြောင့် stdout ထဲ ဘာမှ မရေးရအောင် သတိထားရတယ်။ logging လုပ်ချင်ရင် `stderr` ကို ရေးပါ။
 
 ## အပိုင်း ၃ — HTTP Transport
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-HTTP transport သည် server ကို network ပေါ်တွင် ရောက်နိုင်စေသည့် နည်းလမ်း ဖြစ်သည်။ Server က တစ်နေရာတွင် စောင့်ပြီး၊ client က နောက်မှ dial လုပ်သည်။ Streamable HTTP ကို အသုံးပြုပြီး SSE ကိုလည်း အထောက်အကူ ပြုသည်။
+HTTP transport ဆိုတာ — server ကို network ပေါ် တင်ပေးတဲ့ နည်းလမ်းပါ။ Server ကတစ်နေရာမှာ စောင့်နေပြီး၊ client တွေက နောက်မှ ခေါ်တာပေါ့။ ရုံးတစ်ခုမှာ ဖုန်းတစ်လှဲ ခံနေသလိုမျိုး — server က ဖုန်းခံစောင့်နေ၊ client က ဖုန်းဆက်လို့ရတယ်။ Streamable HTTP ကို သုံးပြီး SSE လည်း ပါဝင်ပါတယ်။
 
 ### ဘာကြောင့် လဲ
 
-တစ်ခါတစ်ရံ server ကို process တစ်ခုအဖြစ် မဟုတ်ဘဲ service တစ်ခုအဖြစ် တည်ရှိစေလိုသည်။ HTTP ဖြင့် ဆိုလျှင် server တစ်ခုကို client များစွာက ခေါ်ဆိုနိုင်သည်။ stdio ကဲ့သို့ ဖွင့်/ပိတ် အသီးသီး မလုပ်ရပါ။
+stdio နဲးဆိုရင် client တစ်ခု ခေါ်တိုင်း server process အသစ် တစ်ခါစ ဖွင့်ရတယ်။ Client များစွာ ပါရင် ဖွင့်/ပိတ် လုပ်ရတာ အလွန် ပင်ပန်းပါတယ်။ HTTP နဲ့ဆိုရင်တော့ server တစ်ခုတည်းကို client များစွာက တစ်ပြိုင်တည်း ခေါ်လို့ရတယ်။ Server က service တစ်ခုလို အမြဲ ရှိနေတာပေါ့။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Server က `host` နှင့် `port` တွင် စောင့်သည်။ `host="127.0.0.1"` ဖြင့် ဆိုလျှင် machine တစ်ခုတည်းအတွင်းသာ ရောက်နိုင်ပြီး၊ `0.0.0.0` ဖြင့် ဆိုလျှင် network အပြင်ဘက်မှ ရောက်နိုင်သည်။ Client က HTTP ဖြင့် ချိတ်ဆက်၍ JSON-RPC message များ ပို့သည်။
+၁။ Server က `host` နဲ့ `port` မှာ စောင့်နေတယ်။
+၂။ `host="127.0.0.1"` ဆိုရင် ကွန်ပျူတာတစ်လုံး အတွင်းမှာပဲ ရောက်နိုင်တယ်။
+၃။ `0.0.0.0` ဆိုရင် network အပြင်ဘက်ကနေ လာလို့ရတယ်။
+၄။ Client က HTTP နဲ့ ချိတ်ဆက်တယ်။
+၅။ ချိတ်ပြီးရင် JSON-RPC message တွေ ပို့တယ်။
 
 ### ဥပမာ
+
+ဒီ snippet မှာ HTTP transport နဲ့ server ဖွင့်တာ ပြထားပါတယ်။ `host` setting က ဘယ်အထိ ရောက်နိုင်လဲဆိုတာ စောင့်ကြည့်ပါနော်။
 
 ```python
 # Server side: run over HTTP on localhost
@@ -92,27 +116,34 @@ def main():
     mcp.run(transport="http", host="127.0.0.1", port=8000)
 
 # Expected output: server listens at http://127.0.0.1:8000
+
 ```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-HTTP တွင် `stdout` သည် protocol လိုင်း မဟုတ်တော့သောကြောင့် `print()` ရေးလို့ရသည်။ သို့သော် network ပေါ်တွင် ဖွင့်လိုက်လျှင် ခွင့်ပြုချက် (auth) မရှိဘဲ လုံးဝ မထုတ်ပြရန် သတိထားရမည်။ `0.0.0.0` ကို ရွေးချယ်ခြင်းသည် တကယ့် အန္တရာယ် ဖြစ်သည်။
+HTTP သုံးတဲ့အခါ `stdout` က protocol လိုင်း မဟုတ်တော့လို့ `print()` ရေးလို့ရပါတယ်။ ဒါပေမယ့် network ပေါ် ဖွင့်လိုက်ရင်တော့ auth (ခွင့်ပြုချက်စစ်တဲ့ စနစ်) မရှိဘဲ ဘာမှ မပြရဘူး။ `0.0.0.0` ကို ရွေးရင် အင်တာနက်က လူတိုင်း ဝင်လို့ရသွားတာပါ။ ဒါက data leak ဖြစ်တဲ့ အန္တရာယ် အစစ်ပါ။
 
 ## အပိုင်း ၄ — Tool ရှာဖွေခြင်း နှင့် Result
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Client က `list_tools()` ဖြင့် server တွင် ရှိသည့် tool များကို ရှာပြီး၊ `call_tool()` ဖြင့် ခေါ်ဆိုသည်။ ခေါ်ဆိုမှု အဆုံးတွင် result object တစ်ခု ပြန်ရ၍ ၎င်းထဲတွင် `structured_content` နှင့် `is_error` တို့ ပါဝင်သည်။
+Client ဆိုတာ — program က server ကို ခေါ်တဲ့အခါ သုံးတဲ့ အလွှာလေး။ Client က `list_tools()` နဲ့ server မှာရှိတဲ့ tool တွေကို ရှာပါတယ်။ ပြီးရင် `call_tool()` နဲ့ ခေါ်ပါတယ်။ ခေါ်ပြီးတဲ့အခါ result object တစ်ခု ပြန်ရပါတယ်။ အဲ့ထဲမှာ `structured_content` နဲ့ `is_error` ဆိုတာတွေ ပါလာပါတယ်။
 
 ### ဘာကြောင့် လဲ
 
-Server က tool တစ်ခုကို ထုတ်ပြသည့်အခါ သူ့ function ၏ type hints မှ JSON Schema ဖြစ်လာသည်။ Client ဘက်တွင် tool object ၏ `.parameters` ဟု မြင်ရပြီး၊ server ဘက်တွင် `.input_schema` ဟု ခေါ်သည်။ နာမည် ကွဲခြားလောက်စွာ ရှိသည်မှာ အမှားအများဆုံး နေရာ ဖြစ်သည်။
+Server က tool တစ်ခု ထုတ်ပြောက်တဲ့အခါ သူ့ function ရဲ့ type hints က JSON Schema ဖြစ်သွားပါတယ်။ JSON Schema ဆိုတာ — "ဒီ tool ကို ဘယ် argument တွေနဲ့ ဘယ်ပုံခေါ်ရမလဲ" ဆိုတာ ဖော်ပြတဲ့ စာရွက်လေးပါ။ နာမည်ချင်း မတူတာက အမြဲမှားတဲ့ နေရာပါ။ Client ဘက်က `.parameters` လို့ မြင်ရပြီး၊ server ဘက်က `.input_schema` လို့ ခေါ်ပါတယ်။ တစ်ခုတည်းပေမယ့် နာမည် နှစ်မျိုးရှိလို့ ရှုပ်ပါတယ်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-`call_tool()` က tool နာမည်နှင့် argument dict ကို လက်ခံသည်။ Tool အတွင်းတွင် error ဖြစ်လျှင် `raise` လုပ်သည့်အစား result ထဲတွင် `is_error=True` ဖြင့် ပြန်လာသည်။ ထို့ကြောင့် client က ခေါ်ဆိုပြီးတိုင်း `is_error` ကို စစ်ရမည်။
+၁။ Client က `list_tools()` နဲ့ ရှိတဲ့ tool စာရင်း တောင်းပါတယ်။
+၂။ ရလာတဲ့ tool object ထဲက `.parameters` ကို ကြည့်ပြီး argument တွေ စီမံပါတယ်။
+၃။ `call_tool()` ကို tool နာမည်နဲ့ argument dict ပေးပြီး ခေါ်ပါတယ်။
+၄။ Tool အထဲမှာ error ဖြစ်ရင် `raise` မလုပ်ဘဲ `is_error=True` နဲ့ ပြန်လာပါတယ်။
+၅။ Client က result ရင်း `is_error` ကို စစ်ပြီး error လား ဆုံးဖြတ်ပါတယ်။
 
 ### ဥပမာ
+
+ဒီ snippet မှာ `list_tools()` နဲ့ `call_tool()` ကို တွဲသုံးထားပုံ ပြထားပါတယ်။ `is_error` ကို မစစ်ဘဲ သွားရင် error ကို အောင်မြင်တယ်လို့ မှားယူင်နိုင်လို့ အဲ့အပိုင်းကို သတိထားကြည့်ပါ။
 
 ```python
 async def main():
@@ -123,18 +154,19 @@ async def main():
 # Expected output:
 # False
 # {'result': 5}
+
 ```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-`is_error=False` ဖြစ်လျှင်ပင် အလုပ်က ကျရှုံးနိုင်သည် — ဥပမာ argument တန်ဖိုး မှားနေလျှင် result ထဲတွင် မှားယွင်းမှု ပါလာသည်။ ဤ pattern ကို နောင် module များတွင်လည်း တူညီစွာ တွေ့ရမည်ဖြစ်၍၊ result ကို အခြေခံ၍ ဆုံးဖြတ်သည့် အလေ့အကျင့်ကို ယခုကတည်း စတင်ထားသင့်သည်။
+`is_error=False` ဖြစ်နေရင်တောင် အလုပ်မှားနိုင်တယ် နော်။ ဥပမာ — argument တန်ဖိုး မှားနေရင် result ထဲမှာ အမှား ပါလာတယ်။ ဒီ pattern က နောင် module တွေမှာလည်း ထပ်တွေ့ရမယ်။ ဒါကြောင့် result ကိုကြည့်ပြီး ဆုံးဖြတ်တဲ့ အလေ့အကျင့်ကို အခုကတည်းက လေ့ကျင့်ထားသင့်ပါတယ်။
 
 ## အနှစ်ချုပ်
 
-- **FastMCP** က MCP protocol ၏ JSON-RPC အသေးစိတ်ကို ကိုယ်စားလုပ်ပေး၍ `FastMCP("name")` နှင့် `@mcp.tool` သာ ရေးရမည်။
-- **stdio transport** တွင် client က server ကို child process အဖြစ် ဖွင့်ပြီး `stdout` သည် protocol လိုင်းဖြစ်၍ `print()` လုံးဝ မရေးရ။
-- **HTTP transport** တွင် server က စောင့်ပြီး client က dial လုပ်သည်။ `0.0.0.0` ကို ရွေးလျှင် အပြင်မှ ရောက်နိုင်သဖြင့် အန္တရာယ် ရှိသည်။
-- **Transport ရွေးချယ်ရာ**တွင် — ဘယ်သူ စသလဲ၊ ဘယ်သူ ရောက်နိုင်သလဲ၊ auth ဘယ်မှာလဲ၊ stdout ဘယ်လို အသုံးပြုလဲ — ဆိုသည့် မေးခွန်းများကို မေးရမည်။
-- **Inspector** သည် server ထုတ်ပြသည့် tool များကို မြင်ရန် အသုံးဝင်သော်လည်း tool အတွင်းရှိ စီးပွားရေး logic ၏ မှန်ကန်မှုကို မပြနိုင်ပါ။
-- **Result object** တွင် `structured_content` နှင့် `is_error` ကို တွေ့ရ၍ ခေါ်ဆိုပြီးတိုင်း `is_error` ကို စစ်ရမည်။
-- **Schema နာမည်** သည် server ဘက်တွင် `.input_schema`၊ client ဘက်တွင် `.parameters` ဟု ကွဲခြားသည်။
+- **FastMCP** က MCP protocol ရဲ့ JSON-RPC အသေးစိတ်အပိုင်းတွေကို ကိုယ်စားလုပ်ပေးတယ်။ ဒါကြောင့် `FastMCP("name")` နဲ့ `@mcp.tool` ပဲ ရေးရပါတယ်။
+- **stdio transport** မှာ client က server ကို child process အဖြစ် ဖွင့်ပေးတယ်။ `stdout` က protocol လိုင်းမို့ `print()` လုံးဝ မရေးရပါနဲ့။
+- **HTTP transport** မှာ server က စောင့်ပြီး client က ချိတ်သွားတယ်။ `0.0.0.0` ရွေးရင် အပြင်ကလူတွေ ဝင်ရောက်လို့ရတာမို့ အန္တရာယ် ရှိတယ်။
+- **Transport ရွေးရာ**မှာ မေးရမဲ့ မေးခွန်းတွေက — ဘယ်သူ စလဲ၊ ဘယ်သူ ရောက်နိုင်လဲ၊ auth ဘယ်မှာ ရှိလဲ၊ stdout ကို ဘယ်လို သုံးလဲ။
+- **Inspector** က server မှ tool တွေကို ကြည့်ဖို့ အသုံးဝင်တယ်။ ဒါပေမဲ့ tool ထဲက logic မှန်မမှန်ကိုတော့ မပြနိုင်ပါဘူး။
+- **Result object** ထဲမှာ `structured_content` နဲ့ `is_error` တွေ့ရတယ်။ ဒါကြောင့် ခေါ်တိုင်း `is_error` ကို စစ်ရမယ်။
+- **Schema နာမည်** က ဘက်အလိုက် မတူပါဘူး။ server ဘက်မှာ `.input_schema`၊ client ဘက်မှာ `.parameters` လို့ ခေါ်တယ်။

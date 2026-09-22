@@ -34,7 +34,7 @@
      `stdout` လွတ်လပ်၊ ဒါပေမယ့် **auth ကို သင်ထည့်ရမည်**
 
 ၆.  ⭐ ဇယားလိုင်း ၅ လိုင်းသည် အကြောင်းရင်းတစ်ခုတည်းမှ: **"ဘယ်သူ စသလဲ"**
-     ဆုံးဖြတ်ချက်: "တစ်ဦး တစ်စက် → stdio ။ အများ/အဝေး → HTTP ။"
+     ဆုံးဖြတ်ချက်: "တစ်ဦး တစ်စက် → stdio။ အများ/အဝေး → HTTP။"
 
 ၇.  ⭐ Schema သည် annotations + docstring မှ **ထုတ်လုပ်**သည် —
      **server တွင် `.parameters`**၊ **client တွင် `.input_schema`** (`.inputSchema` = deprecated)
@@ -286,7 +286,7 @@ print(t.input_schema)
 
 ```text
 ဆုံးဖြတ်ချက်: မေးခွန်း ၁ — client သည် server နှင့် တူညီသည့် machine တွင် ရှိသလား?
-  မဟုတ် → HTTP ။  ဟုတ် → client တစ်ခုတည်းလား? ဟုတ် → stdio
+  မဟုတ် → HTTP။  ဟုတ် → client တစ်ခုတည်းလား? ဟုတ် → stdio
 ```
 
 ---
