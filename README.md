@@ -50,7 +50,7 @@ Every module now follows one consistent shape:
 | `README.md` | Module overview: what you will learn, lesson list, prerequisites, when it matters |
 | `explanation.md` | The lesson, condensed. Each topic follows the same five steps: what it means → why it matters → how it works → worked example → why it matters in practice |
 | `exercise.md` | Six hands-on exercises (easy → hard). Each one carries a **Hints** line and an **Expected behavior** line |
-| `solution.md` | One worked answer per exercise (runnable code, English comments) plus a one-line key-idea summary |
+| `solution.md` | One worked answer per exercise — headings match the exercise headings one-to-one (runnable code, English comments) plus a one-line key-idea summary. Supplementary worked answers, where a module has extra labs, sit under an `အပိုဆောင်း` heading at the end |
 | `cheatsheet.md` | Quick reference card for the module |
 | `code/` | The runnable labs referenced by the exercises |
 | `../tests/` | The pytest suite that pins the measured behaviour recorded in `VERIFIED.md` |

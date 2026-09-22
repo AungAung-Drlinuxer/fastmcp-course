@@ -1,6 +1,8 @@
 # M8 — Interactive Elicitation: အဖြေများ (solution.md)
 
-## Lab 1 — Elicitation warm-up
+## လေ့ကျင့်ခန်း ၁ — Elicitation warm-up
+### Elicitation warm-up
+
 
 ```python
 # Minimal elicitation: the server asks the client a question mid-tool.
@@ -19,7 +21,9 @@ async def warmup(ctx: Context) -> str:
 
 **အဓိကအယူအဆ** — `await ctx.elicit()` က tool အလယ်မှာ server က client ဆီ တိုက်ရိုက်မေးလို့ရတဲ့ ပထမဆုံး capability ဖြစ်ပါတယ်။
 
-## Lab 2 — The Flight Booking tool, in full
+## လေ့ကျင့်ခန်း ၂ — Booking tool အပြည့်အစုံ
+### The Flight Booking tool, in full
+
 
 ```python
 # The booking flow: collect the missing piece before booking.
@@ -50,7 +54,8 @@ async def book_flight(origin: str, destination: str, ctx: Context) -> str:
 
 **အဓိကအယူအဆ** — Elicitation က အားလုံးကို အစကတည်းကမတောင်းဘဲ လိုအပ်တဲ့အချိန်မှာသာ တောင်တဲ့ design ဖြစ်ပါတယ်။
 
-## Lab 3 — Every question shape, and the schema behind it
+### Every question shape, and the schema behind it
+
 
 ```python
 # Scalar answers arrive wrapped: {"value": ...} inside result.data.
@@ -75,7 +80,8 @@ async def ask_everything(ctx: Context) -> str:
 
 **အဓိကအယူအဆ** — Scalar ပုံစံတွေက `{"value": ...}` နဲ့ ထုပ်ပြီး form mode က Pydantic model တစ်ခုလုံးကို ပြန်ပေးပါတယ်။
 
-## Lab 4 — Design a form the host can render
+### Design a form the host can render
+
 
 ```python
 # Keep the schema inside the restricted subset the host can render.
@@ -96,7 +102,8 @@ class BookingForm(BaseModel):
 
 **အဓိကအယူအဆ** — Form mode က native form တစ်ခုဖြစ်ပေမယ့် အဆင့်မြင့် Pydantic feature အားလုံးကို မထောက်ပံ့ဘဲ restricted subset တစ်ခုပဲ ထောက်ပံ့ပါတယ်။
 
-## Lab 5 — URL mode: sending the user to a browser
+### URL mode: sending the user to a browser
+
 
 ```python
 # URL mode: the answer must be typed outside the host, in a browser.
@@ -115,7 +122,9 @@ async def login_via_browser(ctx: Context) -> str:
 
 **အဓိကအယူအဆ** — Password သို့မဟုတ် OAuth လို မျိုး type လုပ်သင့်တဲ့အရာတွေကို form နဲ့ မေးမထားပဲ URL mode နဲ့ browser ကို လွှဲပို့ရမယ်။
 
-## Lab 6 — The three outcomes, and the policy each one demands
+## လေ့ကျင့်ခန်း ၃ — Outcome သုံးမျိုး ခွဲခြားခြင်း
+### The three outcomes, and the policy each one demands
+
 
 ```python
 # Each outcome demands its own policy, written in code.
@@ -134,24 +143,8 @@ async def outcome_router(ctx: Context) -> str:
 
 **အဓိကအယူအဆ** — accept / decline / cancel သုံးမျိုးကို ရောလိုက်ရင် audit trail မှာ ဘယ်သူ့ကိုမှ ယုံမကြောက်တဲ့ log ဖြစ်သွားစေတယ်။
 
-## Lab 7 — Measure the mode matrix yourself
+### Break the handler contract on purpose, then fix it
 
-```python
-# sessionless transports need mode="legacy" for elicitation.
-@mcp.tool()
-async def needs_mode(ctx: Context) -> str:
-    # Without mode="legacy" on a sessionless transport this raises -32602.
-    result = await ctx.elicit(
-        message="Confirm?",
-        response_type="boolean",
-        mode="legacy",
-    )
-    return f"action={result.action}"
-```
-
-**အဓိကအယူအဆ** — Handshake-era transport များမှာ elicitation က ပုံမှန်လုပ်ငန်းလုပ်ပေမယ့် sessionless era မှာ `mode="legacy"` ထည့်ဖို့ လိုအပ်ပါတယ်။
-
-## Lab 8 — Break the handler contract on purpose, then fix it
 
 ```python
 # The handler contract: async, exactly four params, returns the outcome.
@@ -170,7 +163,9 @@ async def confirm_handler(
 
 **အဓိကအယူအဆ** — Handler တစ်ခုက async ဖြစ်ရပြီး parameter လေးခု အတိအကျ ရှိရမယ်၊ outcome က return value ဖြစ်ရတယ်။
 
-## Lab 9 — Build a protected gate and read its audit trail
+## လေ့ကျင့်ခန်း ၄ — Protected gate တည်ဆောက်ခြင်း
+### Build a protected gate and read its audit trail
+
 
 ```python
 # The protected-service pattern: confirm before anything risky.
@@ -192,7 +187,8 @@ async def maintenance_window(ctx: Context) -> str:
 
 **အဓိကအယူအဆ** — အန္တရာယ်ရှိတဲ့ အလုပ်တိုင်းရဲ့ ရှေ့မှာ confirmation gate တစ်ခု ထားပြီး ဘယ်သူက ဘာကို ခွင့်ပြုခဲ့လဲဆိုတာ audit trail မှာ ကျန်ရှိရမယ်။
 
-## Lab 10 — Decide whether to elicit at all
+### Decide whether to elicit at all
+
 
 ```python
 # The single test: is the model able to answer without the human?
@@ -212,7 +208,28 @@ async def dispatch(task: str, ctx: Context) -> str:
 
 **အဓိကအယူအဆ** — မေးခြင်းက တကယ့်ကုန်ကျစရိတ်ရှိလို့ server က ကိုယ်တိုင် ရှာဖွေနိုင်တဲ့အရာအတွက် ဘယ်တော့မှ elicit မလုပ်သင့်ပါ။
 
-## Lab 11 — Testing an elicitation flow without a human
+## လေ့ကျင့်ခန်း ၅ — Mode matrix တိုင်းတာခြင်း
+### Measure the mode matrix yourself
+
+
+```python
+# sessionless transports need mode="legacy" for elicitation.
+@mcp.tool()
+async def needs_mode(ctx: Context) -> str:
+    # Without mode="legacy" on a sessionless transport this raises -32602.
+    result = await ctx.elicit(
+        message="Confirm?",
+        response_type="boolean",
+        mode="legacy",
+    )
+    return f"action={result.action}"
+```
+
+**အဓိကအယူအဆ** — Handshake-era transport များမှာ elicitation က ပုံမှန်လုပ်ငန်းလုပ်ပေမယ့် sessionless era မှာ `mode="legacy"` ထည့်ဖို့ လိုအပ်ပါတယ်။
+
+## လေ့ကျင့်ခန်း ၆ — Elicitation flow ကို လူမပါဘဲ test လုပ်ခြင်း
+### Testing an elicitation flow without a human
+
 
 ```python
 # Elicitation is testable: inject a fake handler, no human needed.
@@ -233,3 +250,4 @@ async def test_book_flight_accepts():
 ```
 
 **အဓိကအယူအဆ** — Fake handler တစ်ခု ထိုးသွင်းပြီး outcome သုံးမျိုးစလုံးကို လူတစ်ယောက်မပါပဲ CI အတွင်းမှာ test လုပ်နိုင်ပါတယ်။
+

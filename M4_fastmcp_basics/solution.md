@@ -1,6 +1,8 @@
 # M4 — လေ့ကျင့်ခန်းများ၏ အဖြေများ (solution)
 
-## လေ့ကျင့်ခန်း ၁ — ပထမဆုံး FastMCP server ကို ရေးခြင်း
+## လေ့ကျင့်ခန်း ၁ — ပထမဆုံး server ကို ကိုယ်တိုင်ရေးခြင်း
+### ပထမဆုံး FastMCP server ကို ရေးခြင်း
+
 
 ```python
 # hello_server.py — your first FastMCP server
@@ -31,7 +33,9 @@ if __name__ == "__main__":
 
 **အဓိကအယူအဆ** — server ၏ အမည်သည် လှပမှုအတွက် မဟုတ်ဘဲ `initialize` handshake တွင် client ထံ ပေးပို့သည့် စနစ်တကျ အချက်အလက်တစ်ခု ဖြစ်သည်။
 
-## လေ့ကျင့်ခန်း ၂ — Server object နှင့် tool များကို code ဖြင့် စစ်ခြင်း
+## လေ့ကျင့်ခန်း ၂ — Server object ကို code ဖြင့် စစ်ဆေးခြင်း
+### Server object နှင့် tool များကို code ဖြင့် စစ်ခြင်း
+
 
 ```python
 # Check the server object and its tools without running the transport
@@ -56,35 +60,9 @@ server ကို run မူင်မီဘဲ `mcp.name` နှင့် `mcp.li
 
 **အဓိကအယူအဆ** — transport ကို စတင်ချင်းမပြောင်းနိုင်မီ code အနေဖြင့် server object ထံမှ အချက်အလက်များကို တိုက်ရိုက် ဖတ်နိုင်သည်။
 
-## လေ့ကျင့်ခန်း ၃ — Tool တစ်ခုကို အပြင်ဘက်မှ စစ်ခြင်း (registration audit)
+## လေ့ကျင့်ခန်း ၃ — stdio ထောင်ချောက်ကို ကိုယ်တိုင် မြင်ခြင်း
+### stdio round trip နှင့် `print()` ထောင်ချောက်
 
-```python
-# Registration audit: verify that a tool exists and is callable
-from hello_server import mcp
-
-
-def main() -> None:
-    tool_names = [tool.name for tool in mcp.list_tools()]
-
-    # The decorator must have registered our tool under its function name
-    if "hello" in tool_names:
-        print("hello tool is registered")
-    else:
-        print("hello tool is MISSING")
-
-    # A wrongly wrapped tool would not appear here
-    print("all registered tools:", tool_names)
-
-
-if __name__ == "__main__":
-    main()
-```
-
-`@mcp.tool` သည် function ၏ အမည်ဖြင့် tool ကို register လုပ်သောကြောင့် အမည်စာရင်းကို စစ်ခြင်းသည် အတည်ပြုခြင်း၏ အလွယ်ဆုံးနည်း ဖြစ်သည်။
-
-**အဓိကအယူအဆ** — `@mcp.tool` ကို ထိပ်တွင်ထားသည့် wrapper ပုံစံ မှားလျှင် tool သည် ဇယားထဲ လုံးဝ မရောက်တော့သောကြောင့် registration audit သည် အန္တရာယ်အကြီးဆုံး အမှားကို ဖမ်းနိုင်သည်။
-
-## လေ့ကျင့်ခန်း ၄ — stdio round trip နှင့် `print()` ထောင်ချောက်
 
 ```python
 # Run a stdio round trip and see how one print() can break the protocol
@@ -116,7 +94,9 @@ server က `print()` တစ်ကြောင်း ထုတ်လိုက်�
 
 **အဓိကအယူအဆ** — stdio transport တွင် `stdout` သည် protocol ၏ ပိုင်ဆိုင်မှု ဖြစ်သောကြောင့် server အတွင်း `print()` တစ်ကြောင်းကသာ protocol တစ်ခုလုံးကို ဖျက်ဆီးနိုင်သည်။
 
-## လေ့ကျင့်ခန်း ၅ — တူညီသည့် server ကို HTTP ဖြင့် ခေါ်ခြင်း
+## လေ့ကျင့်ခန်း ၄ — တူညီသည့် server ကို HTTP ဖြင့် ခေါ်ခြင်း
+### တူညီသည့် server ကို HTTP ဖြင့် ခေါ်ခြင်း
+
 
 ```python
 # Call the same server over HTTP instead of stdio
@@ -148,7 +128,38 @@ HTTP transport တွင် server က စောင့်ပြီး client က
 
 **အဓိကအယူအဆ** — transport ပြောင်းလိုက်ရုံသာဖြစ်ပြီး tool များနှင့် ၎င်းတို့၏ schema များမှာ မပြောင်းလဲသောကြောင့် HTTP သည် server တစ်ခုတည်းကို ကွန်ရက်တစ်ခုလုံးသို့ ရောက်စေသည်။
 
-## လေ့ကျင့်ခန်း ၆ — Client တစ်ခု ရေးပြီး server ကို ရှာဖွေခြင်း
+## လေ့ကျင့်ခန်း ၅ — Client discovery နှင့် registration audit
+### Tool တစ်ခုကို အပြင်ဘက်မှ စစ်ခြင်း (registration audit)
+
+
+```python
+# Registration audit: verify that a tool exists and is callable
+from hello_server import mcp
+
+
+def main() -> None:
+    tool_names = [tool.name for tool in mcp.list_tools()]
+
+    # The decorator must have registered our tool under its function name
+    if "hello" in tool_names:
+        print("hello tool is registered")
+    else:
+        print("hello tool is MISSING")
+
+    # A wrongly wrapped tool would not appear here
+    print("all registered tools:", tool_names)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+`@mcp.tool` သည် function ၏ အမည်ဖြင့် tool ကို register လုပ်သောကြောင့် အမည်စာရင်းကို စစ်ခြင်းသည် အတည်ပြုခြင်း၏ အလွယ်ဆုံးနည်း ဖြစ်သည်။
+
+**အဓိကအယူအဆ** — `@mcp.tool` ကို ထိပ်တွင်ထားသည့် wrapper ပုံစံ မှားလျှင် tool သည် ဇယားထဲ လုံးဝ မရောက်တော့သောကြောင့် registration audit သည် အန္တရာယ်အကြီးဆုံး အမှားကို ဖမ်းနိုင်သည်။
+
+### Client တစ်ခု ရေးပြီး server ကို ရှာဖွေခြင်း
+
 
 ```python
 # Discover a server from a client: list tools, then call one
@@ -184,7 +195,9 @@ if __name__ == "__main__":
 
 **အဓိကအယူအဆ** — client ၏ ရှာဖွေမှုသည် `initialize` → `list_tools` → `call_tool` ဟူသော အစီအစဉ်အတိုင်း လျှောက်လည်းသွားသည့် pattern တစ်ခုသာ ဖြစ်သည်။
 
-## လေ့ကျင့်ခန်း ၇ — `is_error` နှင့် `structured_content` ကို တိုင်းတာခြင်း
+## လေ့ကျင့်ခန်း ၆ — Calculator + Currency lab အပြည့်အစုံ
+### `is_error` နှင့် `structured_content` ကို တိုင်းတာခြင်း
+
 
 ```python
 # Measure is_error and structured_content on a real call
@@ -221,7 +234,8 @@ if __name__ == "__main__":
 
 **အဓိကအယူအဆ** — tool ၏ ကျရှုံးမှုကို exception အဖြစ် မမြင်ရဘဲ `is_error` ထဲ ဝင်ရောက်နေတတ်သောကြောင့် result object ကို စစ်ဆေးခြင်းသည် ယုံကြည်မှု၏ ပထမဆုံးအဆင့် ဖြစ်သည်။
 
-## လေ့ကျင့်ခန်း ၈ — Schema ကို နှစ်ဖက်မှ တိုင်းတာ၍ နှိုင်းယှဉ်ခြင်း
+### Schema ကို နှစ်ဖက်မှ တိုင်းတာ၍ နှိုင်းယှဉ်ခြင်း
+
 
 ```python
 # Read .parameters on the server side and .inputSchema on the client side
@@ -263,7 +277,8 @@ if __name__ == "__main__":
 
 **အဓိကအယူအဆ** — schema သည် server မှ client အထိ JSON Schema အဖြစ် ခရီးဆက်သွားပြီး နာမည်တစ်ခုစီသည် ကြည့်ရှုနေသည့် ဘက်ပေါ်တွင် မူတည်သည်။
 
-## လေ့ကျင့်ခန်း ၉ — Calculator + Currency server ကို transport နှစ်မျိုးဖြင့် ခေါ်ခြင်း
+### Calculator + Currency server ကို transport နှစ်မျိုးဖြင့် ခေါ်ခြင်း
+
 
 ```python
 # Drive the same currency server over both stdio and HTTP
@@ -299,3 +314,4 @@ if __name__ == "__main__":
 server တစ်ခုတည်းကို transport နှစ်မျိုးဖြင့် ခေါ်ဆိုခြင်းသည် hybrid ပုံစံဖြစ်ပြီး tool များ လုံးဝ မပြောင်းလဲပါ။
 
 **အဓိကအယူအဆ** — tool များသည် transport နှင့် ဘာသာမကွာသောကြောင့် server တစ်ခုကို လုပ်ငန်းအခြေအနေအလိုက် stdio သို့မဟုတ် HTTP ဖြင့် ကွဲပြားစွာ တွဲဖက်အသုံးပြုနိုင်သည်။
+

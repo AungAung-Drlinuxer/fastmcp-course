@@ -1,6 +1,8 @@
 # M9 — အဖြေများ (solution.md)
 
-## LAB 1 — client loop ကိုကိုယ်တိုင်ရေးခြင်း (LLM မပါဘဲ)
+## လေ့ကျင့်ခန်း ၁ — မော်ဒယ်မပါဘဲ client loop တစ်ခုကို ကိုယ်တိုင်ရေးခြင်း
+### client loop ကိုကိုယ်တိုင်ရေးခြင်း (LLM မပါဘဲ)
+
 
 ```python
 # lab_1_client_loop.py — a client loop with no model at all
@@ -25,7 +27,9 @@ asyncio.run(main())
 
 **အဓိကအယူအဆ** — LLM မပါပဲနဲ့ပဲ `list_tools` နဲ့ `call_tool` ကို loop တစ်ခုအဖြစ် ခေါ်နိုင်တယ်ဆိုတာ client ဆိုတာ သာမာန် programming သာဖြစ်တယ်။
 
-## LAB 2 — မျက်နှာလေးဖက်ကို server သုံးခုနဲ့ တွေ့ဆုံခြင်း
+## လေ့ကျင့်ခန်း ၂ — မျက်နှာပြင်လေးခုကို ရှာဖွေခြင်း
+### မျက်နှာလေးဖက်ကို server သုံးခုနဲ့ တွေ့ဆုံခြင်း
+
 
 ```python
 # lab_2 — discover all four surfaces from a real server
@@ -48,7 +52,9 @@ asyncio.run(probe("python", ["server.py"]))
 
 **အဓိကအယူအဆ** — client method လေးခုဖြစ်တဲ့ `list_tools`, `list_resources`, `list_resource_templates`, `list_prompts` ကနေ server ရဲ့ မျက်နှာလေးဖက်ကို အတိအကျ မြင်နိုင်တယ်။
 
-## LAB 3 — ခေါ်မခေါ်မှ ငြင်းတတ်တဲ့ dispatcher
+## လေ့ကျင့်ခန်း ၃ — Schema မှ dispatch လုပ်ခြင်း
+### ခေါ်မခေါ်မှ ငြင်းတတ်တဲ့ dispatcher
+
 
 ```python
 # lab_7_dispatch_table.py — validate before you call
@@ -68,7 +74,27 @@ def dispatch(session, emission: str):
 
 **အဓိကအယူအဆ** — dispatcher တစ်ခြောက်က JSON Schema အတိုင်း arguments ကို စစ်ပြီးမှ ခေါ်ရတဲ့အတွက် model ရဲ့ emission မှားရင် server ဆီ မရောက်မီ ငြင်းနိုင်တယ်။
 
-## LAB 4 — host ရဲ့ settings ကို audit လုပ်ခြင်း
+### chooser နှစ်မျိုးကို တွဲပြခြင်း
+
+
+```python
+# one graph, two brains: the chooser is swappable
+def scripted_chooser(state):
+    # deterministic: pick the tool by simple rules, no API key needed
+    if "add" in state["messages"][-1].content:
+        return {"messages": [("ai", "tool_call:add")]}
+
+def model_chooser(state):
+    # ask the model which tool fits, requires an API key
+    response = model.invoke(state["messages"])
+    return {"messages": [response]}
+```
+
+**အဓိကအယူအဆ** — chooser က graph ထဲက swap လုပ်နိုင်တဲ့ အစိတ်အပိုင်းတစ်ခုသာဖြစ်လို့ scripted chooser နဲ့ API key မလိုပဲ test လုပ်ပြီး model chooser နဲ့ ပြောင်းနိုင်တယ်။
+
+## လေ့ကျင့်ခန်း ၄ — Host settings file ကို စစ်ဆေးခြင်း
+### host ရဲ့ settings ကို audit လုပ်ခြင်း
+
 
 ```python
 # lab_2_cline_settings.py — audit cline_mcp_settings.json
@@ -86,7 +112,43 @@ for name, entry in settings.get("mcpServers", {}).items():
 
 **အဓိကအယူအဆ** — `cline_mcp_settings.json` ထဲက `mcpServers` entry တစ်ခုစီက stdio transport အတွက် `command` နဲ့ `args` ပါရင် launch လုပ်နိုင်တယ်ဆိုတာ settings ဖိုင်ကို FastMCP code အဖြစ် ပြန်ဘာသာပြန်ပြီး စစ်ဆေးနိုင်တယ်။
 
-## LAB 5 — adapter ကို လက်ဖြင့်ရေးခြင်း
+## လေ့ကျင့်ခန်း ၅ — LangGraph နှင့် stop condition
+### reducer ကို တိုင်းတာခြင်း
+
+
+```python
+# lab_5_state_reducer.py — add_messages appends, it does not overwrite
+from langgraph.graph import MessagesState
+
+class State(MessagesState):
+    counter: int  # keys without a reducer are simply overwritten
+
+state = {"messages": [("user", "hi")], "counter": 0}
+first = StateSchema.apply(state, [("ai", "hello")])
+```
+
+**အဓိကအယူအဆ** — `add_messages` reducer က message list ကို အစားထိုးတာမဟုတ်ဘဲ တန်းစာ ထပ်ထည့်တယ်၊ reducer မပါတဲ့ key တွေကတော့ အစားထိုးတယ်။
+
+### stop condition မဲ့ loop နဲ့ budget
+
+
+```python
+# lab_6_stop_condition.py — a step budget guards the cycle
+from langgraph.graph import StateGraph, MessagesState, START, END
+
+def agent(state: MessagesState):
+    budget = state.get("step_budget", 3) - 1
+    if budget <= 0:
+        return {"messages": [("ai", "budget exhausted")], "step_budget": 0}
+    # otherwise keep the cycle going with one more tool call
+    return {"messages": [("ai", "call again")], "step_budget": budget}
+```
+
+**အဓိကအယူအဆ** — graph ထဲက cycle တစ်ခုဟာ `tools_condition` ဆီ ပြန်လှည့်နေတာကြောင့် state ထဲမှာ step budget ထားပြီး stop condition မလိုမခင် ရပ်ရတယ်။
+
+## လေ့ကျင့်ခန်း ၆ — Checkpointer, threads နှင့် server နှစ်ခု
+### adapter ကို လက်ဖြင့်ရေးခြင်း
+
 
 ```python
 # lab_3_hand_adapter.py — MCP schema -> LangChain tool, by hand
@@ -106,38 +168,8 @@ add_tool = StructuredTool.from_function(func=_add, name="add",
 
 **အဓိကအယူအဆ** — MCP schema ကို Pydantic model အဖြစ် ပြောင်းပြီး `StructuredTool.from_function` နဲ့ LangChain tool ဆောက်တဲ့ လက်ဖြင့်ရေးထားတဲ့ adapter က one-liner ထက် ပိုတိကျပြီး မှားစရာနည်းတယ်။
 
-## LAB 6 — reducer ကို တိုင်းတာခြင်း
+### thread တစ်ခုကို ကိုယ်တိုင်တိုင်းခြင်း
 
-```python
-# lab_5_state_reducer.py — add_messages appends, it does not overwrite
-from langgraph.graph import MessagesState
-
-class State(MessagesState):
-    counter: int  # keys without a reducer are simply overwritten
-
-state = {"messages": [("user", "hi")], "counter": 0}
-first = StateSchema.apply(state, [("ai", "hello")])
-```
-
-**အဓိကအယူအဆ** — `add_messages` reducer က message list ကို အစားထိုးတာမဟုတ်ဘဲ တန်းစာ ထပ်ထည့်တယ်၊ reducer မပါတဲ့ key တွေကတော့ အစားထိုးတယ်။
-
-## LAB 7 — stop condition မဲ့ loop နဲ့ budget
-
-```python
-# lab_6_stop_condition.py — a step budget guards the cycle
-from langgraph.graph import StateGraph, MessagesState, START, END
-
-def agent(state: MessagesState):
-    budget = state.get("step_budget", 3) - 1
-    if budget <= 0:
-        return {"messages": [("ai", "budget exhausted")], "step_budget": 0}
-    # otherwise keep the cycle going with one more tool call
-    return {"messages": [("ai", "call again")], "step_budget": budget}
-```
-
-**အဓိကအယူအဆ** — graph ထဲက cycle တစ်ခုဟာ `tools_condition` ဆီ ပြန်လှည့်နေတာကြောင့် state ထဲမှာ step budget ထားပြီး stop condition မလိုမခင် ရပ်ရတယ်။
-
-## LAB 8 — thread တစ်ခုကို ကိုယ်တိုင်တိုင်းခြင်း
 
 ```python
 # checkpointing: turn 2 remembers turn 1 via thread_id
@@ -154,24 +186,8 @@ print(second["messages"][-1].content)  # the model still knows turn 1
 
 **အဓိကအယူအဆ** — checkpointer နဲ့ `thread_id` ပါတဲ့ `config` ရှိရင် graph run တိုင်း မမှတ်တဲ့ state အသစ် မဟုတ်ဘဲ အရင် turn ကို ပြန်မှတ်တယ်။
 
-## LAB 9 — chooser နှစ်မျိုးကို တွဲပြခြင်း
+### server နှစ်ခု၊ graph တစ်ခု
 
-```python
-# one graph, two brains: the chooser is swappable
-def scripted_chooser(state):
-    # deterministic: pick the tool by simple rules, no API key needed
-    if "add" in state["messages"][-1].content:
-        return {"messages": [("ai", "tool_call:add")]}
-
-def model_chooser(state):
-    # ask the model which tool fits, requires an API key
-    response = model.invoke(state["messages"])
-    return {"messages": [response]}
-```
-
-**အဓိကအယူအဆ** — chooser က graph ထဲက swap လုပ်နိုင်တဲ့ အစိတ်အပိုင်းတစ်ခုသာဖြစ်လို့ scripted chooser နဲ့ API key မလိုပဲ test လုပ်ပြီး model chooser နဲ့ ပြောင်းနိုင်တယ်။
-
-## LAB 10 — server နှစ်ခု၊ graph တစ်ခု
 
 ```python
 # lab_8_two_servers.py — one host, two servers, one graph
@@ -184,3 +200,4 @@ async def main():
 ```
 
 **အဓိကအယူအဆ** — host တစ်ခုက server အများအပြားကနေ tool တွေကို ပေါင်းစည်းပြီး allowlist နဲ့ ကန့်သတ်နိုင်တာကြောင့် server တစ်ခုကို host များစွာက ဝေမျှသလို host တစ်ခုက server များစွာကို ဦးစီးနိုင်တယ်။
+

@@ -1,6 +1,8 @@
 # M11 — Capstone: အဖြေများ (solution.md)
 
-## LAB 1 — Surface probe
+## လေ့ကျင့်ခန်း ၁ — Surface probe (LAB 1)
+### Surface probe
+
 
 ```python
 from devops_assistant import mcp
@@ -33,7 +35,9 @@ print("LAB 1 OK")
 
 **အဓိကအယူအဆ** — Server ကို ယုံကြည်ရန် မတင်မကြသေးခင် သူ့ surface (tool, resource, prompt) အားလုံးကို အရင်ရေတွက်၍ စစ်ဆေးရမည်။
 
-## LAB 2 — Metrics audit
+## လေ့ကျင့်ခန်း ၂ — Metrics audit (LAB 2)
+### Metrics audit
+
 
 ```python
 from devops_assistant import system_metrics
@@ -57,7 +61,9 @@ print("LAB 2 OK")
 
 **အဓိကအယူအဆ** — Metric tool တစ်ခုသည် တိုင်းလို့ ရသော တန်ဖိုးကိုသာ ပြောရမည်၊ တိုင်းလို့ မရပါက `null` ဟု ရိုးသားစွာ ဖော်ပြရမည်။
 
-## LAB 3 — Log forensics
+## လေ့ကျင့်ခန်း ၃ — Log forensics (LAB 3)
+### Log forensics
+
 
 ```python
 from devops_assistant import list_logs, read_log
@@ -78,7 +84,9 @@ print("LAB 3 OK")
 
 **အဓိကအယူအဆ** — Log စုံစမ်းရာတွင် အသံအကြီးဆုံး event ကို မယူဘဲ ပထမဆုံး ထူးဆန်းသော event ကို ရှာရမည်၊ ထို့ပြင် output ကို ကန့်သတ်ထားရမည်။
 
-## LAB 4 — Confirm guard
+## လေ့ကျင့်ခန်း ၄ — Confirm guard (LAB 4)
+### Confirm guard
+
 
 ```python
 from devops_assistant import restart_service
@@ -96,7 +104,9 @@ print("LAB 4 OK")
 
 **အဓိကအယူအဆ** — Protected service ကို ပြန်စတင်ရန် elicitation လမ်းကို သုံးရမည်၊ လုပ်ဆောင်ချက်ကို မလုပ်ခဲ့ပါက မလုပ်ခဲ့ကြောင်း ရလဒ်ထဲ ထင်ရှားစွာ ဖော်ပြရမည်။
 
-## LAB 5 — Autonomous client
+## လေ့ကျင့်ခန်း ၅ — Autonomous client (LAB 5)
+### Autonomous client
+
 
 ```python
 from lab_5_autonomous_client import run_agent
@@ -117,7 +127,9 @@ print("LAB 5 OK")
 
 **အဓိကအယူအဆ** — Autonomous client ဆိုသည်မှာ ချိန်းကြပ်မထားသော လမ်းညွှန်ချက်အလိုက် တစ်ဆင့်ချင်း စစ်ဆောင်းပြီးမှ ဆက်သွားသော scripted agent ဖြစ်သည်၊ anti-pattern ၆ မျိုးကို ရှောင်ရမည်။
 
-## LAB 6 — Estate memory tool
+## လေ့ကျင့်ခန်း ၆ — ကိုယ်ပိုင် extension (LAB 6 / LAB 7 / LAB 8)
+### Estate memory tool
+
 
 ```python
 from lab_6_estate_memory_tool import note_get, note_set, notes_list
@@ -136,7 +148,8 @@ print("LAB 6 OK")
 
 **အဓိကအယူအဆ** — Extension tool တိုင်းသည် ရိုးရိုးရှင်းရှင်း set/get/list စာချုပ်ဖြင့် အဖြေပေးရမည်၊ ချဲ့ထွင်မှုတိုင်းအတွက် စစ်ဆေးမှု ၅ ခုကို ဖြေရမည်။
 
-## LAB 7 — Estate resource guard
+### Estate resource guard
+
 
 ```python
 from lab_7_estate_resource_guard import read_resource
@@ -157,7 +170,8 @@ print("LAB 7 OK")
 
 **အဓိကအယူအဆ** — Resource အသစ်တွင် allowlist root ပြင်ပကို ဖတ်လို့ မရစေရန် guard ထည့်ရမည်၊ ချိုးဖောက်မှုကို တိတ်တဆိတ် မထောက်ပါးဘဲ loud failure ဖြစ်ရမည်။
 
-## LAB 8 — Incident review prompt
+### Incident review prompt
+
 
 ```python
 from lab_8_incident_review_prompt import incident_review
@@ -181,6 +195,8 @@ print("LAB 8 OK")
 
 ## ကိုးကား
 
+
 - `../code/devops_assistant.py` — Capstone server အဓိကဖိုင်
 - `../code/my_self_test.py` — တစ် command ဖြင့် server အားလုံးကို စစ်ဆေးသည့် self-test
 - `../../tests/test_m11_capstone.py`, `../../tests/test_m11_lab6_extension.py` — အသုံးပြုသင့်သော test များ
+
