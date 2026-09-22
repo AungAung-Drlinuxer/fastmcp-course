@@ -1,6 +1,6 @@
 # M2 — Type Hints, Introspection & Pydantic (ရှင်းလင်းချက်)
 
-M1 တွင် Python ပတ်ဝန်းကျင်ကို ပြင်ဆင်ခဲ့ပြီးဖြစ်သည်။ M2 တွင် MCP tool တစ်ခု၏ input schema ကို အလိုအလျောက် ထုတ်ယနိုင်ရန် လိုအပ်သည့် အခြေခံ သုံးရပ်ကို သင်မည်ဖြစ်သည် — type hints၊ `inspect` module နှင့် Pydantic တို့ဖြစ်သည်။
+M1 တွင် Python ပတ်ဝန်းကျင်ကို ပြင်ဆင်ခဲ့ပြီးဖြစ်သည်။ M2 တွင် MCP tool တစ်ခု၏ input schema ကို အလိုအလျောက် ထုတ်ယူနိုင်ရန် လိုအပ်သည့် အခြေခံ သုံးရပ်ကို သင်မည်ဖြစ်သည် — type hints၊ `inspect` module နှင့် Pydantic တို့ဖြစ်သည်။
 
 ---
 
@@ -8,7 +8,7 @@ M1 တွင် Python ပတ်ဝန်းကျင်ကို ပြင်�
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Type hint ဆိုသည်မှာ comment သက်သက် မဟုတ်ပါ။ function တစ်ခုပေါ်တွင် ရေးထားသော `def provision(vm_name: str, cpu: int) -> dict:` ကဲ့သို့သော မှတ်စုများသည် runtime တွင် `__annotations__` attribute ထဲ အမှန်တကယ် သိမ်းဆည်းထားသော object များ ဖြစ်သည်။ ဆိုလိုသည်မှာ ကုဒ်ကို ဖတ်နိုင်သလို ကိုယ်တိုင်လည်း ဖတ်နိုင်သည် — schema generator တစ်ခု ရေးနိုင်ရန် အခြေခံ အုတ်မြစ် ဖြစ်သည်။
+Type hint ဆိုသည်မှာ comment သက်သက် မဟုတ်ပါ။ function တစ်ခုပေါ်တွင် ရေးထားသော `def provision(vm_name: str, cpu: int) -> dict:` ကဲ့သို့သော မှတ်စုများသည် runtime တွင် `__annotations__` attribute ထဲ အမှန်တကယ် သိမ်းဆည်းထားသော object များ ဖြစ်သည်။ ဆိုလိုသည်မှာ ကုဒ်ကို လူဖတ်နိုင်သလို စက်လည်း ဖတ်နိုင်သည် — schema generator တစ်ခု ရေးနိုင်ရန် အခြေခံ အုတ်မြစ် ဖြစ်သည်။
 
 ### ဘာကြောင့် လဲ
 
@@ -20,7 +20,7 @@ Function ပေါ်ရှိ `__annotations__` dict ကို တိုက်�
 
 ### ဥပမာ
 
-``python
+```python
 from typing import get_type_hints, get_origin, get_args
 
 def provision(vm_name: str, tags: list[str], cpu: int | None = None):
@@ -43,7 +43,7 @@ print(get_origin(cpu_hint), get_args(cpu_hint))
 # list[str]
 # <class 'list'> (str,)
 # typing.Union (<class 'int'>, <class 'NoneType'>)
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -59,15 +59,15 @@ MCP တွင် tool တစ်ခု၏ schema သည် လုံးဝ မှ
 
 ### ဘာကြောင့် လဲ
 
-`"smal"` ဟု ရိုက်မှားသော input တစ်ခုသည် `str` parameter တွင် အလွတ်လက်ခံခံရပြီး အလုပ်ချိန်နှောင်းမှ ပျက်စီးသွားမည်။ `Literal` ဖြင့် ရေးထားပါက schema ထဲ ဖြစ်စေ၊ validation အဆင့်ဖြစ်စေ အမှားကို ချက်ချင်း ဖမ်းနိုင်သည်။ အရေးအကြီးဆုံးမှာ client UI များစွာက schema ထဲရှိ enum ကို မြင်သည်နှင့် dropdown တစ်ခုအဖြစ် ပြသပေးလေ့ရှိသည် — အသုံးပြုသူ အမှားရိုက်စရာ အခွင့်အလမ်းပင် မရှိတော့ပါ။
+`"smal"` ဟု ရိုက်မှားသော input တစ်ခုသည် `str` parameter တွင် အလွယ်တကူ လက်ခံခံရပြီး အလုပ်ချိန်နှောင်းမှ ပျက်စီးသွားမည်။ `Literal` ဖြင့် ရေးထားပါက schema ထဲ ဖြစ်စေ၊ validation အဆင့်ဖြစ်စေ အမှားကို ချက်ချင်း ဖမ်းနိုင်သည်။ အရေးအကြီးဆုံးမှာ client UI များစွာက schema ထဲရှိ enum ကို မြင်သည်နှင့် dropdown တစ်ခုအဖြစ် ပြသပေးလေ့ရှိသည် — အသုံးပြုသူ အမှားရိုက်စရာ အခွင့်အလမ်းပင် မရှိတော့ပါ။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-`Literal` ကို `typing` မှ import လုပ်၍ parameter တွင် တွဲသုံးရသည်။ ခွင့်ပြုတန်ဖိုးများကို Python object တွင် ကြေညာပြီးနောက် အဲဒီတန်ဖိုးများကိုပင် validation တွင် အသုံးပြုသောကြောင့် နှစ်ခု မသေချာရပါ။ သတိပြုရန်မှာ dynamic အားဖြင့် ပြောင်းလဲနိုင်သော တန်ဖိုးစုများအတွက် `Literal` ကို တိုက်ရိုက် မသုံးသင့်ချေ — အဲဒီအခါမျိုးတွင် သီးခြား enum-style validator တစ်ခု ရေးရမည်။
+`Literal` ကို `typing` မှ import လုပ်၍ parameter တွင် တွဲသုံးရသည်။ ခွင့်ပြုတန်ဖိုးများကို Python object တွင် ကြေညာပြီးနောက် အဲဒီတန်ဖိုးများကိုပင် validation တွင် အသုံးပြုသောကြောင့် နှစ်ခု ကွဲလွဲစရာ မရှိပါ။ သတိပြုရန်မှာ dynamic အားဖြင့် ပြောင်းလဲနိုင်သော တန်ဖိုးစုများအတွက် `Literal` ကို တိုက်ရိုက် မသုံးသင့်ချေ — အဲဒီအခါမျိုးတွင် သီးခြား enum-style validator တစ်ခု ရေးရမည်။
 
 ### ဥပမာ
 
-``python
+```python
 from typing import Literal
 
 Size = Literal["small", "medium", "large"]
@@ -84,7 +84,7 @@ except Exception as exc:
 
 # Expected output:
 # ValidationError (from Pydantic) -- the typo is caught at the boundary
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -108,7 +108,7 @@ JSON Schema တစ်ခုတွင် `required` list သည် အရေး�
 
 ### ဥပမာ
 
-``python
+```python
 import inspect
 
 def provision(vm_name: str, cpu: int = 2, region: str | None = None):
@@ -130,7 +130,7 @@ print(inspect.getdoc(provision))
 # ['vm_name']
 # <class 'str'>
 # Provision a VM.
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -150,4 +150,45 @@ Pydantic ၏ `BaseModel` သည် field များကို type နှင့
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Class ကို ဆောက်ပြီး input payload ကို class ထဲ လွှတ်လိုက်ပါက မှန်ကန်ပါက instance ရရှိမည်၊ မှားပါက `ValidationError` ထွက်မည်။ Error ကို `exc.errors()` ဖြင့် list အဖြစ် ဖတ်နိုင်သည် — အရေးကြီးဆုံး field မှာ `loc` ဖြစ်ပြီး error ဖြစ်သည့် နေရာကို လမ်းညွှန်သည် (nested model ဖြစ်ပါက အလွှာများစွာ ရှိမည်)၊ `type` က error အမျိုးအစားကို ဖော်ပြသည်၊ `input` က ထည့်လိုက်သော တန်ဖိုးဖြစ်သည်။ `ValidationError` သည
+Class ကို ဆောက်ပြီး input payload ကို class ထဲ လွှတ်လိုက်ပါက မှန်ကန်ပါက instance ရရှိမည်၊ မှားပါက `ValidationError` ထွက်မည်။ Error ကို `exc.errors()` ဖြင့် list အဖြစ် ဖတ်နိုင်သည် — အရေးကြီးဆုံး field မှာ `loc` ဖြစ်ပြီး error ဖြစ်သည့် နေရာကို လမ်းညွှန်သည် (nested model ဖြစ်ပါက အလွှာများစွာ ရှိမည်)၊ `type` က error အမျိုးအစားကို ဖော်ပြသည်၊ `input` က ထည့်လိုက်သော တန်ဖိုးဖြစ်သည်။ `ValidationError` သည် error တစ်ခုတည်း အစား စစ်ဆေးမှု မအောင်မြင်သည့် field အားလုံးကို တစ်ပြိုင်နက် စုဆောင်းပြီး ပြသသောကြောင့် အသုံးပြုသူထံ အချက်အလက် ပြည့်စုံစွာ ပြန်လည် အကြောင်းကြားနိုင်သည်။
+
+### ကုဒ် ဥပမာ
+
+```python
+from pydantic import BaseModel, Field, ValidationError
+
+
+class ServerSpec(BaseModel):
+    # Required field: no default means the caller must provide it
+    name: str = Field(description="Human-readable server name")
+
+    # Optional field with a default value
+    environment: str = Field(default="dev", description="Deployment environment")
+
+    # Numeric constraints applied to both validation and schema
+    cpu: int = Field(ge=1, le=64, description="Number of CPU cores")
+    memory_gb: int = Field(ge=1, le=512, description="Memory in gigabytes")
+
+
+# Valid payload: returns an instance
+spec = ServerSpec(name="web-01", cpu=4, memory_gb=16)
+print(spec.model_dump())
+
+# Invalid payload: raises ValidationError
+try:
+    ServerSpec(name="web-02", cpu=0, memory_gb=16)
+except ValidationError as exc:
+    for error in exc.errors():
+        print(error["loc"], error["type"], error["input"])
+```
+
+### MCP တွင် အသုံးချနည်း
+
+FastMCP တွင် tool function ၏ parameter အဖြစ် Pydantic model တစ်ခုကို တိုက်ရိုက် ထည့်ပါက framework သည် အလိုအလျောက် input schema ထုတ်ပေးပြီး client မှ လာသော payload ကိုလည်း စစ်ဆေးပေးသည်။ ထို့ကြောင့် tool အတွင်းဘက်တွင် validation ကုဒ် တစ်ကြောင်းမျှ ရေးစရာ မလိုတော့ဘဲ business logic အပေါ်တွင်သာ အာရုံ စိုက်နိုင်သည်။ Model တစ်ခု ကြေညာပြီးပါက ထို model ကို tool၊ resource၊ အခြား model တို့တွင် ပြန်သုံးနိုင်သောကြောင့် ကုဒ် ထပ်ဆင့်ရေးခြင်းမှ ကာကွယ်ပေးသည်။
+
+## အနှစ်ချုပ်
+
+- Pydantic ၏ `BaseModel` ကြေညာချက် တစ်ခုတည်းမှ validation နှင့် JSON Schema ထုတ်ယူမှု နှစ်ခုလုံးကို တစ်ပြိုင်နက် ရရှိသည်။
+- `Field()` ၏ keyword များ (`default`၊ `description`၊ `ge=`၊ `le=`) ဖြင့် ကန့်သတ်ချက်များကို ကြေညာရုံသာ လိုပြီး လက်ဖြင့် စစ်ဆေးသော ကုဒ် ရေးရန် မလိုတော့ပါ။
+- Required field အဖြစ် သတ်မှတ်လိုပါက default တန်ဖိုး မထည့်ရုံသာ လိုသည် — ဒီစည်းမျဉ်းကို သေချာ မှတ်ယူပါ။
+- `ValidationError` ကို `exc.errors()` ဖြင့် ဖတ်ပါက `loc`၊ `type`၊ `input` တို့မှ အမှားရှိနေသည့် နေရာ၊ အမျိုးအစား၊ တန်ဖိုးတို့ကို တိကျစွာ သိနိုင်သည်။

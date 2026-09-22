@@ -12,7 +12,7 @@ MCP server တစ်ခုရဲ့ ပစ္စည်း သုံးမျိ�
 - Consistency သည် prompt ရဲ့ တန်ဖိုးအခြေခံဖြစ်ခြင်း
 - Multi-turn guidance format များ — numbered procedure, forced ordering, stop conditions
 - Anti-hallucination clause ကို prompt ထဲ ထည့်သင့်သည့် အကြောင်း
-- Custom return type ကို မှားယွင်းစွာ သုံးမိလျှင် ဖြစ်ပွားသည့် trap — registered ဖြစわောင်း render မဖြစ်သည့် ပြဿနာ
+- Custom return type ကို မှားယွင်းစွာ သုံးမိလျှင် ဖြစ်ပွားသည့် trap — registered ဖြစ်သော်လည်း render မဖြစ်သည့် ပြဿနာ
 - Host ဘက်မှ prompt များကို listing လုပ်ခြင်းနှင့် rendering လုပ်ခြင်း contract
 
 ## သင်ခန်းစာများ

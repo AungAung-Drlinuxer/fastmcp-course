@@ -30,7 +30,7 @@
 
 `lab_4_custom_type_trap.py` ကို ဖန်တီးပါ — custom return type တစ်ခုကို ပြန်ပေးသော prompt တစ်ခုကို ရေးပြီး အဲဒီ prompt သည် registry ထဲမှာ ပေါ်လာသော်လည်း render လုပ်သောအခါ ပျက်သွားပုံကို မှတ်တမ်းတင်ပါ။ Error စာသားကို ခွဲခြမ်းပြီး ဖြေရှင်းနည်း သုံးမျိုးထဲက တစ်မျိုးကို အသုံးပြု၍ ပြင်ပါ။
 
-**Hints:** Custom return type သည် register ဖြစまေသော်လည်း render မအောင်မြင် — ဒါက "fail late" ပြဿနာဖြစ်သည်။ ဖြေရှင်းနည်းများထဲမှာ return type ကို `str` ဖြစ်စေခြင်း၊ `Message` type များ သုံးခြင်း သို့မဟုတ် structure ပြန်ပြင်ခြင်း ပါဝင်သည်။ `mini_exercise_trap.py` နှင့် `extra_render_selftest.py` ကို ကြည့်ပါ။
+**Hints:** Custom return type သည် register ဖြစ်သော်လည်း render မအောင်မြင် — ဒါက "fail late" ပြဿနာဖြစ်သည်။ ဖြေရှင်းနည်းများထဲမှာ return type ကို `str` ဖြစ်စေခြင်း၊ `Message` type များ သုံးခြင်း သို့မဟုတ် structure ပြန်ပြင်ခြင်း ပါဝင်သည်။ `mini_exercise_trap.py` နှင့် `extra_render_selftest.py` ကို ကြည့်ပါ။
 
 **Expected behavior:** ပထမတွင် render error ဖမ်းဆုပ်ရမိသည်။ ပြင်ပြီးနောက် prompt သည် အပြည့်အစုံ render ဖြစ်သည်။ Render self-test ကို တွဲဖက် ထည့်သွင်းပါက အနာဂတ်မှာ ဒီပြဿနာကို အစောကြည့်တွေ့နိုင်သည်။
 

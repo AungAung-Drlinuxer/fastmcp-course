@@ -1,8 +1,9 @@
 # M7 — Workflow Steering Prompts (`@mcp.prompt`) — Solution
 
-## Exercise 1 — Prompt အသားပေးခြင်း (Declare, List, Render)
+## လေ့ကျင့်ခန်း ၁ — Prompt အခြေခံဖွဲ့စည်းပုံ (LAB 1)
 
-``python
+
+```python
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("m7_solution")
@@ -19,13 +20,14 @@ print([p.name for p in prompts])
 
 result = mcp.render_prompt("first_prompt", {"topic": "MCP prompts"})
 print(result)
-``
+```
 
 **အဓိကအယူအဆ** — Server သည် prompt ကို ကြေညာရုံသာ လုပ်ပြီး စာရင်းပြသခြင်းနှင့် render လုပ်ခြင်းကို host က သေချာစွာ ဆက်ဆောင်ပေးရမည်။
 
-## Exercise 2 — Argument များ — Required, Defaulted, Missing
+## လေ့ကျင့်ခန်း ၂ — Argument များ (LAB 2)
 
-``python
+
+```python
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("m7_solution_args")
@@ -45,13 +47,14 @@ try:
     mcp.render_prompt("rca_prompt", {})
 except Exception as e:
     print("missing-arg error:", e)
-``
+```
 
 **အဓိကအယူအဆ** — Function signature သည် prompt ၏ argument contract ဖြစ်ပြီး required argument လျော့လျှင် render ချိန်မှာသာ ပျက်သည်။
 
-## Exercise 3 — Multi-Turn Guidance: `highlight_sections_prompt`
+## လေ့ကျင့်ခန်း ၃ — Multi-turn Prompt (LAB 3)
 
-``python
+
+```python
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("m7_solution_highlight")
@@ -72,13 +75,14 @@ result = mcp.render_prompt(
     "highlight_sections_prompt", {"service": "billing-api", "section": "errors"}
 )
 print(result)
-``
+```
 
-**အဓိကအယူအဆ** — Numbered procedure၊ forced ordering နှင့် stop condition တို့ကိ် တစ်ပေါင်းတည်းထည့်ခြင်းဖြင့် multi-turn လုပ်ငန်းစဉ်ကို တည်ငြိမ်စွာ ဦးဆောင်နိုင်သည်။
+**အဓိကအယူအဆ** — Numbered procedure၊ forced ordering နှင့် stop condition တို့ကို တစ်ပေါင်းတည်းထည့်ခြင်းဖြင့် multi-turn လုပ်ငန်းစဉ်ကို တည်ငြိမ်စွာ ဦးဆောင်နိုင်သည်။
 
-## Exercise 4 — Custom Return Type ထောင်ချောက်
+## လေ့ကျင့်ခန်း ၄ — Custom-Type Trap (LAB 4)
 
-``python
+
+```python
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("m7_solution_trap")
@@ -106,13 +110,14 @@ except Exception as e:
 def fixed_prompt(service: str) -> str:
     """This renders fine."""
     return f"Report for {service}"
-``
+```
 
 **အဓိကအယူအဆ** — Register ဖြစ်သည်မှာ render ဖြစ်သည်မဟုတ်ပါ။ return type သည် string (သို့မဟုတ် `Message`) ဖြစ်ကြောင်း render self-test ဖြင့် အလိုအလျောက် စစ်ဆေးပါ။
 
-## Exercise 5 — Anti-Hallucination Clause ပါသော RCA Prompt Library
+## လေ့ကျင့်ခန်း ၅ — RCA Prompt Library (LAB 5)
 
-``python
+
+```python
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("m7_solution_library")
@@ -140,13 +145,14 @@ def rca_step_prompt(step: int, service: str) -> str:
 # Consistency: same clause, same wording, for every step.
 for s in range(1, 6):
     print(mcp.render_prompt("rca_step_prompt", {"step": s, "service": "billing"}))
-``
+```
 
 **အဓိကအယူအဆ** — Prompt library ၏ တန်ဖိုးအားလုံးသည် consistency မှာဖြစ်ပြီး anti-hallucination clause ကို အဆင့်တိုင်းတွင် စာလုံးတွဲတူညီစွာ ထည့်သွင်းရမည်။
 
-## Exercise 6 — Host Contract: List၊ Render၊ Error ကိုင်တွယ်ခြင်း
+## လေ့ကျင့်ခန်း ၆ — Host Contract (LAB 6)
 
-``python
+
+```python
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("m7_solution_host")
@@ -167,6 +173,6 @@ try:
     print(result)
 except Exception as e:
     print("host-side error handling:", e)
-``
+```
 
 **အဓိကအယူအဆ** — Host သည် `prompt.arguments` မှ argument schema ကို ဖတ်ပြီး render ရလဒ်နှင့် error လေးမျိုးကို မဖြစ်မနေ ကိုင်တွယ်ရမည်။

@@ -50,7 +50,7 @@
 
 ## ကိုးကား
 
-- အလွန်စာမျိုး — [../M10_security/README.md](../M10_security/README.md)
+- အရင် module — [../M10_security/README.md](../M10_security/README.md)
 - နောက် module — ဤ module သည် course ၏ နောက်ဆုံး module ဖြစ်သည်
 - စစ်ဆေးမှုဖိုင်များ — [../../tests/test_m11_capstone.py](../tests/test_m11_capstone.py), [../../tests/test_m11_lab6_extension.py](../tests/test_m11_lab6_extension.py)
 - Lab ကုဒ် — [../code/devops_assistant.py](code/devops_assistant.py), [../code/my_self_test.py](code/my_self_test.py)

@@ -34,7 +34,7 @@
 
 ## လေ့ကျင့်ခန်း ၅ — Autonomous client (LAB 5)
 
-`lab_5_autonomous_client.py` ကို အသုံးပြုပြီး script အလိုက် tool ခေါ်ဆိုမှုများ ပြုလုပ်ပါ။ Part A (scripted agent) အဖြစ် surface probe → metrics → log forensics ဟူ၍ အစီအစဉ်တစ်ခုကို အလိုအလျောက် run စေပါ။ ရရှိလာသော output များကို ပြန်ချုပ်ပြီး `system_metrics` မှ ရှိရှိသမျှ အချက်အလက်များနှင့် တိုက်ဆိုင်စစ်ဆေးပါ။ နိုင်ငံသာ anti-pattern (ခန့်မှန်းချက်ကို အချက်အလက်လို့ ယူဆခြင်း) များ မကျူးးကျော်စေရန် သတိပြုပါ။
+`lab_5_autonomous_client.py` ကို အသုံးပြုပြီး script အလိုက် tool ခေါ်ဆိုမှုများ ပြုလုပ်ပါ။ Part A (scripted agent) အဖြစ် surface probe → metrics → log forensics ဟူ၍ အစီအစဉ်တစ်ခုကို အလိုအလျောက် run စေပါ။ ရရှိလာသော output များကို ပြန်ချုပ်ပြီး `system_metrics` မှ ရှိရှိသမျှ အချက်အလက်များနှင့် တိုက်ဆိုင်စစ်ဆေးပါ။ နိုင်ငံသာ anti-pattern (ခန့်မှန်းချက်ကို အချက်အလက်လို့ ယူဆခြင်း) များ မကျူးကျော်စေရန် သတိပြုပါ။
 
 **Hints:** ဤသင်ခန်းစာမှ "autonomous" ဆိုသည်မှာ လူစွက်မစွက်ဘဲ script အလိုက် လည်ပတ်ခြင်းသာ ဖြစ်သည်။ LangGraph နှင့် Cline အပိုင်းများသည် ရွေးချယ်စရာ extension ဖြစ်သည်။
 

@@ -4,11 +4,11 @@
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-FastMCP သည် Python code ကို MCP server အဖြစ် ပြောင်းပေးသည့် framework ဖြစ်သည်။ `FastMCP("name")` ဖြင့် server object တစ်ခု ဖန်တီးပြီး `@mcp.tool` decorator ဖြင့် ကျွနု်ပ်တို့၏ function များကို client များ ခေါ်ဆိုနိုင်သည့် tool များအဖြစ် မှတ်ပုံတင်ပေးသည်။ Server နာမည်သည် client ဘက်မှ တွေ့ရမည့် အချက်အလက်တစ်ခု ဖြစ်သည်။
+FastMCP သည် Python code ကို MCP server အဖြစ် ပြောင်းပေးသည့် framework ဖြစ်သည်။ `FastMCP("name")` ဖြင့် server object တစ်ခု ဖန်တီးပြီး `@mcp.tool` decorator ဖြင့် ကျွန်ုပ််တို့၏ function များကို client များ ခေါ်ဆိုနိုင်သည့် tool များအဖြစ် မှတ်ပုံတင်ပေးသည်။ Server နာမည်သည် client ဘက်မှ တွေ့ရမည့် အချက်အလက်တစ်ခု ဖြစ်သည်။
 
 ### ဘာကြောင့် လဲ
 
-MCP protocol သည် JSON-RPC 2.0 အပေါ် အခြေခံသည်။ protocol အရ ဆိုလျှင် host, client, server ဟူ၍ အခန်းကဏ္ဍ သုံးမျိုး ရှိပြီး၊ server က tools, prompts, resources ဟူ၍ သုံးမျိုး ထုတ်ပြနိုင်သည်။ ဤ handshake နှင့် message format အားလုံးကို FastMCP က ကိုယ်စားလုပ်ပေး၍၊ ကျွနု်ပ်တို့သည် စီးပွားရေး logic ကိုသာ ရေးရမည်။
+MCP protocol သည် JSON-RPC 2.0 အပေါ် အခြေခံသည်။ protocol အရ ဆိုလျှင် host, client, server ဟူ၍ အခန်းကဏ္ဍ သုံးမျိုး ရှိပြီး၊ server က tools, prompts, resources ဟူ၍ သုံးမျိုး ထုတ်ပြနိုင်သည်။ ဤ handshake နှင့် message format အားလုံးကို FastMCP က ကိုယ်စားလုပ်ပေး၍၊ ကျွန်ုပ််တို့သည် စီးပွားရေး logic ကိုသာ ရေးရမည်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
@@ -16,7 +16,7 @@ Server object ကို ဖန်တီးသည့်အခါ FastMCP က အ�
 
 ### ဥပမာ
 
-``python
+```python
 from fastmcp import FastMCP
 
 # Create a server with a name reported to clients
@@ -31,7 +31,7 @@ def add(a: int, b: int) -> int:
 # Inspect what the server publishes
 print(mcp.name)
 # Expected output: course-hello
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -53,7 +53,7 @@ Client က server command ကို ဖွင့်သည်။ Server ၏ `stdi
 
 ### ဥပမာ
 
-``python
+```python
 from pathlib import Path
 from fastmcp import Client
 
@@ -63,7 +63,7 @@ async def main():
         tools = await client.list_tools()
         print([t.name for t in tools])
 # Expected output: ['add']
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -85,16 +85,16 @@ Server က `host` နှင့် `port` တွင် စောင့်သည�
 
 ### ဥပမာ
 
-``python
+```python
 # Server side: run over HTTP on localhost
 def main():
     # transport="http", host and port decide who can reach us
     mcp.run(transport="http", host="127.0.0.1", port=8000)
 
 # Expected output: server listens at http://127.0.0.1:8000
-``
+```
 
-### လက်တွေ့မှာ ဘာကြောင်း အရေးကြီးလဲ
+### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
 HTTP တွင် `stdout` သည် protocol လိုင်း မဟုတ်တော့သောကြောင့် `print()` ရေးလို့ရသည်။ သို့သော် network ပေါ်တွင် ဖွင့်လိုက်လျှင် ခွင့်ပြုချက် (auth) မရှိဘဲ လုံးဝ မထုတ်ပြရန် သတိထားရမည်။ `0.0.0.0` ကို ရွေးချယ်ခြင်းသည် တကယ့် အန္တရာယ် ဖြစ်သည်။
 
@@ -106,7 +106,7 @@ Client က `list_tools()` ဖြင့် server တွင် ရှိသည့
 
 ### ဘာကြောင့် လဲ
 
-Server က tool တစ်ခုကို ထုတ်ပြသည့်အခါ သူ့ function ၏ type hints မှ JSON Schema ဖြစ်လာသည်။ Client ဘက်တွင် tool object ၏ `.parameters` ဟု မြင်ရပြီး၊ server ဘက်တွင် `.input_schema` ဟု ခေါ်သည်။ နာမည် ကွဲခြားかလောက်စွာ ရှိသည်မှာ အမှားအများဆုံး နေရာ ဖြစ်သည်။
+Server က tool တစ်ခုကို ထုတ်ပြသည့်အခါ သူ့ function ၏ type hints မှ JSON Schema ဖြစ်လာသည်။ Client ဘက်တွင် tool object ၏ `.parameters` ဟု မြင်ရပြီး၊ server ဘက်တွင် `.input_schema` ဟု ခေါ်သည်။ နာမည် ကွဲခြားလောက်စွာ ရှိသည်မှာ အမှားအများဆုံး နေရာ ဖြစ်သည်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
@@ -114,7 +114,7 @@ Server က tool တစ်ခုကို ထုတ်ပြသည့်အခါ
 
 ### ဥပမာ
 
-``python
+```python
 async def main():
     async with Client(Path("hello_server.py")) as client:
         result = await client.call_tool("add", {"a": 2, "b": 3})
@@ -123,11 +123,11 @@ async def main():
 # Expected output:
 # False
 # {'result': 5}
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-`is_error=False` ဖြစ်လျှင်ပင် အလုပ်က ကျရှုံးနိုင်သည် — ဥပမာ argument တန်ဖိုး မှားနေလျှင် result ထဲတွင် မှားယွင်းမှု ပါလာသည်။ ဤ pattern ကို နောင် module များတွင်လည်း တူညီစွာ တွေ့ရမည်ဖြစ်၍၊ result ကို အခြေခံ၍ ဆုံးဖြတ်သည့် အလေ့အက ခုကတည်း စတင်ထားသင့်သည်။
+`is_error=False` ဖြစ်လျှင်ပင် အလုပ်က ကျရှုံးနိုင်သည် — ဥပမာ argument တန်ဖိုး မှားနေလျှင် result ထဲတွင် မှားယွင်းမှု ပါလာသည်။ ဤ pattern ကို နောင် module များတွင်လည်း တူညီစွာ တွေ့ရမည်ဖြစ်၍၊ result ကို အခြေခံ၍ ဆုံးဖြတ်သည့် အလေ့အကျင့်ကို ယခုကတည်း စတင်ထားသင့်သည်။
 
 ## အနှစ်ချုပ်
 

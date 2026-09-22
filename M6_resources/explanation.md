@@ -16,7 +16,7 @@ MCP တွင် primitive နှစ်မျိုးရှိသည် — **a
 Server ဘက်တွင် function တစ်ခုကို `@mcp.resource` ဖြင့် URI ချိတ်ပေးသည်။ Client က URI ကို တောင်းလာသောအခါ server က function ကို run ပြီး တန်ဖိုးကို ပြန်ပေးသည်။
 
 ### ဥပမာ
-``python
+```python
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("m6-demo")
@@ -25,7 +25,7 @@ mcp = FastMCP("m6-demo")
 def host_inventory() -> str:
     # A static resource: a fixed URI, read-only data
     return "web-01: online\nweb-02: offline"
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 Configuration၊ runbook၊ log ကဲ့သို့ ဖတ်စရာ data များအတွက် tool မှားသုံးပါက action ထင်စေမည်။ Resource က ကျွန်ုပ်တို့ကို အဓိပ္ပာယ်မှန်ကန်စွာ ခွဲခြားစေပြီး client က ကြိုတင်ရယူနိုင်ရန်လည်း ဖြစ်စေသည်။
@@ -44,7 +44,7 @@ Function တစ်ခုကို resource လား tool လား ဆုံး
 မေးခွန်း ၄ ခုကို စဉ်းစားပါ — (၁) ဒါက ဖတ်ရုံလား၊ ပြောင်းလဲလား (၂) တစ်ခါတည်း အတုံးအသင်း ရနိုင်လား (၃) ဖတ်ဖို့သက်သက် လိုအပ်လား (၄) ကမ်းလှမ်းချက်က လက်တွေ့ဘက် သက်ရောက်လား။ ဖတ်ရုံ၊ တစ်ခါတည်းရနိုင်၊ data ဘက် သက်သက် ဖြစ်ပါက resource ဖြစ်သည်။
 
 ### ဥပမာ
-``python
+```python
 # Reading the runbook = resource (a thing)
 @mcp.resource("runbook://{service}")
 def get_runbook(service: str) -> str:
@@ -55,7 +55,7 @@ def get_runbook(service: str) -> str:
 def restart_service(service: str) -> str:
     # An action that changes state: must be a tool
     return f"restarted {service}"
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 `runbooks.py` ၏ ဆုံးဖြတ်ချက်များကို ကြည့်ပါက — ဖတ်စရာများ (runbook၊ config၊ inventory) သည် resource ဖြစ်ပြီး၊ ပြောင်းလဲသည့်အရာများ (restart၊ deploy) သည် tool ဖြစ်သည်။ ဒီ စည်းမျဉ်းက server တစ်ခုလုံး၏ ဖွဲ့စည်းပုံကို သိသာစေသည်။
@@ -74,7 +74,7 @@ URI က resource ၏ လိပ်စာသာမက၊ အမျိုးအစ�
 Static resource တွင် URI အတိအကျဖြင့် ချိတ်သည်။ Template တွင် `{service}` ကဲ့သို့ variable တစ်ခုသည် function parameter တစ်ခုဖြစ်လာသည် — server က URI ထဲက တန်ဖိုးကို ညှပ်ယူပြီး parameter အဖြစ် ပေးလိုက်သည်။
 
 ### ဥပမာ
-``python
+```python
 from pathlib import Path
 
 @mcp.resource("runbook://{service}")
@@ -85,7 +85,7 @@ def runbook_for(service: str) -> str:
         raise FileNotFoundError(f"no runbook for '{service}'")
     return p.read_text()
 # Expected output: client calls read_resource("runbook://postgres")
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 မတူညီသော data များကို URI တစ်ခုတည်းသော template ဖြင့် ဖန်တီးနိုင်သည်။ သို့သော် LAB 4 တွင် တွေ့ရမည့် **enumeration ထောင်ချောက်** ရှိသည် — `list_resources()` က static resources ကိုသာ ပြပြီး template များကို `list_resource_templates()` ဖြင့် သီးသန့်ရယူရသည်။
@@ -104,7 +104,7 @@ Client က ရရှိလာသော content ကို မှန်ကန်�
 `str` ပြန်ပါက `text/plain`၊ `dict`/`list` ပြန်ပါက JSON content ဖြစ်သည်။ `mime_type` ပေးနိုင်သည့် နေရာ ၃ ခုရှိသည် — decorator ထဲ၊ function ထဲတွင် `Resource` object ပြန်ခြင်းဖြင့်၊ client ဘက်တွင် ကြည့်ခြင်းဖြင့်။ Template တစ်ခုတည်းအတွက် `mime_type` တစ်ခုတည်းသာ ရှိသည်။
 
 ### ဥပမာ
-``python
+```python
 import json
 
 @mcp.resource("inventory://hosts.json", mime_type="application/json")
@@ -112,10 +112,10 @@ def hosts_json() -> dict:
     # Declaring the type: the client can parse it as JSON
     return {"web-01": "online", "web-02": "offline"}
 # Expected output: client sees mime_type="application/json"
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
-အရေးကြီးဆုံး အချက်မှာ — `mime_type` သည် **ကြေညာချက်သာဖြစ်ပြီး content ကို ပြောင်းလဲမပေး**။ မှားကြေညာပါက client လှည့်ဖြင့် ချရမည်။ LAB 8 တွင် return shape အမျိုးမျိုးကို တိုင်းတာကြည့်မည်။
+အရေးကြီးဆုံး အချက်မှာ — `mime_type` သည် **ကြေညာချက်သာဖြစ်ပြီး content ကို ပြောင်းလဲမပေး**။ မှားကြေညာပါက client လှည့်စားခံရမည်။ LAB 8 တွင် return shape အမျိုးမျိုးကို တိုင်းတာကြည့်မည်။
 
 ---
 
@@ -131,7 +131,7 @@ Resource က read-only ဖြစ်သောကြောင့် error ပြ�
 File မတွေ့ပါက `FileNotFoundError` ချပြီး message ထဲတွင် ဘယ် service များအတွက် runbook ရနိုင်ကြောင်း စာရင်းထည့်သည်။ LAB 9 တွင် failure အမျိုးအစား ၄ မျိုးကို တိုင်းတာမည်။
 
 ### ဥပမာ
-``python
+```python
 available = "postgres, redis, nginx"
 
 @mcp.resource("runbook://{service}")
@@ -144,10 +144,10 @@ def runbook_for(service: str) -> str:
         )
     return p.read_text()
 # Expected output: FileNotFoundError: no runbook for 'kafka'. available: postgres, redis, nginx
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
-LAB 5 ၏ reader loop တွင် တွေ့ရမည့်အတိုင်း — client တစ်ခုက server ပေးသမျှ ကိုင်တွယ်ရသည်။ Error message ကောင်းလျှင် user က ဘာဆက်လုပ်ရမည်ကို ချက်ချင်း မြင်နိုင်သည်။ Path confinement (LAB 6) ကလည်း `Path.resolve()` ဖြင့် ဖိုင်ကို ချိတ်ပိတ်ထားသည့် ဖိုဒါထဲမှာသာ ရှိမကြောင်း စစ်သည် — အပြည့်အစုံကို M10 တွင် ဆက်သင်မည်။
+LAB 5 ၏ reader loop တွင် တွေ့ရမည့်အတိုင်း — client တစ်ခုက server ပေးသမျှ ကိုင်တွယ်ရသည်။ Error message ကောင်းလျှင် user က ဘာဆက်လုပ်ရမည်ကို ချက်ချင်း မြင်နိုင်သည်။ Path confinement (LAB 6) ကလည်း `Path.resolve()` ဖြင့် ဖိုင်ကို ချိတ်ပိတ်ထားသည့် ဖိုဒါထဲမှာသာ ရှိကြောင်း စစ်သည် — အပြည့်အစုံကို M10 တွင် ဆက်သင်မည်။
 
 ---
 

@@ -26,7 +26,7 @@ Scalar အဖြေများကို `{"value": ...}` ဟု wrapper ထဲ 
 မေးခွန်းပုံစံတစ်ခုစီအတွက် Pydantic model သတ်မှတ်ပြီး `response_type` မှာ ထည့်သွင်းသည်။ ဖြေမှုက result object တစ်ခုအဖြစ် ပြန်ရောက်သည်။
 
 ### ဥပမာ
-``python
+```python
 from pydantic import BaseModel
 
 class Confirm(BaseModel):
@@ -42,7 +42,7 @@ async def delete_file(path: str, ctx: Context) -> str:
     return f"action={result.action}"
 # Expected output:
 # action=accept
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 မေးခွန်းပုံစံ ငါးမျိုး (scalar၊ enum၊ multi-select၊ form၊ URL) ကို မှန်ကန်စွာ ရွေးတတ်ရင် လူသုံးသူရဲ့ ဖြေရလွယ်မှု သိသိသာသာ တိုးသည်။
@@ -59,7 +59,7 @@ Host က JSON Schema ရဲ့ restricted subset တစ်ဝက်ပဲ render
 Pydantic model ထဲ ဖိုင်ကွက်များကို သတ်မှတ်ပြီး `response_type` မှာ ပေးလွှတ်သည်။
 
 ### ဥပမာ
-``python
+```python
 from pydantic import BaseModel, Field
 
 class BookingForm(BaseModel):
@@ -77,7 +77,7 @@ async def book_flight(flight_no: str, ctx: Context) -> str:
     return f"booked for {result.data.passenger}"
 # Expected output:
 # booked for Daw Aye
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 လူက စကားလုံးရိုက်စရာ မလိုဘဲ ကွက်ဖြည့်ရုံပဲ လိုသည်။ မေးခွန်းအားလုံး တစ်ကွက်တည်းမှာ ပြီးသွားသည်။
@@ -102,13 +102,13 @@ Login မလုပ်ရသေးသည့် အသုံးပြုသူက�
 Elicitation တစ်ခုရဲ့ ဖြေမှုက outcome သုံးမျိုးထဲက တစ်မျိုးဖြစ်သည် — `accept` (လက်ခံ)，`decline` (ငြင်းပယ်)，`cancel` (ပယ်ဖျက်)။ `accept` + `proceed=False` ဟူသည့် စတုတ္ထ အခြေအနေလည်း ရှိသည်။
 
 ### ဘာကြောင့် လဲ
-သုံးမျိုးကို ရောလိုက်လျှင် မတူသည့် အခြေအနေတွေကို တူသည်ဟု မှားယွင်း စပြစ်သည်။ တစ်မျိုးစီအတွက် ကွဲပြားသည့် policy လိုအပ်သည် — `decline` က လူရဲ့ ဆုံးဖြတ်ချက်ဖြစ်ပြီး `cancel` က host ရဲ့ ဆုံးဖြတ်ချက်ဖြစ်သည်။
+သုံးမျိုးကို ရောလိုက်လျှင် မတူသည့် အခြေအနေတွေကို တူသည်ဟု မှားယွင်း သတ်မှတ်သည်။ တစ်မျိုးစီအတွက် ကွဲပြားသည့် policy လိုအပ်သည် — `decline` က လူရဲ့ ဆုံးဖြတ်ချက်ဖြစ်ပြီး `cancel` က host ရဲ့ ဆုံးဖြတ်ချက်ဖြစ်သည်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 Outcome တိုင်းအတွက် branch တစ်ခုစီ code ထဲ ရေးသည်၊ `hint` ဖြင့် လူ့ဘာသာနဲ့ ရှင်းပြသည်။
 
 ### ဥပမာ
-``python
+```python
 @mcp.tool
 async def charge_card(amount: int, ctx: Context) -> str:
     result = await ctx.elicit(
@@ -125,7 +125,7 @@ async def charge_card(amount: int, ctx: Context) -> str:
         return "cancelled by host"
 # Expected output:
 # stopped: too expensive
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 Model (LLM) က outcome များကို ခွဲခြားမြင်သည်။ `hint` ကောင်းတစ်ခုက နောက်ထပ် မေးစရာ မလိုအောင် လျှော့ပေးသည်။
@@ -156,7 +156,7 @@ Parameter လေးခုက protocol ရဲ့ ဖွဲ့စည်းမှ�
 `make_handler` ပုံစံနဲ့ ရေးပြီး `params` ကို ဖတ်ကာ လူ့အဖြေကို ဆက်သွင်းသည်။ Contract ကို တမင် ချိုးပြီး (lab 8) ပြန်ပြင်ခြင်းဖြင့် သင်ယူသည်။
 
 ### ဥပမာ
-``python
+```python
 async def make_handler():
     # Minimal host-application handler shape (from booking.py)
     async def handler(ctx, message, schema, params):
@@ -166,7 +166,7 @@ async def make_handler():
     return handler
 # Expected output:
 # handler registered
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 Handler ကိုမတတ်ရင် host နဲ့ server က ဆက်လက် မပြောနိုင်ပါ။ ဒါက elicitation ရဲ့ host ဘက်တစ်ဝက်ဖြစ်သည်။
@@ -177,4 +177,57 @@ Handler ကိုမတတ်ရင် host နဲ့ server က ဆက်လက
 အန္တရာယ်ရှိသည့် အလုပ် (ငွေဖြတ်ခြင်း၊ data ပယ်ဖျက်ခြင်း) မတိုင်ခင် confirmation gate တစ်ခု ထားခြင်းကို protected-service pattern ဟုခေါ်သည်။ အခြားတစ်ဘက်မှာ — မေးစရာ မလိုသည့် အချက်အလက်ကို မေးခြင်းက anti-pattern ဖြစ်သည်။
 
 ### ဘာကြောင့် လဲ
-Confirmation fatigue က လူ
+Confirmation fatigue က လူသား user တွေကို လိုက်နာရခက်စေသည်။ ရိုးရိုးသားသား ဖတ်စရာ မလိုသည့် အလုပ်တစ်ခုချင်းစီအတွက် အတည်ပြုချက် မေးနေရင် user က အလိုအလျောက် "confirm" ကို နှိပ်လိုက်ဖို့ လေ့ကျင့်သွားပြီး confirmation gate ရဲ့ အဓိကရည်ရွယ်ချက် ပျက်ပြယ်သွားသည်။ ဒါကြောင့် elicitation ကို စစ်မှန်စွာ အန္တရာယ်ရှိတဲ့ နေရာတွေမှာပဲ သုံးသင့်သည်။
+
+### Protected service တစ်ခု ဥပမာ
+
+```python
+from fastmcp import FastMCP, Context
+
+mcp = FastMCP("Payments")
+
+@mcp.tool
+async def transfer_money(
+    amount: float,
+    to_account: str,
+    ctx: Context,
+) -> str:
+    """Transfer money to another account (requires confirmation)."""
+    # Ask the user to confirm the risky action before proceeding
+    confirmation = await ctx.elicit({
+        "message": f"Transfer {amount} USD to account {to_account}? "
+                   "This cannot be undone.",
+        "requestedSchema": {
+            "type": "object",
+            "properties": {
+                "confirmed": {
+                    "type": "boolean",
+                    "description": "True to proceed with the transfer",
+                }
+            },
+            "required": ["confirmed"],
+        },
+    })
+
+    # If the user declined (or dismissed the dialog), do nothing
+    if not (confirmation.data and confirmation.data.confirmed):
+        return "Transfer cancelled — no money was moved."
+
+    return f"Transferred {amount} USD to {to_account}."
+```
+
+### ဘယ်အခါ မမေးရ
+
+- **Idempotent ဖတ်ခြင်းအလုပ်များ** — read-only query၊ search၊ report ထုတ်ခြင်းတို့မှာ ဘာမှ ပြောင်းလဲမသွားသဖြင့် မေးရန် မလိုပါ။
+- **Data ထဲမှာ ရှိပြီးသား အချက်အလက်** — database ထဲ ရှိတဲ့ customer ရဲ့ email ကို user ကို ပြန်မေးခြင်းက noise သာ ဖြစ်သည်။ contextထဲက ရနိုင်ရင် အဲဒါကိုပဲ သုံးပါ။
+- **ဆက်တိုက် နှိပ်နေရမည့် workflow** — တစ်ခေါက်ချင်း အတည်ပြုရင် ရှိသမျှ workflow တစ်ခုလုံး ရပ်တန့်သွားပြီး user experience ကို ပျက်စေသည်။
+
+### သတိထားရန် စည်းမျဉ်းတစ်ခု
+မေးခင် ကိုယ်ကိုယ်တိုင် မေးပါ — "ဒီ tool က မှားရင် ပြန်ပြင်လို့ ရမလား၊ ငွေကြေး သို့မဟုတ် data ဆုံးရှုံးမှု ရှိမလား?" ဆိုတာကို။ ပြန်ပြင်လို့ရလျှင် မမေးပါနဲ့။ ပြန်ပြင်လို့ မရလျှင် confirmation တောင်းပါ။
+
+## အနှစ်ချုပ်
+
+- **Elicitation** ဆိုသည်မှာ server ကနေ client ဆီသို့ အချက်အလက် တောင်းခံနိုင်သည့် MCP စံနှုန်းတွင် ပါဝင်သော နည်းလမ်းတစ်ခုဖြစ်ပြီး FastMCP ရှိ `Context.elicit()` ဖြင့် အသုံးပြုသည်။
+- **ခေါ်ဆိုမှု ပုံစံ**ကို JSON Schema ဖြင့် သတ်မှတ်ပြီး အဖြေများကို `SendResult`၊ `AcceptResult`၊ `DeclineResult` အဖြစ် ခွဲခြားနိုင်သည်။
+- **Protected-service pattern** သည် အန္တရာယ်ရှိသော လုပ်ဆောင်ချက်များအတွက် confirmation gate ထားခြင်းဖြစ်ပြီး user က `Decline` လုပ်လျှင် လုပ်ဆောင်ချက်ကို အပြီးအပိုင် ရပ်ဆိုင်းရမည်။
+- **မမေးသင့်သည့် အချက်များ** — idempotent ဖတ်ခြင်းအလုပ်များ၊ context ထဲ ရှိပြီးသား data၊ နှင့် မကြာခဏ အတည်ပြုရမည့် workflow များတွင် elicitation ကို ရှောင်ကြဉ်၍ confirmation fatigue ကို ကာကွယ်ပါ။

@@ -7,7 +7,7 @@ Run လုပ်နေစဉ် ဖွင့်ထားပြီး ရှာ�
 
 ## 1. Server ဖိုင်၏ skeleton
 
-``python
+```python
 """One paragraph: what this server is, and how to run it.
 
 Run:
@@ -56,7 +56,7 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-``
+```
 
 ---
 
@@ -73,12 +73,12 @@ if __name__ == "__main__":
 
 ### ဘယ်ဟာ ရွေးရမလဲ
 
-``text
+```text
 runtime argument လိုလား?             → tool
 URI ဖြင့် ရည်ညွှန်းလိုလား?            → resource
 လုပ်ငန်းစဉ် လမ်းညွှန်လိုလား?           → prompt
 လူသာ ဖြေနိုင်သည့် ဆုံးဖြတ်ချက်လား?    → elicitation
-``
+```
 
 ---
 
@@ -110,7 +110,7 @@ URI ဖြင့် ရည်ညွှန်းလိုလား?            �
 
 ## 4. Elicitation — လိုအပ်သည့်အရာ အားလုံး
 
-``python
+```python
 # SERVER — inside the tool
 class Confirm(BaseModel):
     """Confirmation before an action that affects live traffic."""
@@ -132,9 +132,9 @@ async def restart_service(service: str, ctx: Context, reason: str = "") -> dict:
     if not answer.data.proceed:
         return {"ok": False, "status": "refused_by_user", "reason": answer.data.reason or "no reason given"}
     return {"ok": True, "status": "confirmed"}
-``
+```
 
-``python
+```python
 # CLIENT — ⭐ mode="legacy" is required, ⭐ four parameters, ⭐ async
 from fastmcp.client.elicitation import ElicitResult
 
@@ -151,7 +151,7 @@ async def handler(message: str, response_type: Any, params: Any = None,
 
 async with Client(mcp, mode="legacy", elicitation_handler=handler) as client:
     print(client.protocol_version)          # "2025-11-25"
-``
+```
 
 ### အဖြေ ၄ မျိုး
 
@@ -174,13 +174,13 @@ async with Client(mcp, mode="legacy", elicitation_handler=handler) as client:
 
 ### ⭐ Handler ထဲတွင် `response_type` သည် ဘာလဲ
 
-``python
+```python
 response_type.__name__             # 'Confirm'      ← your class name
 response_type.__module__           # 'types'        ← ⭐ NOT your module
 list(response_type.__dataclass_fields__)   # ['proceed', 'reason']   ✅
 response_type.model_fields         # ❌ AttributeError — it is not a pydantic model
 type(params).__name__              # 'ElicitRequestFormParams'
-``
+```
 
 ---
 
@@ -211,7 +211,7 @@ type(params).__name__              # 'ElicitRequestFormParams'
 
 ## 6. စစ်ဆေးမှု command များ
 
-``bash
+```bash
 # ⭐ 1. Self-test — no client needed
 uv run python -m M11_capstone.code.devops_assistant
 
@@ -235,11 +235,11 @@ uv run fastmcp dev inspector M11_capstone/code/devops_assistant.py
 # ⭐ 7. component count
 uv run fastmcp inspect M11_capstone/code/devops_assistant.py
 #   Tools: 5   Prompts: 2   Resources: 0   Templates: 2
-``
+```
 
 ### `fastmcp inspect` ၏ output (တိုင်းထားသည်)
 
-``text
+```text
 Server
   Name:         devops-assistant
   Version:      4.0.5
@@ -254,7 +254,7 @@ Components
 Environment
   FastMCP:      4.0.5
   MCP:          2.2.0
-``
+```
 
 ---
 
@@ -275,14 +275,14 @@ Environment
 
 ## 8. Seed ထားသည့် estate
 
-``text
+```text
 data/conf/pve01.yaml         host: pve01          role: hypervisor  cpu_cores: 72  memory_gb: 270
 data/conf/kasm-agent1.yaml   host: kasm-agent1    role: lab-agent   cpu_cores: 16  memory_gb: 48
 data/runbooks/postgres-ha.md ၄ အဆင့် — "2. Check replication lag before anything else."
 data/runbooks/kasm-agent.md  ၃ အဆင့် — "1. `docker ps` …"
 data/logs/postgres-ha.log    ၈ လိုင်း — WARN lag (02:01:50)၊ ERROR kasm-app x2၊ WARN failover
 data/logs/kasm-agent.log     ၃ လိုင်း — INFO၊ WARN pull slow၊ ERROR session start failed
-``
+```
 
 ⭐ **ပထမဆုံး anomalous event** = `2026-09-19 02:01:50 WARN  replication lag 3.1s on postgres-ha-3`
 ⭐ **အကျယ်လောင်ဆုံး** = `ERROR could not connect to host kasm-app` (x2)
@@ -319,7 +319,7 @@ data/logs/kasm-agent.log     ၃ လိုင်း — INFO၊ WARN pull slow�
 
 ## 11. Client ၏ တာဝန် ၁၀ ခု
 
-``text
+```text
 1  list_tools() ဖြင့် ရှာဖွေခြင်း
 2  list_resource_templates() ဖြင့် ရှာဖွေခြင်း
 3  list_prompts() နှင့် ရွေးချယ်ခြင်း
@@ -330,13 +330,13 @@ data/logs/kasm-agent.log     ၃ လိုင်း — INFO၊ WARN pull slow�
 8  elicitation handler ပေးခြင်း
 9  ⭐ action_taken ကို လူထံ ပို့ခြင်း
 10 ⭐ truncated ကို စစ်ခြင်း
-``
+```
 
 ---
 
 ## 12. Client ကို ဖွဲ့စည်းခြင်း (Cline)
 
-``json
+```json
 {
   "mcpServers": {
     "devops-assistant": {
@@ -348,7 +348,7 @@ data/logs/kasm-agent.log     ၃ လိုင်း — INFO၊ WARN pull slow�
     }
   }
 }
-``
+```
 
 ⚠️ Path/key များသည် version အလိုက် ပြောင်းနိုင်သည် — သင့် Cline documentation ကို အတည်ပြုပါ။
 ⭐ `--directory` မဖြစ်မနေ။ ⭐ `autoApprove` တွင် read-only tool များသာ — `restart_service` မထည့်ပါ။
@@ -357,7 +357,7 @@ data/logs/kasm-agent.log     ၃ လိုင်း — INFO၊ WARN pull slow�
 
 ## 13. Test အလွတ်များ
 
-``python
+```python
 # every promise — the surface
 assert {"system_metrics", "read_log", "restart_service"} <= {t.name for t in await client.list_tools()}
 
@@ -389,7 +389,7 @@ async with Client(mcp) as c:
 
 # ⭐ metrics — both answers are correct
 assert data["load_average"] is None or isinstance(data["load_average"], list)
-``
+```
 
 ---
 
@@ -409,7 +409,7 @@ assert data["load_average"] is None or isinstance(data["load_average"], list)
 
 ## 15. မလုပ်ရမည့်အရာ ၆ ခု
 
-``text
+```text
 ❌ တန်ဖိုးကို default ဖြင့် အစားထိုးခြင်း            → null ကို null ထားပါ
 ❌ path ကို string startswith ဖြင့် စစ်ခြင်း          → (root / name).resolve()
 ❌ ကျရှုံးမှုကို raise ဖြင့် ပုံသွင်းခြင်း (tool)      → _fail + available
@@ -417,7 +417,7 @@ assert data["load_average"] is None or isinstance(data["load_average"], list)
 ❌ prompt တွင် လွတ်လမ်း မထည့်ခြင်း                   → "insufficient evidence"
 ❌ tool က မလုပ်ခဲ့သည်ကို "လုပ်ပြီး" လို့ ဆိုခြင်း      → action_taken: "none"
 ❌ `protected_service_add` ကဲ့သို့ guard ဖျက်သည့် tool  → ဘယ်တော့မှ
-``
+```
 
 ---
 
@@ -438,7 +438,7 @@ assert data["load_average"] is None or isinstance(data["load_average"], list)
 
 ## 17. အလွတ်ကျက်ရမည့် စည်းမျဉ်း ၅ ချက်
 
-``text
+```text
 ⭐ ၁။ ဖတ်လို့ရသည့်နေရာဖြင့် စစ်ပါ — documentation ကို မယုံပါနဲ့
        print(hasattr(obj, "parameters"), fastmcp.__version__)
 
@@ -453,7 +453,7 @@ assert data["load_average"] is None or isinstance(data["load_average"], list)
 
 ⭐ ၅။ tool က မလုပ်သည့်အရာကို ရှင်းရှင်းလင်းလင်း ဆိုပါ
        action_taken: "none — …"  → client က လူထံ ပို့ရမည်
-``
+```
 
 ---
 

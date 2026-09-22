@@ -1,8 +1,9 @@
 # solution.md — M2 အဖြေများ
 
-## အလေ့ ၁ — Annotation Report
+## လေ့ကျင့်ခန်း ၁ — Annotation Report (lab_1_annotation_report.py)
 
-``python
+
+```python
 # lab_1_solution.py — read annotations like a schema generator would
 from typing import get_type_hints, get_origin, get_args
 
@@ -21,13 +22,14 @@ for pname, hint in hints.items():
 #   cpus: origin=None, args=()           -> plain scalar with default
 #   tags: origin=typing.Union, args=(list[str], NoneType)
 #   -> a Union means "optional" to a schema generator
-``
+```
 
 **အဓိကအယူအဆ** — `get_origin` နှင့် `get_args` ဖြင့် annotation တစ်ခုကို scalar၊ container၊ optional ဟု ခွဲခြားဖတ်နိုင်သည်။
 
-## အလေ့ ၂ — `str` vs `Literal` စာချုပ်
+## လေ့ကျင့်ခန်း ၂ — `str` နှင့် `Literal` ကို တိုက်စစ်ခြင်း (lab_2_literal_contract.py)
 
-``python
+
+```python
 # lab_2_solution.py — show why Literal is a contract, str is a wish
 from typing import Literal
 from pydantic import BaseModel, ValidationError
@@ -49,13 +51,14 @@ except ValidationError as exc:
         print(err["loc"], err["type"], err["input"])
 
 # error type is 'literal_error' — the typo is caught at the boundary
-``
+```
 
 **အဓိကအယူအဆ** — `str` ထက် `Literal` သုံးခြင်းက တစ်စလော စာလုံးမှားမှုကို validation နေရာမှာပဲ ဖမ်းပေးသည်။
 
-## အလေ့ ၃ — Signature မှ JSON Schema
+## လေ့ကျင့်ခန်း ၃ — Signature မှ Schema ကို ကိုယ်တိုင် ဆောက်ခြင်း (lab_3_signature_schema.py)
 
-``python
+
+```python
 # lab_3_solution.py — build a schema from a function signature
 import inspect
 from typing import get_type_hints, get_origin, get_args, Union
@@ -89,13 +92,14 @@ def create_vm(name: str, cpus: int, pinned: bool = False):
 
 print(function_to_schema(create_vm))
 # {"type": "object", "properties": {...}, "required": ["name", "cpus"]}
-``
+```
 
 **အဓိကအယူအဆ** — function တစ်ခု၏ JSON Schema ကို `inspect.signature` နှင့် type hints မှ စက်ဖြင့် ထုတ်နိုင်သည်။
 
-## အလေ့ ၄ — `ServerProvisionSchema`
+## လေ့ကျင့်ခန်း ၄ — `ServerProvisionSchema` ရေးခြင်း (lab_4_server_schema.py)
 
-``python
+
+```python
 # lab_4_solution.py — the sibling of VMProvisionSchema
 from typing import Literal
 from pydantic import BaseModel, Field
@@ -115,13 +119,38 @@ good = ServerProvisionSchema(name="web-01", size="small", cpus=4,
 print(good.model_dump())
 print(ServerProvisionSchema.model_json_schema()["required"])  # ['name', 'size', 'region']
 # cpus is absent from required because it has a default
-``
+```
 
 **အဓိကအယူအဆ** — Pydantic model တစ်ခုတည်းက validation rule များနှင့် JSON Schema နှစ်မျိုးလုံးကို တစ်ပြိုင်နက် ထုတ်ပေးသည်။
 
-## အလေ့ ၅ — Validation Drill
+## လေ့ကျင့်ခန်း ၅ — Validation Error ကို Debugger လို ဖတ်ခြင်း (lab_5_validation_drill.py)
 
-``python
+
+```python
+# lab_7_solution.py — verify the model still matches reality
+from lab_4_solution import ServerProvisionSchema
+
+EXPECTED_REQUIRED = {"name", "size", "region"}
+EXPECTED_KEYS = {"name", "size", "cpus", "region"}
+
+schema = ServerProvisionSchema.model_json_schema()
+
+actual_keys = set(schema["properties"].keys())
+actual_required = set(schema["required"])
+
+# Three drift checks: fields, required set, and an unknown extra field.
+assert actual_keys == EXPECTED_KEYS, f"field drift: {actual_keys ^ EXPECTED_KEYS}"
+assert actual_required == EXPECTED_REQUIRED, f"required drift: {actual_required}"
+assert "deprecated_zone" not in schema["properties"], "stale field detected"
+
+print("No drift — the declaration and the contract still agree.")
+```
+
+**အဓိကအယူအဆ** — declaration တစ်ခုတည်းနှင့် schema ကို မွေးထုတ်ပြီး test များဖြင့် စစ်ဆေးခြင်းက drift ဖြစ်မှုကို အလိုအလျောက် ဖမ်းပေးသည်။
+## လေ့ကျင့်ခန်း ၆ — Drift ကို ကိုယ်တိုင် ဖမ်းခြင်း (lab_7_drift_check.py)
+
+
+```python
 # lab_5_solution.py — read a ValidationError like a debugger
 from typing import Literal
 from pydantic import BaseModel, Field, ValidationError
@@ -146,13 +175,14 @@ for payload in bad_payloads:
             print(f"loc={err['loc']} type={err['type']} input={err['input']!r}")
 
 # Each error is independent: loc pinpoints WHERE, type explains WHY.
-``
+```
 
 **အဓိကအယူအဆ** — `loc`၊ `type`၊ `input` သုံးခုက error ဖြစ်သည့်နေရာ၊ အကြောင်းရင်းနှင့် ဝင်လာသောတန်ဖိုးကို ပြသည်။
 
-## အလေ့ ၆ — Nested Models
+## အပိုဆောင်း — Nested Models
 
-``python
+
+```python
 # lab_6_solution.py — nested models, $defs and $ref
 from pydantic import BaseModel, Field, ValidationError
 
@@ -174,30 +204,7 @@ try:
 except ValidationError as exc:
     for err in exc.errors():
         print(err["loc"])   # ('network', 'public') — path into the child model
-``
+```
 
 **အဓိကအယူအဆ** — nested model များက schema ထဲတွင် `$defs` နှင့် `$ref` ဖြင့် ချိတ်ဆက်ပြီး error ၏ `loc` က child field အထိ လမ်းညွှန်သည်။
 
-## အလေ့ ၇ — Drift Check
-
-``python
-# lab_7_solution.py — verify the model still matches reality
-from lab_4_solution import ServerProvisionSchema
-
-EXPECTED_REQUIRED = {"name", "size", "region"}
-EXPECTED_KEYS = {"name", "size", "cpus", "region"}
-
-schema = ServerProvisionSchema.model_json_schema()
-
-actual_keys = set(schema["properties"].keys())
-actual_required = set(schema["required"])
-
-# Three drift checks: fields, required set, and an unknown extra field.
-assert actual_keys == EXPECTED_KEYS, f"field drift: {actual_keys ^ EXPECTED_KEYS}"
-assert actual_required == EXPECTED_REQUIRED, f"required drift: {actual_required}"
-assert "deprecated_zone" not in schema["properties"], "stale field detected"
-
-print("No drift — the declaration and the contract still agree.")
-``
-
-**အဓိကအယူအဆ** — declaration တစ်ခုတည်းနှင့် schema ကို မွေးထုတ်ပြီး test များဖြင့် စစ်ဆေးခြင်းက drift ဖြစ်မှုကို အလိုအလျောက် ဖမ်းပေးသည်။

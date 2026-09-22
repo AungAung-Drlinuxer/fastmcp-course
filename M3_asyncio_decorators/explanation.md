@@ -8,7 +8,7 @@
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Decorator ဆိုတာ function တစ်ခုကို လက်ခံပြီး အသစ်တစ်ခုပြန်ပေးတဲ့ function ပါ။ Python မှာ function ဟာ object တစ်ခုဖြစ်လို့ အခြား function ကို argument အဖြစ် ပေးလို့ရပါတယ်။ `@` သင်္က fix တစ်ခုဟာ အပေါ်ကနေ အောက်က function ပေါ် apply လုပ်တဲ့ သင်္က fix သာ ဖြစ်ပါတယ်။
+Decorator ဆိုတာ function တစ်ခုကို လက်ခံပြီး အသစ်တစ်ခုပြန်ပေးတဲ့ function ပါ။ Python မှာ function ဟာ object တစ်ခုဖြစ်လို့ အခြား function ကို argument အဖြစ် ပေးလို့ရပါတယ်။ `@` syntax အမှတ်အသား တစ်ခုဟာ အပေါ်ကနေ အောက်က function ပေါ် apply လုပ်တဲ့ syntax အမှတ်အသား သာ ဖြစ်ပါတယ်။
 
 ### ဘာကြောင့် လဲ
 
@@ -20,7 +20,7 @@ Decorator က function ကို wrapper function တစ်ခုနဲ့ ဖ�
 
 ### ဥပမာ
 
-``python
+```python
 import functools
 
 def log_calls(fn):
@@ -40,7 +40,7 @@ print(result)
 # Expected output:
 # calling add with (3,), {'b': 4}
 # 7
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -56,7 +56,7 @@ Decorator တစ်ခုက function ကို wrapper နဲ့ ဖုံး�
 
 ### ဘာကြောင့် လဲ
 
-MCP မှာ tool ရဲ့ အမည်နဲ့ description ဟာ model ကြည့်ရတဲ့ စာချက်ချာ ဖြစ်ပါတယ်။ `wraps` မထည့်ဘူးဆိုရင် tool အမည်အားလုံးဟာ `'wrapper'` ဖြစ်သွားပြီး model က tool တွေကို ခွဲခြားနိုင်တော့မှာ မဟုတ်ပါဘူး။ ဒါက MCP အတွက် သေဆုံးသည့် အမှား ဖြစ်ပါတယ်။
+MCP မှာ tool ရဲ့ အမည်နဲ့ description ဟာ model ကြည့်ရတဲ့ စာချုပ် ဖြစ်ပါတယ်။ `wraps` မထည့်ဘူးဆိုရင် tool အမည်အားလုံးဟာ `'wrapper'` ဖြစ်သွားပြီး model က tool တွေကို ခွဲခြားနိုင်တော့မှာ မဟုတ်ပါဘူး။ ဒါက MCP အတွက် သေဆုံးသည့် အမှား ဖြစ်ပါတယ်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
@@ -64,7 +64,7 @@ MCP မှာ tool ရဲ့ အမည်နဲ့ description ဟာ model က�
 
 ### ဥပမာ
 
-``python
+```python
 import functools
 
 # Without wraps: metadata is lost
@@ -95,7 +95,7 @@ print(tool_two.__doc__)
 # Expected output:
 # wrapper tool_two
 # Original docstring.
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -119,7 +119,7 @@ Blocking မလုပ်ဖို့ `await asyncio.sleep()` ကို သုံ
 
 ### ဥပမာ
 
-``python
+```python
 import asyncio
 import time
 
@@ -146,7 +146,7 @@ async def main():
 asyncio.run(main())
 # Expected output:
 # ['done', 'done'] 1.00s
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -170,7 +170,7 @@ Tool တစ်ခုထဲမှာ ခေါ်ဆိုမှု များ�
 
 ### ဥပမာ
 
-``python
+```python
 import asyncio
 
 async def ok(index):
@@ -196,7 +196,7 @@ asyncio.run(main())
 # result-1
 # ValueError
 # result-2
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -204,7 +204,7 @@ Tool တစ်ခုဟာ ရလဒ်တချို့ ရပြီး တခ
 
 ---
 
-## Topic 5 — Docstring သည် Tool ရဲ့ စာချက်ချာ
+## Topic 5 — Docstring သည် Tool ရဲ့ စာချုပ်
 
 ### ဘာကို ဆိုလိုတာလဲ
 
@@ -220,7 +220,7 @@ Google-style docstring မှာ summary တစ်ကြောင်း၊ Args 
 
 ### ဥပမာ
 
-``python
+```python
 def get_weather(city: str, units: str = "celsius") -> dict:
     """Get the current weather for a city.
 
@@ -236,7 +236,7 @@ def get_weather(city: str, units: str = "celsius") -> dict:
 print(get_weather.__doc__.splitlines()[0])
 # Expected output:
 # Get the current weather for a city.
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -246,8 +246,8 @@ print(get_weather.__doc__.splitlines()[0])
 
 ## အနှစ်ချုပ်
 
-- Decorator ဆိုတာ function ကို လက်ခံပြီး function ပြန်ပေးတဲ့ function ဖြစ်ပြီး `@` က apply လုပ်တဲ့ သင်္က fix သာ ဖြစ်သည်။
+- Decorator ဆိုတာ function ကို လက်ခံပြီး function ပြန်ပေးတဲ့ function ဖြစ်ပြီး `@` က apply လုပ်တဲ့ syntax အမှတ်အသား သာ ဖြစ်သည်။
 - `functools.wraps` က မူလ function ရဲ့ `__name__`, `__doc__` တို့ metadata တွေကို wrapper ပေါ် ကူးယူပေးတယ် — မထည့်ရင် MCP tool အမည်အားလုံး `'wrapper'` ဖြစ်သွားတယ်။
 - `async def` က function ကို မခေါ်ဘူး၊ coroutine object တစ်ခု ပြန်တယ် — run ဖို့ `await` လိုတယ်။
 - Coroutine ထဲမှာ blocking ခေါ်ဆိုမှု (ဥပမာ `time.sleep`) က event loop တစ်ခုလုံးကို ရပ်တန့်စေတယ် — `asyncio.to_thread` နဲ့ ကာကွယ်ပါ။
-- ရွေးချယ်စရာ timeout
+- ရွေးချယ်စရာ timeout မထည့်ထားရင် MCP call တစ်ခု သည် အဆုံးမသတ်ဘဲ ဆွဲထားနိုင်သည် — `asyncio.wait_for` ဖြင့် ကန့်သတ်ပါ။

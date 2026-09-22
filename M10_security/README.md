@@ -51,7 +51,7 @@ MCP server တစ်ခုကို production တွင် တည်ငြိ�
 | ဖိုင် | အသုံး |
 |---|---|
 | `explanation.md` | သင်ခန်းစာ အပြည့်အစုံ — concept ၁၁ ချက်ရဲ့ ရှင်းလင်းချက် |
-| `exercise.md` | လေ့ကျင့်ခန်း ၆ ချ体 — threat model မှ audit trail အထိ |
+| `exercise.md` | လေ့ကျင့်ခန်း ၆ ချက် — threat model မှ audit trail အထိ |
 | `solution.md` | လေ့ကျင့်ခန်းအဖြေများ — တိုင်းတာထားသည့် output နှင့်အတူ |
 | `cheatsheet.md` | Quick reference — စည်းမျဉ်း ၁၀ ချက်၊ bound ဇယား၊ error code ဇယား |
 | `../code/` | Lab ဖိုင် ၁၃ ဖိုင် — `lab_1` မှ `lab_11` အထိ |

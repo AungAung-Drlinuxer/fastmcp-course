@@ -2,7 +2,7 @@
 
 ## မိတ်ဆက်
 
-ဒီ module မှာ MCP server တစ်ခုရဲ့ ပစ္စည်းသုံးမျိုးအနက် တတိယမြောက်ဖြစ်သော **prompt** အကြောင်းကို လေ့လာမည်။ Tool က model က ခေါ်သည်၊ resource က application က ဖတ်သည် — prompt ကတော့ **user က task စမှိုင်းခင် host မှတစ်ဆင့် ရွေးချယ်သည့် template** ဖြစ်သည်။ Duration ၂ နာရီ၊ Phase 2 — MCP Core Surfaces ဖြစ်သည်။
+ဒီ module မှာ MCP server တစ်ခုရဲ့ ပစ္စည်းသုံးမျိုးအနက် တတိယမြောက်ဖြစ်သော **prompt** အကြောင်းကို လေ့လာမည်။ Tool က model က ခေါ်သည်၊ resource က application က ဖတ်သည် — prompt ကတော့ **user က task မစခင် host မှတစ်ဆင့် ရွေးချယ်သည့် template** ဖြစ်သည်။ Duration ၂ နာရီ၊ Phase 2 — MCP Core Surfaces ဖြစ်သည်။
 
 ---
 
@@ -22,7 +22,7 @@ Server ဘက်မှာ Python function တစ်ခုကို `@mcp.prompt`
 
 ### ဥပမာ
 
-``python
+```python
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("m7")
@@ -41,7 +41,7 @@ def rca_prompt(service: str) -> str:
     )
 # Expected output: a prompt registered in the server's registry,
 # visible to the host via list_prompts() under the name "rca_prompt".
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -65,7 +65,7 @@ def rca_prompt(service: str) -> str:
 
 ### ဥပမာ
 
-``python
+```python
 # The same task exposed through all three surfaces, for comparison.
 
 @mcp.tool
@@ -84,7 +84,7 @@ def triage_prompt(service: str) -> str:
     return f"Triage the service '{service}' step by step. Do not guess."
 # Expected output: three registered surfaces; highlight.py prints a
 # comparison table showing who chooses each one and when.
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -108,7 +108,7 @@ Required argument ကို host က မထည့်လျှင် render ခ�
 
 ### ဥပမာ
 
-``python
+```python
 @mcp.prompt
 def report_prompt(service: str, max_steps: int = 3, tags: str = "") -> str:
     """Build a structured report prompt. 'tags' is a JSON string."""
@@ -125,7 +125,7 @@ def report_prompt(service: str, max_steps: int = 3, tags: str = "") -> str:
 #   get_prompt("report_prompt", {"service": "auth"})
 # Expected output: two different rendered strings, both valid;
 # extra unknown arguments are ignored, missing 'service' is an error.
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -137,7 +137,7 @@ Host ဘက်မှ မဖြစ်မနေ ကိုင်တွယ်ရမ�
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Multi-turn guidance ဆိုသည်မှာ prompt တစ်ခုက model ကို အလှည့်များစွာ (multiple turns) ဖြတ်သနား၍ လိုက်နာစေသည့် ဦးတည်မှုဖြစ်သည် — numbered procedure (အဆင့် ၁, ၂, ၃…)၊ forced ordering (အဆင့်များကို စဉ်စီးချက်ပေးခြင်း)၊ stop conditions (ဘယ်အချိန်ရပ်မလဲ သတ်မှတ်ခြင်း) ဟူ၍ ပုံစံသုံးမျိုး ရှိသည်။ Anti-hallucination clause ကတော့ "မသိလျှင် မဖန်တီးနှင့်၊ အချက်အလက် မရှိလျှင် အသိအမှတ်ပြု၍ ပြောပါ" ဟူသည့် စာသားတစ်ခုကို prompt ရဲ့ အစိတ်အပိုင်းအဖြစ် ထည့်ခြင်းဖြစ်သည်။
+Multi-turn guidance ဆိုသည်မှာ prompt တစ်ခုက model ကို အလှည့်များစွာ (multiple turns) ဖြတ်သန်း၍ လိုက်နာစေသည့် ဦးတည်မှုဖြစ်သည် — numbered procedure (အဆင့် ၁, ၂, ၃…)၊ forced ordering (အဆင့်များကို စဉ်စီးချက်ပေးခြင်း)၊ stop conditions (ဘယ်အချိန်ရပ်မလဲ သတ်မှတ်ခြင်း) ဟူ၍ ပုံစံသုံးမျိုး ရှိသည်။ Anti-hallucination clause ကတော့ "မသိလျှင် မဖန်တီးနှင့်၊ အချက်အလက် မရှိလျှင် အသိအမှတ်ပြု၍ ပြောပါ" ဟူသည့် စာသားတစ်ခုကို prompt ရဲ့ အစိတ်အပိုင်းအဖြစ် ထည့်ခြင်းဖြစ်သည်။
 
 ### ဘာကြောင့် လဲ
 
@@ -145,4 +145,51 @@ Model သည် အဖြေတစ်ခု အမြဲပေးလိုသည
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Numbered procedure ကို အသုံးချလျှင် အဆင့်များကို နံပါတ်တပ်၍ ရေးသည်၊ forced ordering က အဆင့်အားလုံး မပြီးခင် နောက်တစ်ဆင့်ကို မလုပ်နှင့်ဟု တားမြစ်သည်၊ stop condition က "ဒီအချက်ကို အတည်ပြုလို့မရလျှင် ရပ်တန့်ပြီး မသိကြောင်း ဖော်ပြပါ" ဟု သတ်မှတ်သည်။ Clause မလိုက်နာလျှင် ဘာလုပ်မလဲကိုပါ စာ
+Numbered procedure ကို အသုံးချလျှင် အဆင့်များကို နံပါတ်တပ်၍ ရေးသည်၊ forced ordering က အဆင့်အားလုံး မပြီးခင် နောက်တစ်ဆင့်ကို မလုပ်နှင့်ဟု တားမြစ်သည်၊ stop condition က "ဒီအချက်ကို အတည်ပြုလို့မရလျှင် ရပ်တန့်ပြီး မသိကြောင်း ဖော်ပြပါ" ဟု သတ်မှတ်သည်။ Clause မလိုက်နာလျှင် ဘာလုပ်မလဲကိုပါ စာသားအပြည့်အစုံဖြင့် ရေးသွင်းသင့်သည် — ဥပမာ "အချက်အလက် မတွေ့လျှင် ခန့်မှန်းဖြေရှင်းမှု မပေးနှင့်၊ မတွေ့ကြောင်းသာ ဖော်ပြပါ" ဟူ၍ တိကျစွာ ဖော်ပြရမည်။ Prompt တစ်ခုကို system prompt အဖြစ် server အဆင့်မှာ သတ်မှတ်လျှင် client ဘယ်သူ့ဆီမှ ချိတ်ဆက်စေကာမစ တညီတည်း အသက်ဝင်မည်ဖြစ်သည်။
+
+```python
+from fastmcp import FastMCP
+
+mcp = FastMCP(
+    name="research-assistant",
+    instructions=(
+        "Follow this numbered procedure for every request:\n"
+        "1. Identify what the user is asking for.\n"
+        "2. Gather facts using the available tools before answering.\n"
+        "3. Only answer using information returned by tools.\n"
+        "4. If a tool returns no relevant data, say you do not know.\n\n"
+        "Do not skip steps. Do not move to the next step until the "
+        "current step is complete.\n\n"
+        "ANTI-HALLUCINATION CLAUSE: Never invent facts, numbers, "
+        "names, or citations. If the required information is missing, "
+        "explicitly state that you could not find it instead of "
+        "guessing."
+    ),
+)
+
+@mcp.tool()
+def lookup_paper(title: str) -> dict:
+    """Look up a paper record by exact title. Returns an empty
+    result if no match is found."""
+    # Simulated database lookup
+    database = {
+        "attention is all you need": {"year": 2017, "authors": 8}
+    }
+    key = title.strip().lower()
+    if key in database:
+        return {"found": True, "data": database[key]}
+    return {"found": False, "data": None}
+```
+
+အထက်ပါ ဥပမာတွင် `instructions` parameter ကို အသုံးပြု၍ numbered procedure လေးဆင့်၊ forced ordering (အဆင့်များ မပြီးခင် နောက်တစ်ဆင့်ကို မလုပ်နှင့်) နှင့် anti-hallucination clause တို့ကို တစ်ပေါင်းတည်း သတ်မှတ်ထားသည်ကို တွေ့ရမည်။ Tool ဘက်မှ `lookup_paper` သည် ရှာမတွေ့ပါက `{"found": False, "data": None}` ဟူ၍ တိကျသော ရလဒ်ပြန်ပေးသောကြောင့် model သည် "မတွေ့ကြောင်း" ဟု ဆိုရန် လုံလောက်သည့် အခြေအနေရှိသည် — ခန့်မှန်းဖန်တီးရန် အကြောင်းရင်း မရှိတော့ပေ။
+
+### သတိထားစရာများ
+
+Clause ကို ရေးခဲ့ပါသော်လည်း model အားလုံးက ၁၀၀ ရာခိုင်မှု လိုက်နာမည် မဟုတ်ပါ။ ဒါကြောင့် အရေးကြီးသည့် အချက်အလက်များအတွက် tool ဘက်မှလည်း ခန့်မှန်းချက် မထုတ်ပေးနိုင်ရန် ပြင်ဆင်သင့်သည်။ တစ်ဖက်တွင်လည်း stop condition ပိုတင်းကျပ်လွန်းလျှင် model သည် အလွယ်တကူ "မသိပါ" ဟုသာ ပြောတတ်သွားပြီး တကယ်ရှိသင့်သည့် အဖြေကိုပါ မပေးတော့သည့် အခြေအနေ ဖြစ်စေနိုင်သည်။ ဒီကြားထဲ အဆင့်သင့် ချမှတ်နိုင်ရန် အတွက် clause ကို တိုတောင်း၍ တိကျစွာ ရေးခြင်းသည် အကောင်းဆုံး နည်းလမ်းဖြစ်သည်။
+
+## အနှစ်ချုပ်
+
+- **System prompt** သည် MCP server တစ်ခုလုံးရဲ့ အမူအကိုကို သတ်မှတ်ပေးသည့် အခြေခံကျသော နေရာဖြစ်ပြီး FastMCP ၌ `instructions` parameter ဖြင့် သတ်မှတ်သည်။
+- Prompt ရေးသည့်အခါ role၊ context၊ constraints နှင့် output format ဟူ၍ အစိတ်အပိုင်းလေးမျိုး ပါဝင်စေခြင်းဖြင့် model ၏ တုံ့ပြန်မှုကို ပိုမို ထိန်းချုပ်နိုင်သည်။
+- Few-shot examples ထည့်ခြင်းဖြင့် model ကို လိုချင်သည့် ပုံစံအတိအကျ အတုခိုးစေနိုင်ပြီး format တူညီမှု သိသိသာသာ တိုးတက်စေသည်။
+- Multi-turn guidance (numbered procedure, forced ordering, stop conditions) နှင့် anti-hallucination clause တို့ကို တွဲဖက်အသုံးချခြင်းဖြင့် မှားယွင်းခန့်မှန်းမှု (hallucination) ကို လျှော့ချနိုင်သည်။

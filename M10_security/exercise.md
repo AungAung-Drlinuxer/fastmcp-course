@@ -6,7 +6,7 @@
 
 **Hints:** asset = အကာအရံပေးရမည့် အရာ၊ trust boundary = privilege ပြောင်းလဲသည့် နေရာ၊ actor = စကားလုံးကို လှုပ်ရှားစေနိုင်သူဟု သတ်မှတ်ပါ။ Threat, vulnerability, risk သုံးခု ကွာခြားချက်ကို docstring တွင် ရှင်းပါ။
 
-**Expected behavior:** script ကို run လျှင် တစ်ခုချင်းစီ၏ asset/boundary/actor mapping ကို စဉ်းနားနိုင်သော output ရရှိပြီး၊ မည့်သည့် tool မဆို `@mcp.tool` အဖြစ် ထည့်ခင်း မေးခွန်းသုံးခု ရှိသည်။
+**Expected behavior:** script ကို run လျှင် တစ်ခုချင်းစီ၏ asset/boundary/actor mapping ကို စဉ်းနားနိုင်သော output ရရှိပြီး၊ မည်သည့် tool မဆို `@mcp.tool` အဖြစ် ထည့်ခြင်း မေးခွန်းသုံးခု ရှိသည်။
 
 ## လေ့ကျင့်ခန်း ၂ — Indirect injection bench ဆောက်ပါ
 
@@ -36,13 +36,13 @@
 
 `lab_9_attack_matrix.py` ရှိ တိုက်ခိုက်မှု ၇ ခုကို run လုပ်ပါ — ၎င်းတို့သည် မိသားစု ၂ မျိုး (path family, shell family) တွင် ရှိသည်ကို သတိပြုပါ။ ထို့နောက် တိုက်ခိုက်မှုအသစ် တစ်ခု (ဥပမာ — `LOG_ROOT` အတွင်းရှိ symlink တစ်ခုမှတဆင့် အပြင် file ဖတ်ရန် ကြိုးစားခြင်း) ထည့်သွင်းပြီး အဘယ်ကြောင့် မအောင်မြင်သည်ကို ရှင်းပါ။
 
-**Hints:** Matrix တစ်ခုစီတွင် attack name, input, မျှော်မှန်းရလဒ် (blocked), ဘယ် control က ဘယ်လို block လုပ်သည် ဆိုသည့် အချက်လေးခု ပါဝင်သင့်သည်။ Refusal သည် `{ok: False, error: ..., hint: ...}` shape ဖြင့် ထွက်သင့်သည် — `lab_8_refusal_contract.py` ရှ contract အတိုင်း။
+**Hints:** Matrix တစ်ခုစီတွင် attack name, input, မျှော်မှန်းရလဒ် (blocked), ဘယ် control က ဘယ်လို block လုပ်သည် ဆိုသည့် အချက်လေးခု ပါဝင်သင့်သည်။ Refusal သည် `{ok: False, error: ..., hint: ...}` shape ဖြင့် ထွက်သင့်သည် — `lab_8_refusal_contract.py` ရှိ contract အတိုင်း။
 
 **Expected behavior:** တိုက်ခိုက်မှုအားလုံး blocked ဟု ပြပြီး၊ တစ်ခုချင်းစီအတွက် တာဝန်ရှိသော control (path confinement, no-shell, output bound) ကို ဖော်ပြသည်။
 
 ## လေ့ကျင့်ခန်း ၆ — Audit trail ဆောက်ပြီး container recipe စစ်ပါ
 
-`lab_11_audit_log.py` ရှိ ပုံစံအတိုင်း JSON Lines format ဖြင့် audit log တစ်ခု ရေးပါ — tool name, actor, timestamp, argument hash တို့ ပါဝင်စေပြီး redaction ဖြင့် တောင်းဆိုမှုအတွင်း ကိုယ်ရေးအချက်အလက်များ မ leaked စေပါ။ ထို့နောက် `lab_10_container_smoke.py` ဖြင့် Dockerfile recipe ကို Docker မပါဘဲ စစ်ဆေးပါ — non-root user, read-only flag များ ပါဝင်မှုကို 确认 လုပ်ပါ။
+`lab_11_audit_log.py` ရှိ ပုံစံအတိုင်း JSON Lines format ဖြင့် audit log တစ်ခု ရေးပါ — tool name, actor, timestamp, argument hash တို့ ပါဝင်စေပြီး redaction ဖြင့် တောင်းဆိုမှုအတွင်း ကိုယ်ရေးအချက်အလက်များ မ leaked စေပါ။ ထို့နောက် `lab_10_container_smoke.py` ဖြင့် Dockerfile recipe ကို Docker မပါဘဲ စစ်ဆေးပါ — non-root user, read-only flag များ ပါဝင်မှုကို အတည်ပြု လုပ်ပါ။
 
 **Hints:** Audit log သည် incident မေးခွန်း ၃ ခု (ဘယ်သူ၊ ဘယ် tool၊ ဘယ်အချိန်) ကို ဖြေရမည်၊ error message မဟုတ်။ Dockerfile သည် runtime privilege ကို အပြည့်အဝ မသက်သောပေါက်နိုင် — kernel boundary သည် ဒုတိယ အလွှာဖြစ်သည်။
 

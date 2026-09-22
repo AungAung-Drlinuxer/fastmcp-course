@@ -37,7 +37,7 @@
 
 ## လေ့ကျင့်ခန်း ၆ — Sequential vs Concurrent နှင့် Tool Trio
 
-`../code/lab_4_async_and_loop.py` ဖြင့် `async def` tool သုံးခုကိ sync version နှင့် နှိုင်းယှဉ်တိုင်းတာပါ။ ထို့နောက် `../code/lab_5_tool_trio.py` တွင် `search_articles` → `list_sections` → `get_content` ခေါ်ဆိုမှုကိ တစ်လျှောက်လုပ်ကြည့်ပါ။
+`../code/lab_4_async_and_loop.py` ဖြင့် `async def` tool သုံးခုကို sync version နှင့် နှိုင်းယှဉ်တိုင်းတာပါ။ ထို့နောက် `../code/lab_5_tool_trio.py` တွင် `search_articles` → `list_sections` → `get_content` ခေါ်ဆိုမှုကိ တစ်လျှောက်လုပ်ကြည့်ပါ။
 
 **Hints:** `asyncio.gather()` ဖြင့် concurrent ခေါ်ဆိုပါ။ Coroutine အတွင်းမှ `asyncio.run()` ထပ်ခေါ်၍ မရပါ။ Trio ၏ `get_content` တွင် `offset`/`limit` window ထည့်ပါ။
 **Expected behavior:** Concurrent version သည် sequential version ထက် သိသိသာသာ မြန်ပြီး trio က ကြီးမားသော document ကို ခြုံငုံမှုအနည်းငယ်ဖြင့် ရယူနိုင်သည်။

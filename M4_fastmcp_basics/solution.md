@@ -2,7 +2,7 @@
 
 ## လေ့ကျင့်ခန်း ၁ — ပထမဆုံး FastMCP server ကို ရေးခြင်း
 
-``python
+```python
 # hello_server.py — your first FastMCP server
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-``
+```
 
 `FastMCP("name")` တွင်ပေးသည့် အမည်သည် `initialize` handshake အတွင်း client ထံ အစီရင်ခံခြင်းခံရသောကြောင့် အမည်ကို စနစ်တကျ ပေးရမည်။
 
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
 ## လေ့ကျင့်ခန်း ၂ — Server object နှင့် tool များကို code ဖြင့် စစ်ခြင်း
 
-``python
+```python
 # Check the server object and its tools without running the transport
 from hello_server import mcp
 
@@ -50,7 +50,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-``
+```
 
 server ကို run မူင်မီဘဲ `mcp.name` နှင့် `mcp.list_tools()` ဖြင့် registration မှန်ကန်မှုကို စစ်ဆေးနိုင်သည်။
 
@@ -58,7 +58,7 @@ server ကို run မူင်မီဘဲ `mcp.name` နှင့် `mcp.li
 
 ## လေ့ကျင့်ခန်း ၃ — Tool တစ်ခုကို အပြင်ဘက်မှ စစ်ခြင်း (registration audit)
 
-``python
+```python
 # Registration audit: verify that a tool exists and is callable
 from hello_server import mcp
 
@@ -78,7 +78,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-``
+```
 
 `@mcp.tool` သည် function ၏ အမည်ဖြင့် tool ကို register လုပ်သောကြောင့် အမည်စာရင်းကို စစ်ခြင်းသည် အတည်ပြုခြင်း၏ အလွယ်ဆုံးနည်း ဖြစ်သည်။
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
 ## လေ့ကျင့်ခန်း ၄ — stdio round trip နှင့် `print()` ထောင်ချောက်
 
-``python
+```python
 # Run a stdio round trip and see how one print() can break the protocol
 import asyncio
 
@@ -110,7 +110,7 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-``
+```
 
 server က `print()` တစ်ကြောင်း ထုတ်လိုက်လျှင် JSON-RPC message မဟုတ်သည့် data က `stdout` လိုင်းတွင် ရောပြီး protocol ကို ဖျက်ဆီးသည်။
 
@@ -118,7 +118,7 @@ server က `print()` တစ်ကြောင်း ထုတ်လိုက်�
 
 ## လေ့ကျင့်ခန်း ၅ — တူညီသည့် server ကို HTTP ဖြင့် ခေါ်ခြင်း
 
-``python
+```python
 # Call the same server over HTTP instead of stdio
 import asyncio
 
@@ -142,7 +142,7 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-``
+```
 
 HTTP transport တွင် server က စောင့်ပြီး client က dial လုပ်၍ `print()` ကိုလည်း ဘေးကင်းစွာ ရေးနိုင်သည်။
 
@@ -150,7 +150,7 @@ HTTP transport တွင် server က စောင့်ပြီး client က
 
 ## လေ့ကျင့်ခန်း ၆ — Client တစ်ခု ရေးပြီး server ကို ရှာဖွေခြင်း
 
-``python
+```python
 # Discover a server from a client: list tools, then call one
 import asyncio
 
@@ -178,7 +178,7 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-``
+```
 
 `list_tools` သည် server က ထုတ်ပြသမျှကို ဖော်ပြပြီး `call_tool` သည် ၎င်းတို့ကို တကယ် ခေါ်ဆိုပေးသည်။
 
@@ -186,7 +186,7 @@ if __name__ == "__main__":
 
 ## လေ့ကျင့်ခန်း ၇ — `is_error` နှင့် `structured_content` ကို တိုင်းတာခြင်း
 
-``python
+```python
 # Measure is_error and structured_content on a real call
 import asyncio
 
@@ -215,7 +215,7 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-``
+```
 
 `is_error=False` ဖြစ်စေကာမူ tool ၏ အတွင်းအခြေအနေအရ ဆိုင်ရလဒ် ကျရှုံးနိုင်သောကြောင့် `isError` ကို ယုံကြည်မီ အရင်စစ်ရမည်။
 
@@ -223,7 +223,7 @@ if __name__ == "__main__":
 
 ## လေ့ကျင့်ခန်း ၈ — Schema ကို နှစ်ဖက်မှ တိုင်းတာ၍ နှိုင်းယှဉ်ခြင်း
 
-``python
+```python
 # Read .parameters on the server side and .inputSchema on the client side
 import asyncio
 
@@ -257,7 +257,7 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-``
+```
 
 ဇယားတွင် `.parameters` ကို server-side နှင့် `.inputSchema` ကို client-side ဟူ၍ ခေါ်ဆိုသည့် နာမည်များ မတူသော်လည်း schema မှာ တစ်ခုတည်းသာ ဖြစ်သည်။
 
@@ -265,7 +265,7 @@ if __name__ == "__main__":
 
 ## လေ့ကျင့်ခန်း ၉ — Calculator + Currency server ကို transport နှစ်မျိုးဖြင့် ခေါ်ခြင်း
 
-``python
+```python
 # Drive the same currency server over both stdio and HTTP
 import asyncio
 
@@ -294,7 +294,7 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-``
+```
 
 server တစ်ခုတည်းကို transport နှစ်မျိုးဖြင့် ခေါ်ဆိုခြင်းသည် hybrid ပုံစံဖြစ်ပြီး tool များ လုံးဝ မပြောင်းလဲပါ။
 

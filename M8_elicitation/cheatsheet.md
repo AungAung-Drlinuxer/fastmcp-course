@@ -14,7 +14,7 @@
 
 ## အပိုင်း ၁ — စည်းမျဉ်း ၁၀
 
-``text
+```text
 1.  Elicitation သည် လူကို မေးသည် — model ကို မဟုတ်။
     → ဖြေချက်သည် protocol အဆင့်တွင် လူဆီက လာသည် (ဖိုင် ၀၁)
 
@@ -44,7 +44,7 @@
 
 10. Secret / OAuth / payment အတွက် form မသုံးပါ — URL mode သုံးပါ။
     → await ctx.session.elicit_url(message=..., url=..., elicitation_id=...) (ဖိုင် ၀၅)
-``
+```
 
 ---
 
@@ -52,7 +52,7 @@
 
 ### Form mode
 
-``python
+```python
 result = await ctx.elicit(
     message="What date and seat would you like for the flight to Yangon?",
     response_type=BookingDetails,          # required
@@ -64,11 +64,11 @@ action = getattr(result, "action", "accept")     # "accept" | "decline" | "cance
 if action != "accept":
     return {"ok": False, "status": action}
 data = result.data                              # available only on accept
-``
+```
 
 ### URL mode
 
-``python
+```python
 result = await ctx.session.elicit_url(
     message="Calendar access needs your authorisation. Open the link below, approve, come back.",
     url="https://auth.example.com/oauth/authorize?client=assistant&scope=calendar",
@@ -79,7 +79,7 @@ result = await ctx.session.elicit_url(
 if result.action != "accept":
     return {"ok": False, "status": result.action}
 # accept = user consented to open the browser — it is NOT proof a credential arrived
-``
+```
 
 ### Response ရဲ့ အမျိုးအစားများ
 
@@ -132,11 +132,11 @@ if result.action != "accept":
 
 ## အပိုင်း ၃ — Handler contract
 
-``python
+```python
 async def handler(message: str, response_type: Any, params: Any = None,
                   context: Any = None) -> Any:
     ...
-``
+```
 
 | # | Parameter | ရရှိသည့်အရာ | URL mode |
 |---|---|---|---|
@@ -145,17 +145,17 @@ async def handler(message: str, response_type: Any, params: Any = None,
 | 3 | `params` | `.mode`, `.requested_schema`, `.url`, `.elicitation_id` | `.mode == "url"` |
 | 4 | `context` | request context | ရှိသည် |
 
-``text
+```text
 ⭐ မဖြစ်မနေ async def (sync def → object dict can't be used in 'await' expression)
 ⭐ parameter လေးခု (three → takes 3 positional arguments but 4 were given)
 ⭐ return ဖြင့် သာ outcome ဖော်ပြသည် (raise → ToolError; None → MCPError)
-``
+```
 
 ---
 
 ## အပိုင်း ၄ — Handler တစ်ခုကောင်း ရေးခြင်း (စစ်ဆေးစာရင်းနှင့် template)
 
-``text
+```text
 □ async def ဖြစ်သည်
 □ parameter လေးခု ရှိသည် (message, response_type, params, context)
 □ လမ်းကြောင်းအားလုံးတွင် တန်ဖိုးတစ်ခု return ဖြစ်သည် (None မဟုတ်)
@@ -166,11 +166,11 @@ async def handler(message: str, response_type: Any, params: Any = None,
 □ required field များ အားလုံး ဖြည့်သည်
 □ secret များကို print/log မလုပ်ပါ
 □ timeout / dismiss case ကို cancel အဖြစ် ဖော်ပြသည်
-``
+```
 
 ### ဥပမာ — စစ်ဆေးစာရင်းကို လိုက်နာသည့် handler
 
-``python
+```python
 from fastmcp.client.elicitation import ElicitResult
 
 
@@ -201,7 +201,7 @@ def make_realistic_handler(answers_by_field: dict[str, Any]):
         return payload
 
     return handler
-``
+```
 
 ⭐ နောက်ဆုံး အပိုင်းကို သတိထားပါ: **မဖြစ်မနေ လိုသည့် တန်ဖိုး မရှိလျှင်
 `cancel` ပြန်သည် — ခန့်မှန်းသည့် တန်ဖိုး မထည့်ပါ။** ဒါက "လူက မဖြေခဲ့ခြင်း" ကို
@@ -211,7 +211,7 @@ def make_realistic_handler(answers_by_field: dict[str, Any]):
 
 ### Debug print တစ်ခုတည်း ရေးထားသည့် handler template
 
-``python
+```python
 def make_debug_handler(answer: Any):
     """A handler that shows everything the contract gives you."""
 
@@ -228,7 +228,7 @@ def make_debug_handler(answer: Any):
         return answer
 
     return handler
-``
+```
 
 ⭐ ဒီ template ကို ဖိုင် ၁၂ (cheatsheet) တွင်လည်း ထည့်ထားသည် — ကူးယူပြီး သုံးလို့ရသည်။
 
@@ -238,7 +238,7 @@ def make_debug_handler(answer: Any):
 
 ### Gate (risky action) စစ်ဆေးစာရင်း
 
-``text
+```text
 □ protected စာရင်းသည် code/config ထဲ (prompt ထဲ မဟုတ်)
 □ အန္တရာယ်မရှိလျှင် လုံးဝ မမေးပါ
 □ message တွင်: ဘယ်အရာ + ဘာဖြစ်မလဲ + မေးခွန်း
@@ -248,11 +248,11 @@ def make_debug_handler(answer: Any):
 □ audit: gate + status + ticket/reason; append-only
 □ server ဘက်စစ်ဆေးချက် (authorization) သီးသန့်
 □ test တစ်ခု ရှိ
-``
+```
 
 ### Handler စစ်ဆေးစာရင်း
 
-``text
+```text
 □ async def
 □ parameter လေးခု
 □ လမ်းကြောင်းအားလုံးတွင် တန်ဖိုး return (None မဟုတ်)
@@ -263,11 +263,11 @@ def make_debug_handler(answer: Any):
 □ required field အားလုံး ဖြည့်
 □ secret ကို print/log မလုပ်
 □ dismiss/timeout → cancel
-``
+```
 
 ### Test စစ်ဆေးစာရင်း
 
-``text
+```text
 □ accept (proceed=True)
 □ accept + proceed=False (refused_by_user)
 □ decline (state မပြောင်းကြောင်း assert)
@@ -276,11 +276,11 @@ def make_debug_handler(answer: Any):
 □ canary: default mode သည် မရကြောင်း
 □ canary: sync handler သည် ပျက်ကြောင်း
 □ state ကို fixture ဖြင့် ရှင်း
-``
+```
 
 ### URL mode စစ်ဆေးစာရင်း
 
-``text
+```text
 □ https
 □ URL ထဲ secret မပါ (client_id/scope သာ)
 □ elicitation_id ကို server ဘက်မှ ထုတ်
@@ -288,13 +288,13 @@ def make_debug_handler(answer: Any):
 □ accept ရလျှင် credential ကို ကိုယ်တိုင် စစ်
 □ decline ရလျှင် ထပ်မမေး
 □ mode="legacy" ရှိသည်
-``
+```
 
 ---
 
 ## အပိုင်း ၆ — ⛔ မလုပ်ရ စာရင်း
 
-``text
+```text
 ⛔ လူက ငြင်းပြီးမှ ထပ်မေးခြင်း            → prompt များကို လူက မဖတ်တော့ပါ
 ⛔ decline/cancel ကို error အဖြစ် ပြောင်းခြင်း → model က ထပ်ကြိုးစားသည်
 ⛔ handler ထဲ raise လုပ်ခြင်း                → ငြင်းဆိုချက်သည် ToolError ဖြစ်သွားသည်
@@ -310,7 +310,7 @@ def make_debug_handler(answer: Any):
 ⛔ elicit ကို authorization အနေဖြင့် သုံးခြင်း → policy engine ကို သုံးပါ (M10)
 ⛔ background task ထဲ imperative elicit       → guard pattern သုံးပါ
 ⛔ "Are you sure?" ကို နှစ်ခါ မေးခြင်း         → typed confirmation က ပိုကောင်းသည်
-``
+```
 
 ---
 
@@ -338,32 +338,32 @@ def make_debug_handler(answer: Any):
 
 ### CI တွင် run ခြင်း
 
-``bash
+```bash
 uv sync
 uv run pytest tests/test_m8_elicitation.py -q          # this module's tests
 uv run pytest M8_elicitation/code/lab_10_pytest_elicitation.py -q   # the lab's tests
 uv run pytest -q                                       # the whole repo
-``
+```
 
 ⭐ Lab ၏ test များသည် **module folder ထဲ** တွင်ရှိသည့်အတွက် repo တစ်ခုလုံး run
 လုပ်သည့်အခါ အလိုအလျောက် ပါလာသည် (pytest သည် `test_*.py` နှင့် `*_test.py` ကို
 ရှာသည်; `lab_10_pytest_elicitation.py` ကို **file path ဖြင့်** run ရသည်)။
 
-``text
+```text
 ⚠️ သတိထားပါ: `uv run pytest` သည် default အားဖြင့် `test_*.py` ကို ရှာသည်
    → `lab_10_pytest_elicitation.py` ကို collect မလုပ်ပါ
    → ⭐ path ဖြင့် တိုက်ရိုက် ပေးပါ (အထက်တွင် ပြထားသည့်အတိုင်း)
-``
+```
 
 ### CI checklist
 
-``text
+```text
 □ uv sync (lockfile မှ environment)
 □ pytest -q (repo တစ်ခုလုံး)
 □ lab ၏ pytest file ကို path ဖြင့် run
 □ ⭐ canary test တစ်ခု (default mode သည် မရကြောင်း) — ဒါက version upgrade ကို ဖမ်းသည်
 □ flakiness မရှိကြောင်း — ဒီ test များသည် deterministic ဖြစ်ရမည် (network မလို)
-``
+```
 
 ---
 
@@ -392,7 +392,7 @@ uv run pytest -q                                       # the whole repo
 
 ## အပိုင်း ၁၀ — ဖိုင်လမ်းကြောင်း မြေပုံ
 
-``text
+```text
 Concept  →  01-the-reverse-flow.md        (လမ်းကြောင်း ပြောင်းပြန်)
 Code     →  02-booking-py-line-by-line.md (booking.py တစ်လိုင်းချင်း)
 API      →  03-the-elicit-call.md         (signature + response_type)
@@ -414,7 +414,7 @@ Labs (M8_elicitation/code/):
    lab_3_outcome_router.py    lab_8_triage_decides.py
    lab_4_protected_gate.py    lab_9_handler_contract.py
    lab_5_mode_matrix.py       lab_10_pytest_elicitation.py
-``
+```
 
 ---
 

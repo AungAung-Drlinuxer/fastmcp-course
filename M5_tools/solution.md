@@ -4,7 +4,7 @@
 
 Calculator server ထဲသို့ `divide` tool အသစ်ကို ထည့်သွင်းရန် အောက်ပါအတိုင်း ရေးသားနိုင်ပါသည်။ Tool ၏ အမည်ကို verb-first စနစ်ဖြင့် စတင်ပြီး docstring ထဲတွင် summary နှင့် `Args:` section ကို ပါဝင်စေရမည်ဖြစ်သည်။ ထို့အပြင် parameter တိုင်းအတွက် type annotation နှင့် return annotation အပြည့်အစုံ ထည့်သွင်းရမည်ဖြစ်ပြီး `@mcp.tool()` decorator ကို မမေ့ဘဲ ထည့်ပေးရန် လိုအပ်ပါသည်။ ထိုသို့ရေးသားခြင်းအားဖြင့် `mcp` object တွင် tool အသစ် ပေါ်လာမည်ဖြစ်ပြီး schema ထဲတွင်လည်း description များ အလိုအလျောက် ပါဝင်သွားမည် ဖြစ်သည်။
 
-``python
+```python
 # divide_tool.py
 from mcp.server.fastmcp import FastMCP
 
@@ -24,7 +24,7 @@ def divide(dividend: float, divisor: float) -> float:
 
 if __name__ == "__main__":
     mcp.run()
-``
+```
 
 **အဓိကအယူအဆ** — စံချိန်မီ tool တစ်ခုဆိုသည်မှာ verb-first အမည်၊ summary နှင့် `Args:` ပါဝင်သော docstring၊ type annotations နှင့် return annotation အပြည့်အစုံ ပါဝင်ပြီး `@mcp.tool()` decorator ဖြင့် မှတ်ပုံတင်ထားသော function ဖြစ်သည်။
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
 Docstring သည် function ၏ description အဖြစ် JSON Schema ထဲသို့ ရောက်သွားသည်။ ဤလေ့ကျင့်ခန်းတွင် docstring လုံးဝမပါဝင်သော version၊ summary သာပါဝင်သော version နှင့် `Args:` section ပါဝင်သော version ဟူ၍ ၃ မျိုးကို တိုက်ရိုက် `Tool.from_function()` ဖြင့် ဖန်တီးကာ schema ကွာခြားချက်ကို လေ့လာပါမည်။
 
-``python
+```python
 # lab_8_docstring_contract.py
 # Compare how three docstring styles produce different JSON Schemas.
 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     show_schema("Version 1 — no docstring", multiply_plain)
     show_schema("Version 2 — summary only", multiply_summary)
     show_schema("Version 3 — summary + Args:", multiply_args)
-``
+```
 
 Version 1 နှင့် Version 2 တို့တွင် schema အတွင်း `"description"` field လုံးဝမပါဘဲ `a` နှင့် `b` parameter များသည် `type: "integer"` သာဖြစ်သည်။ Version 3 ၌သာ tool-level description အပြင် parameter တစ်ခုချင်းစီ၏ `description` များ ပါဝင်သည်ကို မြင်ရမည်ဖြစ်သည်။
 
@@ -83,7 +83,7 @@ Version 1 နှင့် Version 2 တို့တွင် schema အတွင
 
 ဒီလေ့ကျင့်ခန်းမှာ error အမျိုးအစားနှစ်မျိုးကို ကွဲပြားစွာ ကိုင်တွယ်တာ လေ့လာရမှာ ဖြစ်ပါတယ်။ Bad REQUEST ဆိုတာက client က parameter မှားပို့လာတာမျိုး၊ ဥပမာ — နံပါတ်မဟုတ်တဲ့ string ပို့လာတာ — ဖြစ်ပြီး၊ ဒီလိုအခြေအနေမှာ MCP protocol အရ `isError=True` ဖြစ်တဲ့ error response ပြန်ဖို့ သင့်တော်ပါတယ်။ တစ်ဖက်မှာ Bad SITUATION ကတော့ request က မှန်ပေမယ့် အခြေအနေက မည့်မည် မဟုတ်တာ — ဥပမာ သုညနဲ့ စားခြင်း — ဖြစ်ပြီး၊ ဒါက tool ရဲ့ သဘာဝအရ ဖြစ်နိုင်တဲ့ ရလဒ်တစ်ခုဖြစ်လို့ structured data အနေနဲ့ ပြန်ဖို့ ပိုသင့်တော်ပါတယ်။ အောက်မှာ `_ok()` / `_fail()` helper နှစ်ခုနဲ့ စံချိန်မီ error code သုံးထားတဲ့ `calculator.py` စတိုင်ဖိုင်ကို ကြည့်ပါ။
 
-``python
+```python
 """
 Lab 1: Error Taxonomy — distinguishing Bad REQUEST from Bad SITUATION.
 Server file: lab_1_error_taxonomy.py
@@ -147,7 +147,7 @@ def safe_divide(a: Any, b: Any) -> dict:
 
 if __name__ == "__main__":
     mcp.run()
-``
+```
 
 Client ဘက်ကနေ စမ်းကြည့်တဲ့အခါ `raise_on_error=False` ထားပြီး `isError` flag နဲ့ structured result နှစ်ခုစလုံးကို စစ်နိုင်ပါတယ် — Bad REQUEST အတွက် `isError=True` ဖြင့် error message ပြန်လာပြီး၊ Bad SITUATION အတွက် `isError=False` ဖြင့် `{"ok": false, "code": "ERR_DIVISION_BY_ZERO", ...}` ဆိုတဲ့ structured data ပြန်လာမှာ ဖြစ်ပါတယ်။ အရေးကြီးတဲ့အချက်က tool function ထဲမှာ unhandled exception များ မဖြစ်စေရန် အမြဲတစ်စိတ်တစ်ဒေသန် စိတ်ရှုံ့ထားရမှာ ဖြစ်ပါတယ်။
 
@@ -157,7 +157,7 @@ Client ဘက်ကနေ စမ်းကြည့်တဲ့အခါ `raise_o
 
 ဤလေ့ကျင့်ခန်းတွင် hint ပါဝင်သော error message နှင့် hint မပါဝင်သော error message တို့၏ ကွာခြားမှုကို လက်တွေ့စမ်းသပ်ကြည့်ပါမည်။ LLM တစ်ခုသည် "Unknown function" ဟူသော message ကိုသာ ရရှိပါက ထို error ကို ပြင်ရန် ထပ်မံ မေးခွန်း ထုတ်ရန် လိုအပ်သည်။ သို့သော် "ဘာမှားသည်၊ ဘာလို့မှားသည်၊ ဘယ်လိုပြင်ရမည်၊ ဥပမာနှင့် retry ရမလား" ပါဝင်ပါက ချက်ချင်း ဆက်လက် အလုပ်လုပ်နိုင်သည်။
 
-``python
+```python
 """
 lab_2_hint_contract.py — Compare errors with and without hints.
 
@@ -277,7 +277,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-``
+```
 
 **အဓိကအယူအဆ** — Hint ထဲတွင် "ဘာမှား၊ ဘာလို့၊ ဘယ်လိုပြင်၊ ဥပမာ၊ retry ရမလား" ဆိုသော အချက်ငါးချက် ပါဝင်ပါက model သည် ထပ်မံ မေးခွန်း ထုတ်ရန် မလိုဘဲ error ကို ချက်ချင်း ပြင်၍ တန်ဖိုးကို ဆက်လက် တွက်နိုင်သည်။
 
@@ -285,7 +285,7 @@ if __name__ == "__main__":
 
 ဤလေ့ကျင့်ခန်းတွင် request ၁၂ မျိုးကို `@mcp.tool` သို့ တိုက်ရိုက်ပို့ကာ Pydantic က ဖမ်းဆုပ်သော error နှင့် ကျွန်ုပ်တို့ ကိုယ်တိုင် စစ်ဆေးရမည့် domain rule ကိစ္စကို ခွဲခြားမှတ်တမ်းတင်ပါမည်။ Type မှားယွင်းမှုများသည် tool function အတွင်း လုံးဝ မရောက်ကြောင်း၊ function အတွင်း ရောက်လာပြီးသားဆိုလျှင် domain validation ကို ကိုယ်ပိုင် logic ဖြင့် စစ်ရမည်ကို အတည်ပြုနိုင်ပါသည်။
 
-``python
+```python
 # lab_3_validate_the_boundary.py
 # Send 12 edge-case requests and record which layer rejects each one.
 # Pydantic catches type errors BEFORE the function body runs;
@@ -372,15 +372,15 @@ for i, probe in enumerate(probes, 1):
     print(f"request {i:2d}: {probe['tool']:<12} -> {outcome}")
 
 print(json.dumps({"note": "type errors never reach the function body"}, indent=2))
-``
+```
 
 **အဓိကအယူအဆ** — Type စစ်ဆေးမှုကို Pydantic က tool function အတွင်း မရောက်မီ ဖမ်းဆုပ်ပေးပြီး function အတွင်း ရောက်ရှိလာသော input များအတွက် domain rules များကိုမူ ကိုယ်ပိုင် code (ဥပမာ ၄-၄-၄) ဖြင့် ပြန်လည်စစ်ဆေးပေးရမည်။
 
 ## လေ့ကျင့်ခန်း ၆ — Sequential vs Concurrent နှင့် Tool Trio
 
-ဤလေ့ကျင့်ခန်းတွင် `async def` tool သုံးခုကိ sync version နှင့် နှိုင်းယှဉ်တိုင်းတာပြီး၊ ထို့နောက် `search_articles` → `list_sections` → `get_content` ခေါ်ဆိုမှုကိ တစ်လျှောက်လုပ်ဆောင်သည့် tool trio ကို စမ်းသပ်ပါမည်။ Concurrent ခေါ်ဆိုမှုအတွက် `asyncio.gather()` ကို အသုံးပြပြီး coroutine အတွင်းမှ `asyncio.run()` ကို ထပ်ခေါ်ခြင်း မပြုရပါ။ Trio ၏ `get_content` တွင် `offset`/`limit` window ထည့်သွင်း၍ ကြီးမားသော document ကို အပိုင်းလိုက် ရယူနိုင်စေရန် စီမံထားပါသည်။
+ဤလေ့ကျင့်ခန်းတွင် `async def` tool သုံးခုကို sync version နှင့် နှိုင်းယှဉ်တိုင်းတာပြီး၊ ထို့နောက် `search_articles` → `list_sections` → `get_content` ခေါ်ဆိုမှုကိ တစ်လျှောက်လုပ်ဆောင်သည့် tool trio ကို စမ်းသပ်ပါမည်။ Concurrent ခေါ်ဆိုမှုအတွက် `asyncio.gather()` ကို အသုံးပြုပြီး coroutine အတွင်းမှ `asyncio.run()` ကို ထပ်ခေါ်ခြင်း မပြုရပါ။ Trio ၏ `get_content` တွင် `offset`/`limit` window ထည့်သွင်း၍ ကြီးမားသော document ကို အပိုင်းလိုက် ရယူနိုင်စေရန် စီမံထားပါသည်။
 
-``python
+```python
 import asyncio
 import time
 
@@ -489,6 +489,6 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-``
+```
 
 **အဓိကအယူအဆ** — `asyncio.gather()` ဖြင့် tool များကို concurrent ခေါ်ဆိုသည့်အခါ sequential နည်းထက် သိသိသာသာမြန်ပြီး tool trio ဖြင့် `offset`/`limit` window အသုံးပြု၍ ကြီးမားသော document ကို ခြုံငုံမှုအနည်းငယ်ဖြင့် ရယူနိုင်သည်။

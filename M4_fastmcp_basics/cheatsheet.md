@@ -16,7 +16,7 @@
 
 ## အပိုင်း ၁ — Lesson 2.1 ၏ အချက် ၁၀ (တစ်နေရာတည်း)
 
-``text
+```text
 ၁.  MCP သည် **protocol** တစ်ခု၊ framework မဟုတ် — wire format သည် JSON-RPC 2.0
      request: {jsonrpc, id, method, params}   |   response: {jsonrpc, id, result|error}
      notification တွင် `id` မပါ
@@ -47,7 +47,7 @@
 
 ၁၀. ⭐ Inspector = `fastmcp dev inspector <file>` (`inspector` သည် `dev` ၏ အောက်)
      Inspector သည် **ရှာဖွေမှု**၊ test သည် **အာမခံချက်** — နှစ်ခုလုံး လိုသည်
-``
+```
 
 ---
 
@@ -72,53 +72,53 @@
 
 ### Server ကို stdio ဖြင့် run
 
-``bash
+```bash
 uv run python -m M4_fastmcp_basics.code.hello_server
 uv run python -m M4_fastmcp_basics.code.lab_1_echo_server
 uv run python -m M4_fastmcp_basics.code.lab_5_currency_server
-``
+```
 
 ⚠️ Output မရှိဘဲ terminal ရပ်နေလျှင် **ဒါက မှန်** — stdin စောင့်နေသည်။ `Ctrl+C`။
 
 ### Server ကို HTTP ဖြင့် run
 
-``bash
+```bash
 uv run python -m M4_fastmcp_basics.code.hello_server --http            # port 8000, host 0.0.0.0
 uv run python -m M4_fastmcp_basics.code.lab_1_echo_server --http       # port 8001, host 127.0.0.1
 uv run python -m M4_fastmcp_basics.code.lab_5_currency_server --http   # port 8002, host 127.0.0.1
-``
+```
 
 ### Client များ
 
-``bash
+```bash
 uv run python -m M4_fastmcp_basics.code.transports
 uv run python -m M4_fastmcp_basics.code.lab_2_client_demo
 uv run python -m M4_fastmcp_basics.code.lab_3_http_client
 uv run python -m M4_fastmcp_basics.code.lab_4_discover_tools
 uv run python -m M4_fastmcp_basics.code.lab_5_drive_both
-``
+```
 
 ### Test နှင့် Inspector
 
-``bash
+```bash
 uv run pytest tests/test_m4_transport.py -v
 uv run fastmcp dev inspector M4_fastmcp_basics/code/hello_server.py
 uv run fastmcp dev inspector M4_fastmcp_basics/code/lab_1_echo_server.py
-``
+```
 
 ### စစ်ဆေးရေး command များ
 
-``bash
-uv run fastmcp version                # ⭐ ပြဿနာ ရှာသည့်အခါ ပထမ
+```bash
+uv run fastmcp version                # ⭐ first step when troubleshooting
 uv run python -c "import fastmcp; print(fastmcp.__version__)"
 uv run fastmcp inspect M4_fastmcp_basics/code/hello_server.py
 uv run fastmcp inspect http://127.0.0.1:8002/mcp
 uv run fastmcp --help
-``
+```
 
 ### Port လွတ်/မလွတ်
 
-``bash
+```bash
 # Windows
 netstat -ano | findstr :8000
 tasklist | findstr python
@@ -126,7 +126,7 @@ tasklist | findstr python
 # Linux/macOS
 ss -ltnp | grep 8000
 ps aux | grep hello_server
-``
+```
 
 ---
 
@@ -151,10 +151,10 @@ ps aux | grep hello_server
 
 ### ⭐ Object အမျိုးအစားကို အရင် စစ်ပါ
 
-``python
+```python
 print(type(tool).__name__)     # "FunctionTool" → .parameters
                                # "Tool"         → .input_schema
-``
+```
 
 ---
 
@@ -179,12 +179,12 @@ print(type(tool).__name__)     # "FunctionTool" → .parameters
 
 ### ⭐ Error နှစ်မျိုးကို ခွဲခြားခြင်း
 
-``text
+```text
 Protocol အဆင့် (transport/handshake): parse error, connection refused, -32601
 Tool အဆင့် (သင့် code):               validation error, ToolError, မှားသည့် data
 
 ⭐ ဒါကို ခွဲနိုင်လျှင် "ငါမှားလား API မှားလား" ဆိုသည့် အချိန်ကုန်ခြင်းကို ရှောင်နိုင်သည်
-``
+```
 
 ---
 
@@ -192,7 +192,7 @@ Tool အဆင့် (သင့် code):               validation error, ToolEr
 
 ### Server ၏ အခြေခံပုံစံ
 
-``python
+```python
 """One line saying what this server fronts.
 
 Run:
@@ -223,11 +223,11 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-``
+```
 
 ### Structured error ပုံစံ
 
-``python
+```python
 def _ok(**payload: object) -> dict:
     return {"ok": True, **payload}
 
@@ -235,11 +235,11 @@ def _ok(**payload: object) -> dict:
 def _fail(code: str, hint: str) -> dict:
     """A structured failure the agent can act on: a code for the client, a hint for the model."""
     return {"ok": False, "error": code, "hint": hint}
-``
+```
 
 ### Client ပုံစံ
 
-``python
+```python
 import asyncio
 from pathlib import Path
 
@@ -258,11 +258,11 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-``
+```
 
 ### Schema ဖတ်သည့် snippet နှစ်ခု
 
-``python
+```python
 # server-side
 t = next(t for t in await mcp.list_tools() if t.name == "add")
 print(t.parameters)
@@ -270,7 +270,7 @@ print(t.parameters)
 # client-side
 t = next(t for t in await client.list_tools() if t.name == "add")
 print(t.input_schema)
-``
+```
 
 ---
 
@@ -284,10 +284,10 @@ print(t.input_schema)
 | `stdout` | ⚠️ protocol — `print()` မဖြစ် | ✅ လွတ်လပ် |
 | ဘာအတွက် | editor on a laptop | shared / containerised server |
 
-``text
+```text
 ဆုံးဖြတ်ချက်: မေးခွန်း ၁ — client သည် server နှင့် တူညီသည့် machine တွင် ရှိသလား?
   မဟုတ် → HTTP ။  ဟုတ် → client တစ်ခုတည်းလား? ဟုတ် → stdio
-``
+```
 
 ---
 
@@ -311,7 +311,7 @@ print(t.input_schema)
 
 ### သင့် deployment ၏ transport
 
-``text
+```text
 ကျွန်တော်၏ အခြေအနေ (ချရေးပါ):
 
   ခေါ်မည့် client:
@@ -321,22 +321,22 @@ print(t.input_schema)
   auth လိုသလား:
   → ရွေးချယ်သည့် transport:
   → အကြောင်းရင်း (တစ်လိုင်း):
-``
+```
 
 ### Port စာရင်း (သင့် lab)
 
-``text
+```text
 8000  — hello_server.py (0.0.0.0)
 8001  — lab_1_echo_server.py (127.0.0.1)
 8002  — lab_5_currency_server.py (127.0.0.1)
 ----  — သင့်ကိုယ်ပိုင် server (ရွေးပါ)
-``
+```
 
 ---
 
 ## အပိုင်း ၉ — နောက် module သို့ ကူးခြင်း
 
-``text
+```text
 M4 (ဤ module) = server ဆောက်ခြင်း + transport
    ✅ server object၊ tool၊ stdio/HTTP၊ Inspector၊ CLI၊ client၊ result၊ schema
 
@@ -356,13 +356,13 @@ M9 — Clients (သင့်ကိုယ်ပိုင် agent loop)
 
 M10 — Security
    ကူးရန်: `M10_security/code/path_validation.py`, allowlist (file 05, 06)
-``
+```
 
 ---
 
 ## အပိုင်း ၁၀ — လေ့အကျင့် ၁၀ ခု (ဤ lesson မှ)
 
-``text
+```text
 ၁.  `uv run` ကို အမြဲ သုံးပါ — `activate` မလုပ်ပါနဲ့
 ၂.  stdio server တွင် `print()` မရေးပါနဲ့ — `sys.stderr.write` / `ctx.info`
 ၃.  `mcp` object ကို module အဆင့်တွင်၊ `mcp.run()` ကို `main()` ထဲ
@@ -373,7 +373,7 @@ M10 — Security
 ၈.  error တွင် `code` + `hint` နှစ်ခုလုံး ထည့်ပါ (M5/M11 ၏ ပုံစံ)
 ၉.  transport ကို tool logic မှ ခွဲထားပါ — `mcp.run(...)` တစ်နေရာတည်း
 ၁၀. lab ပြီးတိုင်း server ကို ရပ်ပါ — port လွတ်မှုသည် နောက် lab ၏ အခြေခံ
-``
+```
 
 ## နိဒါန်း
 

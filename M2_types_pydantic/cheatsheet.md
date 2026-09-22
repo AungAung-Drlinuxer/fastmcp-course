@@ -7,20 +7,20 @@
 
 ## 1. အခြေခံ သဘောတရား — သုံးလိုင်း
 
-``text
+```text
 ★ Type hint သည် DATA ဖြစ်သည် — `f.__annotations__` မှ တကယ် ဖတ်လို့ရသည်
 ★ Hint သည် inert — သူ့အလိုလို ဘာမှ validate မလုပ်ပါ
 ★ MCP သည် annotation ကို ဖတ်ပြီး JSON Schema ဆောက်သည် → annotation တိကျရမည်
-``
+```
 
-``python
+```python
 # Read annotations as data
 def f(vm_name: str, cpu_cores: int = 2) -> dict:
     """Doc."""
     return {}
 
 f.__annotations__          # {'vm_name': <class 'str'>, 'cpu_cores': <class 'int'>, 'return': <class 'dict'>}
-``
+```
 
 ---
 
@@ -44,9 +44,9 @@ f.__annotations__          # {'vm_name': <class 'str'>, 'cpu_cores': <class 'int
 | `list[dict[str,int]]` | `{"type":"array","items":{"type":"object","additionalProperties":{"type":"integer"}}}` ⚠️ |
 | `Disk` (nested model) | `{"$ref": "#/$defs/Disk"}` + `$defs` ⭐ |
 
-``text
+```text
 ⭐ ရွေးချယ်ရာတွင်: Literal > str ; nested model > dict[str, Any] ; list[Model] > list[dict]
-``
+```
 
 ---
 
@@ -60,7 +60,7 @@ f.__annotations__          # {'vm_name': <class 'str'>, 'cpu_cores': <class 'int
 | `inspect.signature(fn, eval_str=True)` | ဖြေရှင်းပြီး Signature | `param.annotation` ကို တိုက်ရိုက် သုံးလို့ရ |
 | `isinstance(x, type)` | bare class ဖြစ်/မဖြစ် | `str` → True; `list[str]` → False |
 
-``python
+```python
 import types, typing
 from typing import Any, Literal, get_args, get_origin
 
@@ -72,19 +72,19 @@ get_origin(typing.Union[str,int])  # typing.Union
 get_origin(Literal["a","b"])    # typing.Literal
 get_args(str | int)             # (<class 'str'>, <class 'int'>)
 get_args(int | None)            # (<class 'int'>, <class 'NoneType'>)
-get_args(Literal["a","b"])      # ('a', 'b')      ← တန်ဖိုးများ၊ type မဟုတ်
-``
+get_args(Literal["a","b"])      # ('a', 'b')      ← values, not a type
+```
 
 ### ⭐⭐ Union ကို ဖမ်းခြင်း — အသုံးအများဆုံး snippet
 
-``python
+```python
 import types, typing
 
 if get_origin(annotation) is typing.Union or get_origin(annotation) is types.UnionType:
     parts = get_args(annotation)
-    non_none = [p for p in parts if p is not type(None)]   # ⚠️ `is not None` မလုပ်ရ
+    non_none = [p for p in parts if p is not type(None)]   # ⚠️ do not use `is not None`
     nullable = len(non_none) != len(parts)
-``
+```
 
 | လုပ်ဆောင်ချက် | ❌ မှား | ✅ မှန် |
 |---|---|---|
@@ -97,35 +97,35 @@ if get_origin(annotation) is typing.Union or get_origin(annotation) is types.Uni
 
 ### ⚠️ PEP 563 trap — `from __future__ import annotations`
 
-``python
+```python
 from __future__ import annotations
 
 def f(cpu_cores: int) -> None: ...
 
 f.__annotations__["cpu_cores"]   # 'int'     ← STRING
-get_origin('int')                # None      ← မဖြေရှင်းပါ
+get_origin('int')                # None      ← not resolved
 'int' in {int: "integer"}        # False     ← string ≠ class
-``
+```
 
-``text
+```text
 အကျိုးဆက်: naive schema generator သည် parameter တိုင်းအတွက် {"type": "object"} ထုတ်သည်
           → ⚠️ ERROR မပေါ်ပါ — SILENT WRONG SCHEMA
 ဖြေရှင်းနည်း: get_type_hints(fn) သို့ inspect.signature(fn, eval_str=True)
-``
+```
 
 ---
 
 ## 4. `inspect` API
 
-``python
+```python
 import inspect
 
 sig = inspect.signature(fn)
-sig.parameters                      # mapping; အစီအစဉ် ထိန်းထားသည်
-sig.return_annotation               # return ၏ annotation
+sig.parameters                      # mapping; order is preserved
+sig.return_annotation               # return annotation
 for name, p in sig.parameters.items():
     p.name, p.annotation, p.default, p.kind
-``
+```
 
 | Attribute | Default မရှိလျှင် | မှတ်ချက် |
 |---|---|---|
@@ -140,24 +140,24 @@ for name, p in sig.parameters.items():
 | `VAR_KEYWORD` (`**kwargs`) | ❌ |
 | `POSITIONAL_ONLY` | ❌ |
 
-``python
-inspect.getdoc(fn)     # dedented docstring — MCP အတွက် ဒါကို သုံးပါ
-fn.__doc__             # raw (indentation ပါ)
+```python
+inspect.getdoc(fn)     # dedented docstring — use this for MCP
+fn.__doc__             # raw (with indentation)
 inspect.Parameter.empty
-``
+```
 
 ⭐ `required` ကို ဆောက်သည့် snippet:
 
-``python
+```python
 required = [n for n, p in sig.parameters.items()
             if p.default is inspect.Parameter.empty]
-``
+```
 
 ---
 
 ## 5. Schema ကို လက်ဖြင့် ဆောက်ခြင်း — skeleton
 
-``python
+```python
 import inspect
 from typing import Literal, get_args, get_origin, get_type_hints
 
@@ -189,7 +189,7 @@ def fragment(annotation: object) -> dict:
 
 def build(fn) -> dict:
     sig = inspect.signature(fn)
-    hints = get_type_hints(fn)              # ⭐ PEP 563 ကို ဖြေသည်
+    hints = get_type_hints(fn)              # ⭐ resolves PEP 563
     props, required = {}, []
     for name, p in sig.parameters.items():
         piece = fragment(hints.get(name, p.annotation))
@@ -202,20 +202,20 @@ def build(fn) -> dict:
     if required:
         out["required"] = required
     return out
-``
+```
 
 ⭐ လက်ဖြင့် ဆောက်ခြင်းက မဖြေနိုင်သည့် အရာ **နှစ်ခု**:
 
-``text
+```text
 ၁. ge= / le= — Field ကို ဖတ်လို့ မရ
 ၂. VALIDATION — ဒါက describe သာ လုပ်သည်; မှား call သည် function ကိုယ်ထဲ ရောက်သည်
-``
+```
 
 ---
 
 ## 6. Pydantic — model declaration
 
-``python
+```python
 from typing import Literal
 from pydantic import BaseModel, Field, ValidationError
 
@@ -230,7 +230,7 @@ class VMProvisionSchema(BaseModel):
         default=None, ge=1,
         description="Memory in GB. Omit to let the platform choose a default for the OS.",
     )
-``
+```
 
 ### `Field(...)` keyword → schema key
 
@@ -266,40 +266,40 @@ class VMProvisionSchema(BaseModel):
 
 ### Class docstring → object description; `title` → Pydantic ဆောက်သည်
 
-``text
+```text
 class M(BaseModel):
     """This text becomes schema["description"]."""
     vm_name: str         → "title": "Vm Name"   (သင် မရေးခဲ့)
-``
+```
 
 ### အလုပ်လုပ်သည့်နည်းလမ်းများ
 
-``python
+```python
 VMProvisionSchema.model_json_schema()          # dict
 VMProvisionSchema.model_json_schema()["required"]
-VMProvisionSchema.model_fields                 # field တစ်ခုစီ၏ metadata
+VMProvisionSchema.model_fields                 # metadata for each field
 VMProvisionSchema.model_fields["cpu_cores"].is_required()
-VMProvisionSchema.model_fields["cpu_cores"].annotation    # ဖြေရှင်းပြီး
+VMProvisionSchema.model_fields["cpu_cores"].annotation    # resolved
 
 vm = VMProvisionSchema(vm_name="kasm-agent1", os_type="ubuntu")
 str(vm)                                        # vm_name='kasm-agent1' ...
 vm.model_dump()                                # dict
-vm.model_dump(exclude_none=True)               # None များ ဖယ်
+vm.model_dump(exclude_none=True)               # remove Nones
 vm.model_dump_json()                           # JSON string
-``
+```
 
 ---
 
 ## 7. `ValidationError` — ဖတ်နည်း
 
-``python
+```python
 try:
     VMProvisionSchema(vm_name="x", cpu_cores=99, os_type="ubuntu")
 except ValidationError as exc:
     exc.errors()          # [{...}, ...]
     exc.error_count()     # 1
-    str(exc)              # လူ ဖတ်ရမည့် စာသား
-``
+    str(exc)              # human-readable text
+```
 
 ### Error dict ၏ key
 
@@ -313,11 +313,11 @@ except ValidationError as exc:
 | `ctx` | `{'le': 16}` | bound ၏ တန်ဖိုး (⚠️ အမြဲ မပါ) |
 | `url` | `https://errors.pydantic.dev/2.13/v/...` | docs |
 
-``python
+```python
 first = exc.errors()[0]
 loc = ".".join(str(p) for p in first["loc"])       # 'disks.0.size_gb'
-first.get("input")                                  # ⭐ .get() သုံးပါ
-``
+first.get("input")                                  # ⭐ use .get()
+```
 
 ### `type` ဇယား — အသုံးအများဆုံး
 
@@ -338,12 +338,12 @@ first.get("input")                                  # ⭐ .get() သုံးပ
 
 ### ⭐ အရေးကြီးသည့် အချက်
 
-``text
+```text
 ★ Pydantic သည် error အားလုံးကို တစ်ချိန်တည်း ပေးသည် (round trip တစ်ခုတည်း) ✅
 ★ errors()[0] သည် "အရေးကြီးဆုံး" မဟုတ် — အစောဆုံး FIELD ၏ error
 ★ ValidationError ⊂ ValueError — ဒါပေမယ့် ValidationError ဖြင့် ဖမ်းပါ
 ★ errors() ထဲ model class အမည် မပါ — log တွင် ကိုယ်တိုင် ရေးပါ
-``
+```
 
 ### Coercion (တိုင်းတာပြီး)
 
@@ -365,7 +365,7 @@ first.get("input")                                  # ⭐ .get() သုံးပ
 
 ## 8. Drift — ဘယ်လို ကာကွယ်မည်
 
-``text
+```text
 ★ rule တစ်ခုကို နေရာတစ်ခုတည်းတွင် ရေးပါ
 ★ bound နှင့် ဆက်စပ်သည့် နံပါတ်ကို f-string + constant ဖြင့် ရေးပါ
      cpu_cores: int = Field(default=2, ge=1, le=MAX,
@@ -376,7 +376,7 @@ first.get("input")                                  # ⭐ .get() သုံးပ
      assert set(schema["required"]) == {"vm_name", "os_type"}
 ★ description တွင် required/optional ကို မရေးပါ — schema က ဆိုသည်
 ★ description ကို တစ်နေရာတည်းတွင် ရေးပါ (Field(description=...) ကို ရွေးပါ)
-``
+```
 
 ### ⭐ FastMCP သည် ရင်းမြစ် နှစ်ခုကို ပေါင်းသည် (`VERIFIED.md`)
 
@@ -389,13 +389,13 @@ first.get("input")                                  # ⭐ .get() သုံးပ
 | `Field(description=...)` | `description` |
 | docstring `Args:` | the parameter `description` |
 
-``text
+```text
 FastMCP က ထုတ်သည့် schema တွင် တိုင်းတာပြီး မြင်ရသည့် ကွာခြားချက် (VERIFIED.md):
   additionalProperties: false  ← Pydantic ၏ schema ထဲ မပါပါ; FastMCP output တွင် ပါသည်
   title key များ မပါ            ← ⚠️ ဒါကို FastMCP က ဖယ်သည်ဟု ဆိုနိုင်သော်လည်း
                                  ဒီ course တွင် implementation ကို မစစ်ပါ —
                                  တိုင်းတာချက်တွင် မပါသည်သာ အတည်ပြုထားသည်
-``
+```
 
 ---
 
@@ -425,7 +425,7 @@ FastMCP က ထုတ်သည့် schema တွင် တိုင်းတ�
 
 ## 10. Tool parameter ဒီဇိုင်း — checklist
 
-``text
+```text
 [ ] parameter တိုင်းတွင် type hint ရှိသည်
 [ ] enum ဖြစ်နိုင်သည့် အရာအားလုံးကို Literal ဖြင့် ရေးထားသည်
 [ ] bound ရှိသည့် ကိန်းတိုင်းတွင် ge=/le= ရှိသည်
@@ -437,18 +437,18 @@ FastMCP က ထုတ်သည့် schema တွင် တိုင်းတ�
 [ ] `*args` / `**kwargs` မသုံးပါ
 [ ] schema ကို test ဖြင့် assert လုပ်ထားသည်
 [ ] `required` list ကို မျက်လုံးဖြင့် စစ်ပြီးပြီ
-``
+```
 
 ---
 
 ## 11. Snippet စုစည်းမှု — ကူးယူရန် အသင့်
 
-``python
-# ── 1. Resolve annotations (PEP 563 ကို ဖြေသည်) ─────────────────────────────
+```python
+# ── 1. Resolve annotations (resolves PEP 563) ─────────────────────────────
 from typing import get_type_hints
 hints = get_type_hints(fn)
 
-# ── 2. Signature ကို ဖတ် ───────────────────────────────────────────────────
+# ── 2. Read the signature ───────────────────────────────────────────────────
 import inspect
 sig = inspect.signature(fn, eval_str=True)
 
@@ -456,19 +456,19 @@ sig = inspect.signature(fn, eval_str=True)
 required = [n for n, p in sig.parameters.items()
             if p.default is inspect.Parameter.empty]
 
-# ── 4. Union စစ် ────────────────────────────────────────────────────────────
+# ── 4. Check for Union ────────────────────────────────────────────────────────────
 import types, typing
 from typing import get_args, get_origin
 origin = get_origin(ann)
 if origin in (typing.Union, types.UnionType):
     non_none = [p for p in get_args(ann) if p is not type(None)]
 
-# ── 5. Literal စစ် ─────────────────────────────────────────────────────────
+# ── 5. Check for Literal ─────────────────────────────────────────────────────────
 from typing import Literal
 if get_origin(ann) is Literal:
     values = list(get_args(ann))
 
-# ── 6. Model ကို သတ်မှတ် ────────────────────────────────────────────────────
+# ── 6. Define the model ────────────────────────────────────────────────────
 from typing import Literal
 from pydantic import BaseModel, Field
 
@@ -478,7 +478,7 @@ class Params(BaseModel):
     count: int = Field(default=2, ge=1, le=16, description="How many (1-16)")
     mode: Literal["a", "b"] = Field(description="Which mode")
 
-# ── 7. Validate + ဖတ် ───────────────────────────────────────────────────────
+# ── 7. Validate + read ───────────────────────────────────────────────────────
 from pydantic import ValidationError
 try:
     params = Params(**payload)
@@ -487,7 +487,7 @@ except ValidationError as exc:
         print(err["loc"], err["type"], err.get("input"), err["msg"])
 else:
     print(params.model_dump())
-``
+```
 
 ---
 

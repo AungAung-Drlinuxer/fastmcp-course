@@ -4,11 +4,11 @@
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Python project တစ်ခုစီမှာ package များ၊ version များနဲ့ interpreter တွေ ကွဲပြားနိုင်သည်။ ဒီအချက်တွေက project တစ်ခုရဲ့ အောင်မြင်မှု သို့မဟုတ် ကျရှုံးမှုကို သီးသန့် ဆုံးဖြတ်ပေးလို့ရသလောက် အရေးကြီးသည်။
+Python project တစ်ခုစီမှာ package များ၊ version များနဲ့ interpreter တွေ ကွဲပြားနိုင်သည်။ ဒီအချက်တွေက project တစ်ခုရဲ့ အောင်မြင်မှု သို့မဟုတ် ကျရှုံးမှုကို ဆုံးဖြတ်နိုင်လောက်အောင် အရေးကြီးသည်။
 
 ### ဘာကြောင့် လဲ
 
-Package တွေ တစ်နေရာထဲ ပူးပေါင်းထားရင် version တိုက်ဆုန်းမှုများ ဖြစ်ပေါ်သည်။ Project တစ်ခုက ရွေ့လို့ မရတော့တဲ့ အခြေအနေ ရောက်လာနိုင်သည်။ အခြားသူတွေ ကိုယ့် project ကို တည်ဆောက်ရင်လည်း တူညီတဲ့ error တွေ နှစ်ဆိုင်ခံရသည်။
+Package တွေ တစ်နေရာထဲ ပူးပေါင်းထားရင် version တိုက်ဆိုင်မှုများ ဖြစ်ပေါ်သည်။ Project တစ်ခုက ရွေ့လို့ မရတော့တဲ့ အခြေအနေ ရောက်လာနိုင်သည်။ အခြားသူတွေ ကိုယ့် project ကို တည်ဆောက်ရင်လည်း တူညီတဲ့ error တွေ ကြုံတွေ့ရသည်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
@@ -22,28 +22,28 @@ MCP server တည်ဆောက်တဲ့အခါ dependency တွေ မ�
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-`.venv` ဆိုတာ "virtual environment" ဆိုတဲ့ ဖိုင်တွဲ တစ်ခုဖြစ်သည်။ သူ့ထဲမှာ Python interpreter တစ်ခု အတုနဲ့ project အတွက်သာ install ထားတဲ့ package တွေ ပါဝင်သည်။
+`.venv` ဆိုတာ "virtual environment" ဆိုတဲ့ ဖိုင်တွဲ တစ်ခုဖြစ်သည်။ သူ့ထဲမှာ project အတွက် သီးသန့် Python interpreter တစ်ခုနဲ့ install ထားတဲ့ package တွေ ပါဝင်သည်။
 
 ### ဘာကြောင့် လဲ
 
-System-wide Python ကို တိုက်ရိုက် အသုံးပြုရင် အားလုံးရဲ့ project တွေက တစ်နေရာတည်းကို မှီခိုလို့ ပြဿနာ ဖြစ်သည်။ `.venv` က project တစ်ခုချင်းစီကို ကိုယ်ပိုင် package စပေ့ တစ်ခု ပေးလိုက်သည်။
+System-wide Python ကို တိုက်ရိုက် အသုံးပြုရင် အားလုံးရဲ့ project တွေက တစ်နေရာတည်းကို မှီခိုလို့ ပြဿနာ ဖြစ်သည်။ `.venv` က project တစ်ခုချင်းစီကို ကိုယ်ပိုင် package နေရာ တစ်ခု ပေးလိုက်သည်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Project folder တစ်ခုထဲ `.venv` ဖိုင်တွဲ တစ်ခု ဖန်တီးသည်။ Activate လုပ်တဲ့အခါ shell က `.venv` ထဲက Python ကိုပဲ ရှာသည်။ Package တွေ ထဲ install ရင် system Python ကို မထိခိုက်ပါ။
+Project folder တစ်ခုထဲ `.venv` ဖိုင်တွဲ တစ်ခု ဖန်တီးသည်။ Activate လုပ်တဲ့အခါ shell က `.venv` ထဲက Python ကိုပဲ ရှာသည်။ Package တွေကို ဒီ `.venv` ထဲ install ရင် system Python ကို မထိခိုက်ပါ။
 
 ### ဥပမာ
 
-``python
+```python
 # This is shell, shown as a block for clarity:
 # uv init creates pyproject.toml, uv add installs into .venv
 # .venv/bin/python (macOS/Linux) or .venv\Scripts\python (Windows)
 # Expected output: a .venv/ directory inside your project folder
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-`mcp` package က version တစ်ခုကို လိုအပ်သလို `pydantic` က နောက်တစ်ခု လိုချင်နိုင်သည်။ `.venv` မှာ ဒီတိုက်ဆုန်းမှုက အခြား project တွေဆီ မရောက်စေပါ။
+`mcp` package က version တစ်ခုကို လိုအပ်သလို `pydantic` က နောက်တစ်ခု လိုချင်နိုင်သည်။ `.venv` မှာ ဒီတိုက်ဆိုင်မှုက အခြား project တွေဆီ မရောက်စေပါ။
 
 ## အပိုင်း ၃ — `uv` က ဘာကွာသလဲ
 
@@ -64,7 +64,7 @@ Project folder တစ်ခုထဲ `.venv` ဖိုင်တွဲ တစ်�
 
 ### ဥပမာ
 
-``python
+```python
 # Shell commands for starting a project with uv:
 #   uv init my-mcp-project
 #   cd my-mcp-project
@@ -72,7 +72,7 @@ Project folder တစ်ခုထဲ `.venv` ဖိုင်တွဲ တစ်�
 #   uv run python env_check.py
 # Expected output: pyproject.toml, uv.lock and .venv/ created,
 # and env_check.py runs with the project's own interpreter.
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -94,7 +94,7 @@ TOML format နဲ့ `[project]` section ထဲ `name`၊ `requires-python`၊ 
 
 ### ဥပမာ
 
-``toml
+```toml
 # pyproject.toml example
 [project]
 name = "my-mcp-project"
@@ -103,7 +103,7 @@ requires-python = ">=3.11"
 dependencies = [
     "mcp>=1.0.0",
 ]
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -125,7 +125,7 @@ System Python တစ်ခု၊ `.venv` Python တစ်ခု၊ တစ်ခ�
 
 ### ဥပမာ
 
-``python
+```python
 # env_check.py prints which interpreter and packages you are using.
 # Run it from the project root:
 #   uv run python env_check.py
@@ -133,11 +133,11 @@ System Python တစ်ခု၊ `.venv` Python တစ်ခု၊ တစ်ခ�
 #   Python executable: /path/to/project/.venv/bin/python
 #   Python version: 3.11.x
 #   Package versions found in this environment only.
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-Course အဆင့်မှာ test များ ကျွမ်းကျော်တဲ့အခါ ပထမဆုံး စစ်သင့်တာက "ဘယ် Python နဲ့ လုပ်နေတာလဲ" ဆိုတာပါပဲ။ `env_check.py` က ဒါကို အလိုအလျောက် ဖြေပေးသည်။
+Course အဆင့်မှာ test များ မအောင်မြင်တဲ့အခါ ပထမဆုံး စစ်သင့်တာက "ဘယ် Python နဲ့ လုပ်နေတာလဲ" ဆိုတာပါပဲ။ `env_check.py` က ဒါကို အလိုအလျောက် ဖြေပေးသည်။
 
 ## အပိုင်း ၆ — `env_check.py` ကို တစ်လိုင်းချင်း ဖတ်ခြင်း
 
@@ -155,7 +155,7 @@ Error တစ်ခု တွေ့တဲ့အခါ ကုဒ် ဘယ်န�
 
 ### ဥပမာ
 
-``python
+```python
 import sys
 import importlib.metadata as metadata
 
@@ -175,7 +175,7 @@ except metadata.PackageNotFoundError:
 # Python executable: .../.venv/bin/python
 # Python version: 3.11.9
 # mcp version: 1.x.x (or the NOT installed message)
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -184,7 +184,7 @@ M1 ကနေ M11 အထိ လမ်းကြောင်းပြဿနာ တ�
 ## အနှစ်ချုပ်
 
 - Environment ပြဿနာတွေက project ရဲ့ အောင်မြင်မှုကို ဆုံးဖြတ်သလို အရေးကြီးသည်
-- `.venv` က project တစ်ခုချင်းစီကို သီးသန့် package စပေ့ ပေးသည်
+- `.venv` က project တစ်ခုချင်းစီကို သီးသန့် package နေရာ ပေးသည်
 - `uv` က ရိုးရိုး tools တွေထက် မြန်ပြီး လုပ်ထုံးကို ရိုးရှင်းစေသည်
 - `pyproject.toml` က project ကို စက်ဖြင့်ဖတ်နိုင်တဲ့ ပုံစံနဲ့ သတ်မှတ်ပေးသည်
 - `env_check.py` က interpreter နဲ့ package တွေကို စစ်ဆေးပေးသည်

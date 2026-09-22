@@ -16,7 +16,7 @@
 
 ## ၁ — Tool anatomy → wire contract
 
-``text
+```text
 source ထဲ                         client မြင်သည့်အရာ
 ────────────────────────────────────────────────────────────────
 def divide(a: float, b: float)    →  properties: {a: {...}, b: {...}}
@@ -34,7 +34,7 @@ a: Annotated[str, Field(description="...")] → "description": "..."
 Args: a: The numerator.           →  "description": "The numerator."
 -> dict                           →  structured content (outputSchema)
 (FastMCP အလိုအလျောက်)             →  "additionalProperties": false
-``
+```
 
 | ကိစ္စ | ရလဒ် |
 |---|---|
@@ -49,8 +49,8 @@ Args: a: The numerator.           →  "description": "The numerator."
 **Docstring ခေါင်းစီး (တိုင်းတာထားသည်):** `Args:` ✅ · `Arguments:` ✅ ·
 `Parameters:` ✅ · `Params:` ✅ · `Inputs:` ❌ · `Keyword Args:` ❌ · `Yields:` ❌
 
-``python
-# ✅ M5 ၏ tool ပုံစံ
+```python
+# ✅ M5's tool style
 @mcp.tool
 def divide(a: float, b: float) -> dict:
     """Divide a by b, reporting a zero denominator as data instead of raising.
@@ -62,17 +62,17 @@ def divide(a: float, b: float) -> dict:
     if b == 0:
         return _fail("division_by_zero", "The denominator must be non-zero; try a different b.")
     return _ok(result=a / b)
-``
+```
 
 ---
 
 ## ၂ ⭐ — Raise vs Return (ဆုံးဖြတ်ရန် ဇယား)
 
-``text
+```text
 "ငါ့ bug/environment လား" → raise (သို့) ဖမ်းမထားဘဲ လွှတ်
 "caller ၏ ခေါ်မှု လား"     → structured error ပြန် (ok: false, error, hint)
 "type/range/enum မှား လား"  → Pydantic ကို လွှတ် (raise လုပ်ပြီးသား)
-``
+```
 
 | အခြေအနေ | လုပ်ရမည့်အရာ | ဘယ်သူ ဖမ်းသလဲ | model ရသည့်အရာ |
 |---|---|---|---|
@@ -89,12 +89,12 @@ def divide(a: float, b: float) -> dict:
 
 **တိုင်းတာထားသည့် ကွာခြားချက်:**
 
-``text
+```text
 structured error: CallToolResult(is_error=False, structured_content={...}, data={...})
 raise လုပ်:       ToolError: Error calling tool 'safe_divide': float division by zero
                  (raise_on_error=False ဖြင့်) is_error=True, structured_content=None, data=None
 request error:    is_error=True, structured_content=None, content="1 validation error for call[...]"
-``
+```
 
 ⭐ **`structured_content: None`** ဆိုသည့် လိုင်းသည် raise လုပ်ခြင်း၏ အကျိုးဆက် —
 သင့် error code လုံးဝ ပျောက်သည်။
@@ -103,7 +103,7 @@ request error:    is_error=True, structured_content=None, content="1 validation 
 
 ## ၃ — ကုဒ် နှစ်ခု: `_ok` / `_fail`
 
-``python
+```python
 def _ok(**payload: Any) -> dict:
     return {"ok": True, **payload}
 
@@ -115,7 +115,7 @@ def _fail(code: str, hint: str) -> dict:
     hint produces an agent that retries the same wrong call.
     """
     return {"ok": False, "error": code, "hint": hint}
-``
+```
 
 ⭐ `_fail(code, hint)` — `hint` သည် **required**; မေ့လို့ မရ။
 
@@ -127,13 +127,13 @@ def _fail(code: str, hint: str) -> dict:
 
 ## ၄ — အမှား၏ အစိတ်အပိုင်း ၄ ခု (wire ပေါ်တွင်)
 
-``json
+```json
 {"ok": false,
  "error": "unknown_sensor",
  "hint": "'boiler1' is not a sensor. Available: boiler-01, boiler-02, pump-07. Did you mean 'boiler-01'?",
  "available": ["boiler-01", "boiler-02", "pump-07"],
  "did_you_mean": "boiler-01"}
-``
+```
 
 | field | ဘယ်သူ ဖတ်သလဲ | ဘာအတွက် |
 |---|---|---|
@@ -175,13 +175,13 @@ def _fail(code: str, hint: str) -> dict:
 | မရှိသည့် key | `unexpected_keyword_argument` |
 | `5` ကို `str` သို့ (list ထဲ) | `string_type` |
 
-``text
+```text
 စာသား ပုံစံ:
 1 validation error for call[set_fan_speed]
 percent
   Input should be less than or equal to 100 [type=less_than_equal, input_value=140, input_type=int]
     For further information visit https://errors.pydantic.dev/2.13/v/less_than_equal
-``
+```
 
 ⭐ **Function body ထဲ `isinstance`/range check မထည့်ပါနှင့်** — request error များသည်
 body မစတင်မီ ဖြစ်သည် (သင့် code ကို မရောက်ပါ)။ Domain rule များသာ code ထဲ ထား။
@@ -190,10 +190,10 @@ body မစတင်မီ ဖြစ်သည် (သင့် code ကို �
 
 ## ၆ — async စည်းမျဉ်း
 
-``text
+```text
 I/O (HTTP, DB, LLM, file) → async def + await
 CPU-only, လျင်မြန်       → def
-``
+```
 
 | စည်းမျဉ်း | အကြောင်းရင်း |
 |---|---|
@@ -204,7 +204,7 @@ CPU-only, လျင်မြန်       → def
 | parallel ခေါ်ရန် `asyncio.gather(...)` | ၃ × 0.3s → sequential `0.98s`၊ concurrent `0.31s` |
 | await မလုပ်သည့် coroutine ကို `.close()` | `RuntimeWarning` မထွက်စေရန် |
 
-``python
+```python
 async def _registry() -> None:
     """List what the server publishes, without a client — useful while developing.
 
@@ -213,23 +213,23 @@ async def _registry() -> None:
     awaited, not re-entered.
     """
     print("Registered tools:", [t.name for t in await mcp.list_tools()])
-``
+```
 
 ---
 
 ## ၇ — httpx checklist
 
-``python
-async with httpx.AsyncClient(timeout=10.0) as client:                  # ⭐ timeout မဖြစ်မနေ
-    response = await client.get(API, params=params,                     # ⭐ params= (f-string မဟုတ်)
-                                headers={"User-Agent": "my-agent/0.1"}) # ⭐ UA မဖြစ်မနေ
+```python
+async with httpx.AsyncClient(timeout=10.0) as client:                  # ⭐ timeout is a must
+    response = await client.get(API, params=params,                     # ⭐ params= (not an f-string)
+                                headers={"User-Agent": "my-agent/0.1"}) # ⭐ UA is a must
     response.raise_for_status()                                        # ⭐ 4xx/5xx → exception
     payload = response.json()
     if "error" in payload:                                             # ⭐ HTTP 200 error
         return {"ok": False, "error": "upstream_error",
                 "hint": f"Upstream rejected the request ({payload['error'].get('code')})."}
-    hits = payload.get("query", {}).get("search", [])                   # ⭐ .get() ကွင်းဆက်
-``
+    hits = payload.get("query", {}).get("search", [])                   # ⭐ .get() chain
+```
 
 | တိုင်းတာထားသည့် အချက် | ရလဒ် |
 |---|---|
@@ -250,12 +250,12 @@ async with httpx.AsyncClient(timeout=10.0) as client:                  # ⭐ tim
 
 ## ၈ — Tool trio (search → enumerate → fetch)
 
-``text
+```text
 search_articles(query, limit)  → {"ok", "source", "note", "count", "results":[{"title"}]}
 list_sections(article)         → {"ok", "source", "article", "count", "sections":[{"index","title","level"}]}
 get_content(article)           → {"ok", "source", "title", "length", "truncated", "content"}
 read_section(article, heading) → {"ok", "source", "article", "heading", "chars", "text"}
-``
+```
 
 | စည်းမျဉ်း | အကြောင်းရင်း |
 |---|---|
@@ -272,18 +272,18 @@ read_section(article, heading) → {"ok", "source", "article", "heading", "chars
 
 ## ၉ — Truncation
 
-``python
+```python
     limit = 4000
     return {
         "ok": True,
-        "length": len(text),                 # ⭐ အရင်းအမြစ် အရွယ်အစား
-        "returned": len(window),             # ⭐ window အရွယ်အစား
-        "offset": offset,                    # ⭐ ဘယ်ကနေ စ
-        "truncated": end < len(DOCUMENT),    # ⭐ နောက်ထပ် ရှိသေးလား
-        "next_offset": end if end < len(DOCUMENT) else None,   # ⭐ နောက် window
+        "length": len(text),                 # ⭐ resource size
+        "returned": len(window),             # ⭐ window size
+        "offset": offset,                    # ⭐ where to start
+        "truncated": end < len(DOCUMENT),    # ⭐ any more left?
+        "next_offset": end if end < len(DOCUMENT) else None,   # ⭐ Next window
         "content": window,
     }
-``
+```
 
 | တိုင်းတာထားသည့် အချက် | တန်ဖိုး |
 |---|---|
@@ -303,7 +303,7 @@ read_section(article, heading) → {"ok", "source", "article", "heading", "chars
 
 ## ၁၀ — Fixture & honest source
 
-``python
+```python
 try:
     result = await _probe(service)
 except Exception as exc:  # noqa: BLE001 — offline is an expected condition here
@@ -312,7 +312,7 @@ except Exception as exc:  # noqa: BLE001 — offline is an expected condition he
                     f"{FIXTURES[service]['captured']} and may be stale",
             "stale": True, "service": service, "data": FIXTURES[service]}
 return {"ok": True, "source": "live", "note": None, "stale": False, ...}
-``
+```
 
 | `source` | အဓိပ္ပါယ် | `ok` |
 |---|---|---|
@@ -328,12 +328,12 @@ return {"ok": True, "source": "live", "note": None, "stale": False, ...}
 
 ## ၁၁ — Clamp
 
-``python
+```python
 def clamp(value: int, low: int, high: int) -> tuple[int, bool]:
     """Return (clamped_value, was_changed) — the flag is what makes the clamp reportable."""
     fixed = max(low, min(high, value))
     return fixed, fixed != value
-``
+```
 
 | Policy | ဘယ်အခါ | ကုဒ် |
 |---|---|---|
@@ -350,12 +350,12 @@ Naive tool: `limit=500` → ၃၀ ခု၊ **error မရှိ၊ ဘာမ�
 
 ## ၁၂ — Wikitext shape normalisation
 
-``python
+```python
 def wikitext_of(parse: dict) -> str:
     """Normalise both upstream shapes to a string. The whole fix is this one line."""
     raw = parse.get("wikitext", "")
     return raw.get("*", "") if isinstance(raw, dict) else (raw or "")
-``
+```
 
 | shape | ဖြစ်နိုင်သည့် error |
 |---|---|
@@ -370,21 +370,21 @@ def wikitext_of(parse: dict) -> str:
 
 ## ၁၃ — စမ်းသပ်ရန် command များ
 
-``bash
-# registry ကို client မလိုဘဲ ဖတ်ခြင်း
+```bash
+# Reading the registry without a client
 uv run python -c "import asyncio; from M5_tools.code.calculator import mcp; print([t.name for t in asyncio.run(mcp.list_tools())])"
 # → ['divide', 'sqrt_of', 'safe_divide']
 
-# schema ကို ဖတ်ခြင်း (server-side: .parameters)
+# Reading the schema (server-side: .parameters)
 uv run python -c "import asyncio, json; from M5_tools.code.calculator import mcp; ts=asyncio.run(mcp.list_tools()); print(json.dumps(ts[0].parameters, indent=2))"
 
-# description များ
+# Descriptions
 uv run python -c "import asyncio; from M5_tools.code.calculator import mcp; print([(t.name, t.description.splitlines()[0]) for t in asyncio.run(mcp.list_tools())])"
 
-# module များကို run
+# Run the modules
 uv run python -m M5_tools.code.calculator
-uv run python -m M5_tools.code.wikipedia                 # fixture fallback ဖြင့်
-uv run python -m M5_tools.code.wikipedia --live           # live သာ (offline လျှင် ToolError)
+uv run python -m M5_tools.code.wikipedia                 # With fixture fallback
+uv run python -m M5_tools.code.wikipedia --live           # Live only (ToolError if offline)
 uv run python -m M5_tools.code.lab_5_tool_trio --offline
 
 # labs
@@ -399,12 +399,12 @@ uv run python -m M5_tools.code.lab_9_http_client_hygiene
 uv run python -m M5_tools.code.lab_10_truncation_budget
 uv run python -m M5_tools.code.lab_11_clamp_untrusted_limits
 
-# stderr (FastMCP ၏ rich log) ကို ဖျောက်ခြင်း
+# Suppressing stderr (FastMCP's rich log)
 uv run python -m M5_tools.code.lab_1_error_taxonomy 2>/dev/null
 
-# import စစ်ဆေးခြင်း (syntax)
+# Check imports (syntax)
 uv run python -c "import M5_tools.code.calculator, M5_tools.code.wikipedia"
-``
+```
 
 ---
 

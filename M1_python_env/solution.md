@@ -2,7 +2,7 @@
 
 ## လေ့ကျင့်ခန်း ၁ — uv နဲ့ project အသစ် တည်ဆောက်ခြင်း
 
-``python
+```python
 # Shell steps (shown together for clarity):
 #   uv init my-mcp-project
 #   cd my-mcp-project
@@ -28,13 +28,13 @@ for name in optional:
 # Expected output:
 # OK: pyproject.toml found
 # .venv: exists
-``
+```
 
 **အဓိကအယူအဆ** — `uv init` နဲ့ `uv add` က project ဖိုင်တွေနဲ့ `.venv` ကို တစ်ပြိုင်တည်း တည်ဆောက်ပေးလို့ လက်တွေ့ စစ်ဆေးရလွယ်သည်။
 
 ## လေ့ကျင့်ခန်း ၂ — Version ချုပ်ခြင်းကို စမ်းသပ်ခြင်း
 
-``python
+```python
 # In pyproject.toml set:
 #   requires-python = ">=3.11"
 # Then try running with an older interpreter:
@@ -54,13 +54,13 @@ else:
 # Expected output:
 # PASS: Python 3.11.9 satisfies >=3.11
 # (uv itself also refuses to run the project on an older Python)
-``
+```
 
 **အဓိကအယူအဆ** — `requires-python` က Python version အနည်းဆုံး လိုအပ်ချက်ကို သတ်မှတ်ပြီး `uv` က အလိုအလျောက် စစ်ဆေးပေးသည်။
 
 ## လေ့ကျင့်ခန်း ၃ — pyproject.toml ကို ဖတ်ခြင်း
 
-``python
+```python
 # Minimal parser reading pyproject.toml dependencies with stdlib only
 
 try:
@@ -85,13 +85,13 @@ for dep in deps:
 # Requires Python: >=3.11
 # Dependencies (1):
 #  - mcp>=1.0.0
-``
+```
 
 **အဓိကအယူအဆ** — `pyproject.toml` က machine-readable project metadata ဖြစ်လို့ Python stdlib (သို) `uv` ဖြင့် တိုက်ရိုက် ဖတ်နိုင်သည်။
 
 ## လေ့ကျင့်ခန်း ၄ — Interpreter လမ်းကြောင်း စစ်ခြင်း
 
-``python
+```python
 # which_python.py — show exactly which interpreter is running
 
 import sys
@@ -109,13 +109,13 @@ else:
 # Executable: /path/to/project/.venv/bin/python
 # Version: 3.11.9
 # Mode: VIRTUAL ENVIRONMENT (.venv)
-``
+```
 
 **အဓိကအယူအဆ** — `sys.executable` က လက်ရှိ interpreter ရဲ့ တိကျတဲ့ လမ်းကြောင်းကို ပြပေးလို့ environment မှားနေမှုကို ချက်ချင်း သိနိုင်သည်။
 
 ## လေ့ကျင့်ခန်း ၅ — env_check.py ကို တစ်လိုင်းချင်း ဖတ်ခြင်း
 
-``python
+```python
 # A condensed version of ../code/env_check.py showing its structure:
 
 import sys
@@ -140,13 +140,13 @@ for package in ["mcp", "pydantic"]:
 # Python version: 3.11.9
 # mcp: 1.x.x
 # pydantic: 2.x.x
-``
+```
 
 **အဓိကအယူအဆ** — `env_check.py` ရဲ့ structure က import → interpreter ထုတ်ပြ → package version စစ်ဆေး ဆိုတဲ့ အစဉ်အတိုင်း ဖွဲ့စည်းထားသည်။
 
 ## လေ့ကျင့်ခန်း ၆ — Environment ပြဿနာ ရှာဖွေခြင်း
 
-``python
+```python
 # Simulate the "clone and rebuild" workflow with a verification step
 
 import subprocess
@@ -170,6 +170,6 @@ print("Executable:", sys.executable)
 # $ uv sync
 # Installed <n> packages in ...
 # Executable: .../.venv/bin/python
-``
+```
 
 **အဓိကအယူအဆ** — `uv.lock` က dependency version တွေရဲ့ အတိအကျ မှတ်တမ်းဖြစ်လို့ `uv sync` တစ်ခုတည်းနဲ့ တူညီတဲ့ environment ကို ဘယ်နေရာမှာမဆို ပြန်တည်ဆောက်နိုင်သည်။

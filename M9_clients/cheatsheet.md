@@ -13,10 +13,10 @@
 
 ## အပိုင်း ၁ — Client API (အတိအကျ)
 
-``python
+```python
 from fastmcp import Client
 from fastmcp.client.transports import StdioTransport, UvStdioTransport
-``
+```
 
 ### Discovery — လေးခု
 
@@ -37,14 +37,14 @@ from fastmcp.client.transports import StdioTransport, UvStdioTransport
 
 ### Connection — ပုံစံများ
 
-``python
+```python
 async with Client(Path("M4_fastmcp_basics/code/hello_server.py")) as client:   # stdio subprocess
 async with Client(mcp) as client:                                              # in-process (fast)
 async with Client(mcp, mode="legacy", elicitation_handler=handler) as client:  # elicitation
 async with Client(StdioTransport(command="uv", args=[...], keep_alive=False)) as client:
 async with Client(UvStdioTransport(command="python", args=["-m", MOD],
                                   project_directory=ROOT, keep_alive=False)) as client:
-``
+```
 
 ⭐ `Client(str(path))` က deprecated — `Path` ပေးပါ။
 
@@ -106,7 +106,7 @@ async with Client(UvStdioTransport(command="python", args=["-m", MOD],
 
 ### Skeleton 1 — client loop (model မပါ)
 
-``python
+```python
 async def main() -> None:
     async with Client(Path("path/to/server.py")) as client:
         tools = await client.list_tools()
@@ -120,11 +120,11 @@ async def main() -> None:
                 print("ok:", result.data)
             except Exception as exc:
                 print("failed:", type(exc).__name__, str(exc).splitlines()[0])
-``
+```
 
 ### Skeleton 2 — adapter (MCP tool → LangChain tool)
 
-``python
+```python
 JSON_TO_PY = {"string": str, "number": float, "integer": int, "boolean": bool,
               "array": list, "object": dict}
 
@@ -149,11 +149,11 @@ def adapt(tool, client: Client, prefix: str) -> StructuredTool:
     return StructuredTool.from_function(coroutine=_call, name=lc_name,
                                         description=f"[{prefix}] {(tool.description or '').strip()}",
                                         args_schema=args_model_from_schema(lc_name, tool.input_schema))
-``
+```
 
 ### Skeleton 3 — the graph
 
-``python
+```python
 class AgentState(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]     # ⭐ reducer
 
@@ -170,11 +170,11 @@ graph.add_conditional_edges("agent", tools_condition)
 graph.add_edge("tools", "agent")
 app = graph.compile(checkpointer=MemorySaver())
 await app.ainvoke({"messages": [HumanMessage("...")]}, {"configurable": {"thread_id": "t1"}})
-``
+```
 
 ### Skeleton 4 — budget router (stop condition)
 
-``python
+```python
 class State(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
     steps: int                                   # no reducer — counter
@@ -189,7 +189,7 @@ def router(state: State) -> str:
 
 
 graph.add_conditional_edges("agent", router, {"tools": "tools", "stop": END})
-``
+```
 
 ---
 
@@ -240,7 +240,7 @@ graph.add_conditional_edges("agent", router, {"tools": "tools", "stop": END})
 
 ## အပိုင်း ၅ — တိုင်းထားသည့် အချက်ရှစ်ခု (ဒီ module မှာ သင် ကိုယ်တိုင်မြင်ရမည်)
 
-``text
+```text
 ၁. tool_loop.py line 38  → AttributeError: 'Tool' object has no attribute 'parameters'
    fix: .input_schema                            [ဖိုင် 01, 02]
 
@@ -257,7 +257,7 @@ graph.add_conditional_edges("agent", router, {"tools": "tools", "stop": END})
 ၇. thread တူတူ turn 2 → 6 messages; thread အသစ် → 2; checkpointer မရှိ → 2 နှင့် 2   [ဖိုင် 08]
 
 ၈. no stop condition → GraphRecursionError (default 10007); budget=3 → steps 3, messages 6   [ဖိုင် 07]
-``
+```
 
 ---
 
@@ -300,7 +300,7 @@ graph.add_conditional_edges("agent", router, {"tools": "tools", "stop": END})
 
 ## အပိုင်း ၈ — Command reference
 
-``bash
+```bash
 # run a module
 uv run python -m M9_clients.code.tool_loop
 uv run python -m M9_clients.code.langgraph_client
@@ -321,7 +321,7 @@ uv run pytest tests/test_m9_client_loop.py -q
 
 # the Inspector (a host you did not write)
 uv run fastmcp dev inspector M4_fastmcp_basics/code/hello_server.py
-``
+```
 
 ⚠️ **`--model` အတွက်:** `OPENAI_API_KEY` **နှင့်** `langchain-openai` (ဒီ environment တွင်
 မရှိပါ)။ Key မရှိလျှင် scripted chooser ကို ပြန်ကျသည်။
@@ -349,22 +349,22 @@ uv run fastmcp dev inspector M4_fastmcp_basics/code/hello_server.py
 
 ## အပိုင်း ၁၀ — နောက်သင်ခန်းစာများသို့
 
-``text
+```text
 M10 security  — ဒီ module ရဲ့ ကာကွယ်မှုများ (allowlist, confinement, audit, attack matrix)
 M11 capstone  — host တစ်ခု ကိုယ်တိုင်ရေးခြင်း (lab_5: phase A scripted, phase B graph)
               ⭐ M11 lab_5 သည် M9 ရဲ့ lesson ကို M11 ရဲ့ server ပေါ် တကယ် အသုံးချထားသည်
-``
+```
 
 ⭐ နောက်တစ်ဆင့်ကို ကိုယ်တိုင် စမ်းရန်:
 
-``text
+```text
 ၁. သင့်ကိုယ်ပိုင် server တစ်ခု ရေးပါ (tool ၃ ခု၊ resource ၁ ခု၊ prompt ၁ ခု)
 ၂. lab_1_client_loop.py ကို သင့် server ပေါ် ချိတ်ပါ — surface လေးခု ရှာပါ
 ၃. lab_3_hand_adapter.py ရဲ့ adapter ဖြင့် tool တွေကို LangChain အဖြစ် ပြောင်းပါ
 ၄. lab_6_stop_condition.py ရဲ့ budget router ကို ထည့်ပါ
 ၅. Cline settings ထဲ သင့် server ကို ထည့်ပြီး lab_2 ဖြင့် launch စမ်းပါ
    → ဒီငါးဆင့်သည် ဒီ module တစ်ခုလုံးရဲ့ အကျဉ်းချုပ် ဖြစ်သည်
-``
+```
 
 ## ကိုးကား
 

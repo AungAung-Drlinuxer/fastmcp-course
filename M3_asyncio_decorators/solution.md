@@ -2,7 +2,7 @@
 
 ## လေ့ကျင့်ခန်း ၁ — Decorator ကို လက်ဖြင့် ဆောက်ခြင်း
 
-``python
+```python
 def trace(fn):
     # decorator: take a function, return a new function
     def wrapper():
@@ -18,13 +18,13 @@ def hello():
 
 hello()          # prints before / hello / after
 print(hello.__name__)  # 'wrapper' -- metadata was lost on purpose
-``
+```
 
 **အဓိကအယူအဆ** — Decorator ဆိုတာ function တစ်ခုကို လက်ခံပြီး အလုပ်လုပ်စေမယ့် function အသစ်တစ်ခုကို ပြန်ပေးတဲ့ function သာ ဖြစ်သည်။
 
 ## လေ့ကျင့်ခန်း ၂ — Wrapper ထဲက Closure များ
 
-``python
+```python
 def count_calls(fn):
     count = 0  # closure state, one memory per decorated function
     def wrapper(*args, **kwargs):
@@ -40,13 +40,13 @@ def add(a, b=0):
 
 add(1, b=2)
 add(3)
-``
+```
 
 **အဓိကအယူအဆ** — Wrapper ထဲမှာ `*args` / `**kwargs` နဲ့ closure state ကို သုံးပြီး မူလ function ရဲ့ အပြုအမူအားလုံးကို မှန်ကန်စွာ ဖြတ်ပို့ပေးရမည်။
 
 ## လေ့ကျင့်ခန်း ၃ — Metadata Trap ကို ဖြေရှင်းခြင်း
 
-``python
+```python
 import functools
 
 def keep_name(fn):
@@ -61,13 +61,13 @@ def my_tool():
 
 print(my_tool.__name__)  # 'my_tool', not 'wrapper'
 print(my_tool.__doc__)
-``
+```
 
 **အဓိကအယူအဆ** — `functools.wraps` မထည့်ဘဲ decorator ရေးရင် tool နာမည် `wrapper` ဖြစ်သွားပြီး MCP registry မှာ docstring နဲ့ schema အတွက် စာချုပ်တစ်ခုလုံး ပျက်သွားမည်။
 
 ## လေ့ကျင့်ခန်း ၄ — `@register_tool` ကို ကိုယ်တိုင် ရေးခြင်း
 
-``python
+```python
 import functools, inspect
 
 TOOLS = {}
@@ -87,13 +87,13 @@ def greet(name: str) -> str:
     return f"Hello, {name}!"
 
 print(TOOLS["greet"]["description"])
-``
+```
 
 **အဓိကအယူအဆ** — Registry decorator က function ကို မဖုံးဘဲ ၎င်းရဲ့ metadata ကို ဖတ်ပြီး စာရင်းထဲ သိမ်းထားတဲ့ pattern က `@mcp.tool` ရဲ့ အခြေခံ အယူအဆ ဖြစ်သည်။
 
 ## လေ့ကျင့်ခန်း ၄B — `@mcp.tool` ဖြည့်ထားတဲ့ registry ကို ဖတ်ခြင်း
 
-``python
+```python
 import asyncio
 from mcp.client.session import ClientSession
 from mcp import StdioServerParameters
@@ -109,13 +109,13 @@ async def main():
                 print(t.name, "--", t.description)
 
 asyncio.run(main())
-``
+```
 
 **အဓိကအယူအဆ** — MCP API တိုင်း async ဖြစ်ပြီး `await session.list_tools()` နဲ့ `@mcp.tool` က ဖြည့်သွားတဲ့ registry ကို တကယ့် client ဘက်ကနေ ဖတ်လို့ရသည်။
 
 ## လေ့ကျင့်ခန်း ၅ — စစ်ဆေးတဲ့ tool decorator
 
-``python
+```python
 import functools
 
 def validated(fn):
@@ -132,13 +132,13 @@ def shout(text: str) -> str:
     return text.upper()
 
 print(shout(text="hi"))
-``
+```
 
 **အဓိကအယူအဆ** — Decorator validation က call ခဏမှာ စစ်တာ ဖြစ်ပြီး pydantic validation က schema အဆင့်မှာ စစ်တာ ဖြစ်သဖြင့် နှစ်ခုစလုံး လိုအပ်သည်။
 
 ## လေ့ကျင့်ခန်း ၅B — Sync နဲ့ async နှစ်ခုလုံး အလုပ်လုပ်တဲ့ decorator
 
-``python
+```python
 import asyncio, functools, inspect
 
 def audit(fn):
@@ -159,13 +159,13 @@ async def slow():
     await asyncio.sleep(0.1)
 
 asyncio.run(slow())
-``
+```
 
 **အဓိကအယူအဆ** — `inspect.iscoroutinefunction` နဲ့ ခွဲခြားပြီး sync/async နှစ်မျိုးလုံးကို လက်ခံနိုင်တဲ့ decorator တစ်ခုတည်း ရေးသင့်သည်။
 
 ## လေ့ကျင့်ခန်း ၆ — Event loop ကို အပြင်ကနေ မြင်ခြင်း
 
-``python
+```python
 import asyncio, time
 
 async def job(n):
@@ -181,13 +181,13 @@ async def main():
 start = time.perf_counter()
 asyncio.run(main())
 print(f"{(time.perf_counter() - start):.2f}s")
-``
+```
 
 **အဓိကအယူအဆ** — `async def` ကို ခေါ်တာက coroutine object တည်ဆောက်တာသာ ဖြစ်ပြီး `await` မလုပ်မချင်း event loop ပေါ်မှာ တကယ် run မည် မဟုတ်ပါ။
 
 ## လေ့ကျင့်ခန်း ၇ — Sequential နဲ့ gather ကို တိုင်းတာခြင်း
 
-``python
+```python
 import asyncio, time
 
 async def io_task(n):
@@ -206,13 +206,13 @@ async def main():
     print(f"gather: {t1 - t0:.2f}s")
 
 asyncio.run(main())
-``
+```
 
 **အဓိကအယူအဆ** — `asyncio.sleep` လို non-blocking wait တွေကို `gather` နဲ့ ပေါင်းလိုက်ရင် အချိန်က ပေါင်းလိုက်တာ မဟုတ်ဘဲ အရှည်ဆုံး task တစ်ခုလောက်သာ ကြာမည်။
 
 ## လေ့ကျင့်ခန်း ၈ — `to_thread` နဲ့ `wait_for`
 
-``python
+```python
 import asyncio, time
 
 def blocking_read():
@@ -226,13 +226,13 @@ async def main():
     print(result)
 
 asyncio.run(main())
-``
+```
 
 **အဓိကအယူအဆ** — Blocking library ကို coroutine ထဲမှာ တိုက်ရိုက် မခေါ်ဘဲ `asyncio.to_thread` ထဲ ထည့်ပြီး `asyncio.wait_for` နဲ့ timeout သတ်မှတ်တာက tool တိုင်းအတွက် နောက်ဆုံး pattern ဖြစ်သည်။
 
 ## လေ့ကျင့်ခန်း ၉ — `gather` vs `TaskGroup`
 
-``python
+```python
 import asyncio
 
 async def ok(n):
@@ -250,13 +250,13 @@ async def main():
         print(repr(r))  # exception comes back as a value
 
 asyncio.run(main())
-``
+```
 
 **အဓိကအယူအဆ** — `gather(return_exceptions=True)` က ကျရှုံးမှုကို value အဖြစ် ပြန်ပေးလို့ partial success ဖန်တီးလို့ရပြီး `TaskGroup` က အမှားတစ်ခုကို ExceptionGroup အဖြစ် တစ်ပြိုင်တည်း ထုတ်ပြမည်။
 
 ## လေ့ကျင့်ခန်း ၁၀ — Docstring စာချုပ်
 
-``python
+```python
 def convert(celsius: float) -> float:
     """Convert a temperature from Celsius to Fahrenheit.
 
@@ -269,13 +269,13 @@ def convert(celsius: float) -> float:
     return celsius * 9 / 5 + 32
 
 print(convert.__doc__)
-``
+```
 
 **အဓိကအယူအဆ** — Docstring က လူအတွက်သာ မဟုတ်ဘဲ model မြင်တဲ့ tool description နဲ့ argument ဖော်ပြချက် ဖြစ်ပြီး Google-style format ကို တသမတ်တည်း လိုက်နာရမည်။
 
 ## လေ့ကျင့်ခန်း ၁၁ — Audit harness ဆောက်ခြင်း
 
-``python
+```python
 import functools, inspect
 
 def audit_tool(fn):
@@ -295,13 +295,13 @@ def my_tool():
     return 1
 
 print(my_tool())
-``
+```
 
 **အဓိကအယူအဆ** — Audit harness က tool တိုင်းရဲ့ metadata လေးမျိုး (name, doc, module, signature) ကို test တွေနဲ့ အလိုအလျောက် စစ်ပြီး bug ဖြစ်လာခင်း ဖမ်းပေးမည်။
 
 ## လေ့ကျင့်ခန်း ၁၁B — Async-ness ကို audit လုပ်ခြင်း
 
-``python
+```python
 import functools, inspect
 
 def must_be_async(fn):
@@ -319,6 +319,6 @@ async def tool_a():
 
 import asyncio
 print(asyncio.run(tool_a()))
-``
+```
 
 **အဓိကအယူအဆ** — Metadata မြင်လို့ မရတဲ့ async ဖြစ်မဖြစ်ကို `inspect.iscoroutinefunction` နဲ့ runtime မှာ တိုက်ရိုက် စစ်ဆေးရမည်။

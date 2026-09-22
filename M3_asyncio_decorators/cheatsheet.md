@@ -12,10 +12,10 @@
 
 ## အပိုင်း ၁ — Decorator ၏ အခြေခံ
 
-``python
-# decorator = function ကို ယူပြီး function ပြန်ပေးသည့် function
+```python
+# decorator = a function that takes a function and returns a function
 def logged(fn):
-    @functools.wraps(fn)                     # ⭐ မဖြစ်မနေ
+    @functools.wraps(fn)                     # ⭐ mandatory
     def wrapper(*args, **kwargs):
         return fn(*args, **kwargs)
     return wrapper
@@ -25,13 +25,13 @@ def logged(fn):
 def probe(x: int) -> int:
     """Probe a service."""
     return x
-``
+```
 
-``text
+```text
 ⭐ @decorator  သည် f = decorator(f) သာဖြစ်သည်
 ⭐ @decorator(arg) သည် f = decorator(arg)(f) — အလွှာ တစ်ခု ပို
 ⭐ @a / @b ထပ်လျှင် `b` အရင် run သည် (fn နှင့် အနီးဆုံး)
-``
+```
 
 | လိုအပ်ချက် | ရေးရမည် |
 |---|---|
@@ -45,12 +45,12 @@ def probe(x: int) -> int:
 
 ## အပိုင်း ၂ — ⭐ Metadata အချက် ၄ ခု
 
-``text
+```text
 __name__          → tool ၏ နာမည် (model က ခေါ်သည်)
 __doc__           → tool ၏ description
 __annotations__   → parameters ၏ type (JSON Schema)
 __wrapped__       → functools.wraps က ချိတ်ပေးသည် (signature() က လိုက်ကြည့်သည်)
-``
+```
 
 ### `functools.wraps` မပါလျှင် (တိုင်းတာထားသည်)
 
@@ -63,39 +63,39 @@ __wrapped__       → functools.wraps က ချိတ်ပေးသည် (sig
 | schema `properties` | `{}` | parameters ရှိ |
 | tool name (list ထဲ) | `'wrapper'` | `'disk_usage'` |
 
-``text
+```text
 ⭐ trap ကို ရှာတွေ့သည့်နည်းလမ်း —
    name='wrapper'  +  description=''  +  properties={}  +  error မတက်
-``
+```
 
 ### ⚠️ Decorator အစဉ် bug
 
-``python
-first = naive_logger(good)     # metadata ဖျက်ခံရသည်
-second = logged(first)         # ❌ wraps က ပျက်ပြီးသားကို copy လုပ်သည်
-``
+```python
+first = naive_logger(good)     # metadata gets destroyed
+second = logged(first)         # ❌ wraps copies the already-broken version
+```
 
-``text
+```text
 ⭐⭐ "garbage in, garbage copied" — functools.wraps သည် copy ကိရိယာ၊
    မှော်ဆရာ မဟုတ်
 ⭐ ဖြေရှင်းနည်း: function အသစ်မှ စ; @mcp.tool ကို အပေါ်ဆုံးတွင်ထား
-``
+```
 
 ---
 
 ## အပိုင်း ၃ — Closure နှင့် `bind_partial`
 
-``python
+```python
 def deco(fn):
-    signature = inspect.signature(fn)      # ⭐ import အချိန် တစ်ခါဖတ်
+    signature = inspect.signature(fn)      # ⭐ read once at import time
 
     def wrapper(*args, **kwargs):
-        bound = signature.bind_partial(*args, **kwargs)   # caller ပေးသည့်သာ
+        bound = signature.bind_partial(*args, **kwargs)   # only what the caller provides
         if "username" in bound.arguments:
             check(bound.arguments["username"])
         return fn(*args, **kwargs)
     return wrapper
-``
+```
 
 | လိုအပ်ချက် | သုံးရမည် |
 |---|---|
@@ -109,21 +109,21 @@ def deco(fn):
 
 ## အပိုင်း ၄ — async ၏ အခြေခံ
 
-``python
+```python
 async def fetch(name: str) -> str:            # coroutine function
     await asyncio.sleep(0.25)                 # ⭐ yield point
     return f"{name}:ok"
 
 
-asyncio.run(main())                            # entry point တွင် တစ်ခါသာ
-``
+asyncio.run(main())                            # only once at the entry point
+```
 
-``text
+```text
 ⭐ async def f(x)  → coroutine object (body မ run)
 ⭐ await f(x)      → ဒါမှ run သည်
 ⭐ await          → control ကို loop သို့ ပြန်ပေးသည် (ရပ်ပြီး စောင့်ခြင်း မဟုတ်)
 ⭐ coroutine object ကို တစ်ခါသာ await လို့ရ
-``
+```
 
 ### ── I/O-bound အတွက် ⭐
 
@@ -137,12 +137,12 @@ asyncio.run(main())                            # entry point တွင် တစ
 
 ### ⭐ တိုင်းတာထားသည့် နံပါတ်
 
-``text
+```text
 sequential (4 tasks × 0.25s)     1.03s
 concurrent (gather)              0.26s        → 3.9x
 to_thread (3 blocking calls)     0.25s  (0.75s serial မှ)
 heartbeat ticks: async 9  |  time.sleep 0  |  to_thread 10
-``
+```
 
 ---
 
@@ -157,11 +157,11 @@ heartbeat ticks: async 9  |  time.sleep 0  |  to_thread 10
 | Order | document order | task အလိုက် |
 | Version | အားလုံး | 3.11+ |
 
-``python
-# partial success အတွက် ⭐ MCP tool အတွက် အကောင်းဆုံး
+```python
+# for partial success ⭐ best for MCP tools
 report = await asyncio.gather(*(safe(n) for n in names))
-# safe() ထဲ try/except → gather သည် exception ကို လုံးဝ မမြင်
-``
+# try/except inside safe() → gather never sees the exception
+```
 
 | လိုအပ်ချက် | သုံးရမည် |
 |---|---|
@@ -174,19 +174,19 @@ report = await asyncio.gather(*(safe(n) for n in names))
 
 ## အပိုင်း ၆ — Timeout နှင့် Error
 
-``python
+```python
 try:
     data = await asyncio.wait_for(fetch(url), timeout=10)
 except asyncio.TimeoutError:
     return {"ok": False, "error": "timeout", "url": url}     # ⭐ data, not a crash
-``
+```
 
-``text
+```text
 ⭐ အပြင်သို့ ခေါ်သည့် ခေါ်ချက်တိုင်းတွင် timeout
 ⭐ timeout က client ၏ timeout ၏ ၅၀–၇၀% ထား
 ⭐ wait_for သည် task ကို cancel လုပ်သည် (leak မရှိ)
 ⭐ 3.11+: asyncio.TimeoutError IS builtins.TimeoutError
-``
+```
 
 ### Return vs Raise (VERIFIED.md)
 
@@ -195,15 +195,15 @@ except asyncio.TimeoutError:
 | `return {"ok": False, "error": "..."}` | `CallToolResult(..., is_error=False)` — **data** |
 | `raise ZeroDivisionError` | `ToolError` — plan မပါသော error string |
 
-``text
+```text
 ⭐ မျှော်လင့်နိုင်သည့် ကျရှုံးမှု → data အဖြစ် return
 ⭐ မမျှော်လင့်နိုင်သည့် bug   → raise
 ❌ `except Exception: pass` — agent အတွက် အဆိုးဆုံး
-``
+```
 
 ### Retry
 
-``python
+```python
 async def retry(coro_factory, attempts=3, base_delay=0.05):
     for attempt in range(1, attempts + 1):
         try:
@@ -211,18 +211,18 @@ async def retry(coro_factory, attempts=3, base_delay=0.05):
         except (asyncio.TimeoutError, RuntimeError):
             await asyncio.sleep(base_delay * (2 ** (attempt - 1)))
     raise RuntimeError(f"all {attempts} attempts failed")
-``
+```
 
-``text
+```text
 ✅ Retry: timeout, 503, 429, deadlock
 ❌ Retry မ လုပ်: 400 validation, 401/403 auth, 404, idempotent မဟုတ်သည့် write
-``
+```
 
 ---
 
 ## အပိုင်း ၇ — Docstring (Google style)
 
-``python
+```python
 def disk_usage(path: str, human: bool = True) -> dict:
     """Report disk usage for a filesystem path.          <- imperative summary
 
@@ -236,15 +236,15 @@ def disk_usage(path: str, human: bool = True) -> dict:
     Raises:
         FileNotFoundError: when the path does not exist on the server host.
     """
-``
+```
 
-``text
+```text
 ⭐ စည်းမျဉ်း ၄ ခု:
    1. One-line summary, imperative
    2. ဗလာလိုင်း + Args: (parameter တိုင်း)
    3. တန်ဖိုး ဘယ်လိုရှိရမည်ကို ပြော ("it is a string" မဟုတ်)
    4. ကျရှုံးမှုကို ရေး (Raises: / "Returns an empty list when ...")
-``
+```
 
 ### ⚠️ Format သည် contract
 
@@ -254,9 +254,9 @@ def disk_usage(path: str, human: bool = True) -> dict:
 | `"Does the thing with the stuff."` | ❌ ၀/၂ — description အားလုံး ဆုံး |
 | `:param path:` (Sphinx) | ❌ ၀/၂ — parser က မသိ |
 
-``text
+```text
 ⭐⭐ သုံးခုလုံး **register ဖြစ်သည်**၊ error မတက်၊ တစ်ခုသာ အသုံးဝင်သည်
-``
+```
 
 ### Schema တွင် ဘာလာသလဲ (VERIFIED.md)
 
@@ -273,9 +273,9 @@ def disk_usage(path: str, human: bool = True) -> dict:
 
 ## အပိုင်း ၈ — MCP API အချက် (VERIFIED.md)
 
-``text
+```text
 fastmcp 4.0.5 · pydantic 2.13.5 · python 3.11.x
-``
+```
 
 | 2.x says | 4.0.5 has | Error |
 |---|---|---|
@@ -289,11 +289,11 @@ fastmcp 4.0.5 · pydantic 2.13.5 · python 3.11.x
 | server: `await mcp.list_tools()` | `FunctionTool` | `.parameters` |
 | client: `await client.list_tools()` | `Tool` | `.input_schema` |
 
-``text
+```text
 ⭐ `@mcp.tool` သည် registration decorator — သင့် fn ကို မဖုံး၊ ဒါကြောင့်
    `disk_usage("/tmp")` ဆက်ခေါ်လို့ရ
 ⭐ tool.parameters ကို ပုံနှိပ်ကြည့်ပါ — model မြင်သည့်အရာ အတိအကျ
-``
+```
 
 ---
 
@@ -331,7 +331,7 @@ fastmcp 4.0.5 · pydantic 2.13.5 · python 3.11.x
 
 ## အပိုင်း ၁၀ — ⭐ လက္ခဏာ ၃ ခု
 
-``text
+```text
 ⭐⭐ ဒီ module ၏ အခက်ဆုံး အမှား ၄ ခုတွင် တူညီသည့် လက္ခဏာ ၃ ခု:
 
 ၁. error မတက်ပါ
@@ -340,13 +340,13 @@ fastmcp 4.0.5 · pydantic 2.13.5 · python 3.11.x
 
 → ⭐ ဒီလက္ခဏာကို မြင်လျှင် error message ကို မရှာပါနဲ့ —
    metadata နှင့် async-ness ကို တိုက်ရိုက် စစ်ပါ
-``
+```
 
 ---
 
 ## အပိုင်း ၁၁ — Audit Harness
 
-``python
+```python
 PLACEHOLDER_NAMES = {"wrapper", "decorator", "inner", "wrapped", "func", "<lambda>"}
 
 def audit_tool(fn) -> dict:
@@ -362,26 +362,26 @@ def audit_tool(fn) -> dict:
     if not body:
         problems.append("signature is only *args/**kwargs")
     return {"verdict": "OK" if not problems else "BROKEN", "problems": problems}
-``
+```
 
-``python
-# ⭐ metadata audit မဖမ်းနိုင်သည့် အမှား
+```python
+# ⭐ error that metadata audit cannot catch
 assert inspect.iscoroutinefunction(fn), "tools that do I/O must be async"
-``
+```
 
-``text
+```text
 ⭐ နှစ်ခုလုံး လိုသည်: audit_tool(fn)["verdict"] == "OK"  +  iscoroutinefunction(fn)
 ⭐ verdict ကို OK / BROKEN (သို့ WARN) — M1 ၏ `env_check.py` နှင့် တူညီ
-``
+```
 
 ---
 
 ## အပိုင်း ၁၂ — Command နှင့် ဖိုင်
 
-``bash
+```bash
 cd D:\fastmcp-course
 
-# module code များ
+# module codes
 uv run python -m M3_asyncio_decorators.code.decorators
 uv run python -m M3_asyncio_decorators.code.async_io
 uv run python -m M3_asyncio_decorators.code.docstrings
@@ -402,26 +402,26 @@ uv run python -m M3_asyncio_decorators.code.lab_10_docstring_contract
 uv run python -m M3_asyncio_decorators.code.lab_11_audit_tool
 uv run python -m M3_asyncio_decorators.code.lab_11b_audit_async
 
-# ⭐ warning ကို error အဖြစ် (coroutine was never awaited ကို ဖမ်းရန်)
+# ⭐ treat the warning as an error (to catch 'coroutine was never awaited')
 uv run python -W error::RuntimeWarning -m M3_asyncio_decorators.code.lab_6_event_loop
-``
+```
 
 ### တစ်လိုင်း စစ်ဆေးမှုများ
 
-``bash
-# metadata စစ်
+```bash
+# check metadata
 uv run python -c "
 import inspect
 from M3_asyncio_decorators.code.decorators import disk_usage
 print(disk_usage.__name__, repr(inspect.getdoc(disk_usage)), disk_usage.__annotations__)"
 
-# signature စစ် (wraps ထိရောက်မှု)
+# check signature (effectiveness of wraps)
 uv run python -c "
 import inspect
 from M3_asyncio_decorators.code.lab_5_validated_tool import create_user
 print(inspect.signature(create_user))"
 
-# async-ness စစ်
+# check async-ness
 uv run python -c "
 import inspect; from fastmcp import FastMCP
 mcp = FastMCP('x')
@@ -434,13 +434,13 @@ async def t(a: str) -> dict:
     '''
     return {}
 print(inspect.iscoroutinefunction(t))"
-``
+```
 
 ---
 
 ## အပိုင်း ၁၃ — နောက်ဆုံး စည်းမျဉ်း ၁၀ ခု
 
-``text
+```text
 ၁.  Wrapper တိုင်းတွင် @functools.wraps — style မဟုတ်၊ tool ကို ဖော်ပြနိုင်စေသည့်အချက်
 ၂.  Registration decorator များသည် `return fn` — wrapper မဆောက်ပါ
 ၃.  @mcp.tool ကို အပေါ်ဆုံးတွင်ထား၊ သင့်ကိုယ်ပိုင် decorator များကို အောက်တွင်
@@ -451,7 +451,7 @@ print(inspect.iscoroutinefunction(t))"
 ၈.  မျှော်လင့်နိုင်သည့် ကျရှုံးမှုကို data အဖြစ် return — `except: pass` မလုပ်ပါ
 ၉.  Docstring သည် tool description — imperative summary + Args: + ကျရှုံးမှု
 ၁၀. Error မတက်သည့် bug ကို ကိုယ်တိုင် audit လုပ်ပါ — metadata + async-ness
-``
+```
 
 ---
 

@@ -15,7 +15,7 @@
 
 ## အပိုင်း ၁ — ⭐ အဓိက စည်းမျဉ်း ၁၀ ချက်
 
-``text
+```text
 ၁. tool list = attack surface. @mcp.tool ရှိသည့် function တစ်ခုစီကို review လုပ်ပါ။
 ၂. tool argument သည် model-generated input ဖြစ်သည် — "user ရိုက်လိုက်တာ" မဟုတ်ပါ။
 ၃. ⭐ Path.resolve() ကို စစ်ဆေးမှု မတိုင်မီ လုပ်ပါ; string နှိုင်းယှဉ်ခြင်း သည် bypass ဖြစ်သည်။
@@ -26,7 +26,7 @@
 ၈. ⭐ audit trail သည် secret မပါရ — shape ကို မှတ်ပါ, value ကို မှတ်ပါနဲ့။
 ၉. ⭐ tool description/docstring သည် code — review, pin, hash လုပ်ပါ။
 ၁၀. ⭐ control တစ်ခုစီအတွက် "ဒါက ဘာကို မကာကွယ်သလဲ" ကို ဆိုနိုင်ရမည်။
-``
+```
 
 ---
 
@@ -50,8 +50,8 @@
 
 ## အပိုင်း ၃ — ⭐ command အားလုံး (copy-paste)
 
-``bash
-# ---- labs (အားလုံး course root မှ run သည်) ----
+```bash
+# ---- labs (run all from course root) ----
 uv run python -m M10_security.code.lab_1_threat_model
 uv run python -m M10_security.code.lab_2_injection_bench
 uv run python -m M10_security.code.lab_3_tool_manifest          # write + verify
@@ -65,24 +65,24 @@ uv run python -m M10_security.code.lab_9_attack_matrix
 uv run python -m M10_security.code.lab_10_container_smoke
 uv run python -m M10_security.code.lab_11_audit_log
 
-# ---- ဒီ module ရဲ့ server ကိုယ်တိုင် ----
+# ---- this module's server itself ----
 uv run python -m M10_security.code.path_validation
 
 # ---- the test suite ----
 uv run pytest -q tests/test_m10_security.py
 uv run pytest -q
 
-# ---- version ကို စစ်ပါ (hash များ မတူလျှင် ဒီဟာ ဖြစ်နိုင်သည်) ----
+# ---- check the version (if hashes don't match, this may be why) ----
 uv run python -c "import fastmcp, pydantic; print(fastmcp.__version__, pydantic.__version__)"
-``
+```
 
 ⭐ လိုအပ်သည့် version:
 
-``text
+```text
 fastmcp   4.0.5
 pydantic  2.13.5
 python    3.11.x
-``
+```
 
 ---
 
@@ -92,7 +92,7 @@ python    3.11.x
 |---|---|---|
 | `../../etc/shadow` | `path_not_allowed` | `.resolve()` က `..` ကို collapse → root ပြင်ပ |
 | `..\..\windows\win.ini` | `path_not_allowed` | backslash separator ကိုပါ pathlib က ကိုင်တယ် |
-| `/etc/passwd` | `path_not_allowed` | absolute path သည် `ROOT / path` တွင် ဘယ်ဘက်ကို ဖျက်သည် |
+| `/etc/passwd` | `path_not_allowed` | absolute path သည် `ROOT / path` ရဲ့ ဘယ်ဘက်ကို ပယ်ပြီး သူ့အစား ဝင်သည် |
 | `logs/../../../etc/hosts` | `path_not_allowed` | subdir မှ တွန်းထုတ်သည် |
 | `postgres.log; rm -rf /` | `not_found` | ⭐ shell မရှိ → `;` သည် စာလုံးတစ်လုံး |
 | `$(id)` | `not_found` | ⭐ substitution လုပ်သည့် shell မရှိ |
@@ -106,11 +106,11 @@ python    3.11.x
 
 ⭐ မိသားစု ၂ ခု:
 
-``text
+```text
 traversal  → boundary (`_resolve_within`) က ကိုင်တွယ်သည် → path_not_allowed
 injection  → shell မရှိခြင်း က ကိုင်တွယ်သည်       → not_found
 ⭐ filter (`if ";" in name`) မထည့်ပါ — false positive ကို ဖန်တီးသည်၊ အန္တရာယ်ကို မဖျက်ပါ
-``
+```
 
 ---
 
@@ -126,13 +126,13 @@ injection  → shell မရှိခြင်း က ကိုင်တွယ်
 
 ⭐ နှင့် ပြောင်းလဲမှု ပဉ္စမ (code ထဲတွင် စာရင်းချထားသည်):
 
-``text
+```text
 ("allowlist of files",        "reading anything on the host")
 ("Path.resolve() confinement","traversal and symlink escapes")
 ("no shell anywhere",         "command chaining and injection")
 ("max_lines / MAX_BYTES",     "context exhaustion from one call")
 ("a list_logs tool",          "the reason to guess paths at all")   ⭐
-``
+```
 
 ---
 
@@ -151,9 +151,9 @@ injection  → shell မရှိခြင်း က ကိုင်တွယ်
 
 ⭐ clamp ရဲ့ ပုံစံ:
 
-``python
+```python
 max_lines = max(1, min(1000, max_lines))      # ⭐ server-side truth
-``
+```
 
 ---
 
@@ -168,10 +168,10 @@ max_lines = max(1, min(1000, max_lines))      # ⭐ server-side truth
 
 ⭐ shape:
 
-``python
+```python
 {"ok": False, "error": "path_not_allowed", "hint": "path escapes the log directory: '...'"}
 {"ok": True,  "name": "postgres.log", "lines": 2, "truncated_bytes": False, "content": "..."}
-``
+```
 
 ⭐ `hint` ထဲ မထည့်ရ: resolved absolute path · ဖိုင်စနစ် စာရင်း · `str(exc)` အပြည့် ·
 user text ကို ပြန်ပေးခြင်း (injection carrier ဖြစ်လာသည်)။
@@ -224,23 +224,23 @@ user text ကို ပြန်ပေးခြင်း (injection carrier ဖ�
 
 ⭐ redaction ပုံစံ:
 
-``python
+```python
 {"redacted": True, "sha256_16": "8b503cb9c94107b3", "length": 22}
-``
+```
 
 ⭐ `is_sensitive` သည် **substring** match ဖြစ်ရမည်:
 
-``python
+```python
 SENSITIVE = ("password", "passwd", "pwd", "token", "secret", "api_key", "apikey",
              "authorization", "auth", "credential", "connection_string", "private_key")
 return any(hint in key.lower() for hint in SENSITIVE)     # ⭐ not `key in SENSITIVE`
-``
+```
 
 ---
 
 ## အပိုင်း ၁၀ — ⭐ tool အသစ် approval gate (ဖြေရမည့် မေးခွန်း ၈ ခု)
 
-``text
+```text
 tool အသစ် တစ်ခု ထည့်မီ — ဒီ ၈ ခုလုံးကို ဖြေပါ:
 
 ၁. ဒီ tool သည် STRANGER တစ်ဦးကို ဘာလုပ်ခွင့် ပေးသလဲ?            (ဖိုင် 01)
@@ -253,39 +253,39 @@ tool အသစ် တစ်ခု ထည့်မီ — ဒီ ၈ ခုလု
 ၈. ဒီ tool ရဲ့ call များကို audit trail တွင် ဘယ်လို မြင်မလဲ?        (ဖိုင် 11)
 
 ⭐ ၈ ခုလုံး ဖြေလို့ရပြီဆိုမှ `@mcp.tool` ကို ရေးပါ။
-``
+```
 
 ---
 
 ## အပိုင်း ၁၁ — ⭐ code review checklist
 
-``bash
-# ၁. shell မရှိရ
+```bash
+# 1. no shell allowed
 rg -n "shell\s*=\s*True" .
 rg -n "os\.system|os\.popen|commands\.getoutput" .
 rg -n "eval\(|exec\(" .
 rg -n "pickle\.loads?" .
 
-# ၂. subprocess ရှိလျှင် — list argv နှင့် timeout ရှိရမည်
+# 2. if subprocess exists — must use list argv and a timeout
 rg -n -A3 "subprocess\.(run|call|Popen|check_output)"
 
-# ၃. path confinement
+# 3. path confinement
 rg -n "startswith\(.*root|startswith\(.*ROOT" .        # ⚠️ sibling-prefix bypass
-rg -n "is_relative_to" .                               # ⚠️ resolve မပါလျှင် lexical ဖြစ်သည်
-rg -n "\.resolve\(\)" .                                # ✅ ဒါကို ရှာပါ
+rg -n "is_relative_to" .                               # ⚠️ without resolve, it's lexical
+rg -n "\.resolve\(\)" .                                # ✅ look for this
 
-# ၄. bound
-rg -n "read_text\(|\.read\(\)" .                       # ⚠️ bound မရှိလျှင်
-rg -n "max_|MAX_" .                                    # ✅ bound constant များ
+# 4. bound
+rg -n "read_text\(|\.read\(\)" .                       # ⚠️ without bound
+rg -n "max_|MAX_" .                                    # ✅ bound constants
 
-# ၅. refusal shape
-rg -n '"error":' .                                     # code များ closed set ထဲ ဝင်သလား
-rg -n 'raise ' .                                       # ⚠️ tool ထဲက raise များ (refusal ဖြစ်နိုင်သည်)
+# 5. refusal shape
+rg -n '"error":' .                                     # are the codes within the closed set
+rg -n 'raise ' .                                       # ⚠️ raises from within a tool (may be a refusal)
 
-# ၆. audit / secret
-rg -n "str\(exc\)|traceback" .                         # ⚠️ arg value ပေါက်ကြားနိုင်သည်
+# 6. audit / secret
+rg -n "str\(exc\)|traceback" .                         # ⚠️ arg value may leak through
 rg -n "os\.environ" .                                  # ⚠️ ambient authority
-``
+```
 
 ⭐ ဒီ command များသည် **တစ်ခုတည်းသော code review pass** ဖြစ်သည် — အချိန် ၅ မိနစ်။
 
@@ -293,7 +293,7 @@ rg -n "os\.environ" .                                  # ⚠️ ambient authorit
 
 ## အပိုင်း ၁၂ — ⭐ incident response checklist
 
-``text
+```text
 tool တစ်ခုက မမျှော်မှန်းသည့် အရာ လုပ်ခဲ့သည်ဟု သံသယ ရှိလျှင်:
 
 ၁. audit trail ကို ဖတ်ပါ — verdict column ကို အရင် ကြည့်ပါ
@@ -314,7 +314,7 @@ tool တစ်ခုက မမျှော်မှန်းသည့် အရ�
 ၅. ⭐ ဖြေရှင်းရာတွင်: code ကို ပြင်ခြင်းထက် ⭐ REACH ကို လျှော့ပါ
       (tool ကို ခေတ္တ ဖယ်၊ allowlist ကို ကျဉ်း၊ mount ကို ro လုပ်)
    ⭐ ဒါသည် ဒီ module တစ်ခုလုံးရဲ့ သင်ခန်းစာ — အာဏာကို ချုပ်ပါ။
-``
+```
 
 ---
 
@@ -334,22 +334,22 @@ tool တစ်ခုက မမျှော်မှန်းသည့် အရ�
 | server: `await mcp.list_tools()` | `FunctionTool` | `.parameters` |
 | client: `await client.list_tools()` | `mcp_types._types.Tool` | `.input_schema` |
 
-``text
+```text
 AttributeError: 'Tool' object has no attribute 'parameters'
 FastMCPDeprecationWarning: Accessing `Tool.inputSchema` is deprecated; ... renamed this field
                            to `input_schema`.
-``
+```
 
 ⭐ ဒီ module အတွက် အရေးကြီးဆုံး တိုင်းတာချက်:
 
-``text
+```text
 tool RETURNING {"ok": false, "error": "..."}
     -> CallToolResult(..., structured_content={...}, is_error=False)   # data
 tool RAISING ZeroDivisionError
     -> ToolError, model သည် error string ကိုသာ ရသည် — plan မရှိပါ
 argument သည် schema ကို ချိုးလျှင် (max_lines="lots")
     -> ToolError  1 validation error for call[read_log]  [type=int_parsing]
-``
+```
 
 ---
 
@@ -382,14 +382,14 @@ argument သည် schema ကို ချိုးလျှင် (max_lines="l
 
 ## အပိုင်း ၁၅ — ⭐ နောက်ဆုံး ၅ ကြောင်း
 
-``text
+```text
 ၁. ⭐ အန္တရာယ်သည် tool ရဲ့ အမည်တွင် မရှိပါ — signature နှင့် body ကို ဖတ်ပါ။
 ၂. ⭐ injection ကို ဖြေလို့ မရပါ — ဒဏ်ကို ဖျက်ပါ (reach, bound, provenance)။
 ၃. ⭐ string ကို မစစ်ပါနဲ့ — တည်နေရာ (resolved path) ကို စစ်ပါ။
 ၄. ⭐ refusal သည် DATA ဖြစ်ရမည်; code သည် closed set ဖြစ်ရမည်; hint သည် model UI ဖြစ်ရမည်။
 ၅. ⭐ "ဒီ control က ဘာကို မကာကွယ်သလဲ" ကို ဆိုနိုင်လျှင် ဒါသည် control တစ်ခု;
    မဆိုနိုင်လျှင် ဒါသည် မျှော်လင့်ချက် တစ်ခု။
-``
+```
 
 ## ကိုးကား
 

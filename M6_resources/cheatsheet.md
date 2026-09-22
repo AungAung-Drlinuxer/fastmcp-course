@@ -7,22 +7,22 @@
 
 ## ၁။ Primitive နှစ်မျိုး
 
-``text
+```text
 @mcp.tool      → ACTION   "ငါ ဒါ လုပ်ပေးနိုင်တယ်"   model က ရွေးသည်
 @mcp.resource  → THING    "ငါ့မှာ ဒါ ရှိတယ်"        URI ဖြင့် ညွှန်းသည်
 
 @mcp.prompt    → TEMPLATE "ဒီလို လုပ်ပါ"           host/လူ က ရွေးသည် (M7)
-``
+```
 
 ## ၂။ မေးခွန်း ၄ ခု (resource or tool?)
 
-``text
+```text
 ၁. ရှိပြီးသားလား? (exists?)        မဟုတ် → tool
 ၂. read-only လား?                  မဟုတ် → tool
 ၃. cheap လား? (< 200 ms)           မဟုတ် → tool
 ၄. state ပြောင်းလား?               ပြောင်း → tool
 → လေးခုလုံး ✅ → resource
-``
+```
 
 | အရာ | ဆုံးဖြတ်ချက် |
 |---|---|
@@ -36,7 +36,7 @@
 
 ## ၃။ ဖိုင်တိုင်း၏ အကြောင်းအရာ
 
-``text
+```text
 01-resource-concept.md        tool vs resource, runbooks.py အပေါ်ပိုင်း
 02-resource-or-tool.md        မေးခွန်း ၄ ခု, cheap ကို တိုင်းတာ, list ၃ မျိုး
 03-uri-schemes.md             URI အစိတ်အပိုင်း, scheme, LAB 7
@@ -50,11 +50,11 @@
 11-cheatsheet.md              ဒီဖိုင်
 12-labs-answers.md            LAB 1–5 အဖြေများ
 13-answers-exercises.md       LAB 6–9, bug ၈ ခု, design ၅ ခု, project
-``
+```
 
 ## ၃.၁။ တိုင်းတာချက် အစစ် ၁၀ ခု (မှတ်ထားရမည်)
 
-``text
+```text
 ၁.  read_resource() → LIST; [0].text                     (LAB 1, 5)
 ၂.  template-only server → list_resources() == []        (LAB 4)
 ၃.  attribute က uri_template; .uriTemplate → AttributeError   (LAB 4)
@@ -65,11 +65,11 @@
 ၈.  return "" → SUCCESS, text='' len=0, is_error=False   (LAB 9)
 ၉.  custom exception type → MCPError, message ကျန်       (LAB 9)
 ၁၀. mime_type မထည့် → text/plain; ကြေညာချက် မစစ်ခံ       (LAB 8)
-``
+```
 
 ## ၄။ Decorator နှစ်မျိုး
 
-``python
+```python
 # STATIC — fixed URI, no arguments   -> list_resources()
 @mcp.resource("inventory://hosts", mime_type="application/json")
 def host_inventory() -> dict:
@@ -91,7 +91,7 @@ def runbook(service: str) -> str:
         raise FileNotFoundError(
             f"no runbook for {service!r}; available: {', '.join(available) or 'none'}")
     return path.read_text(encoding="utf-8")
-``
+```
 
 ## ၅။ Return type → content shape (တိုင်းတာချက်)
 
@@ -110,32 +110,32 @@ def runbook(service: str) -> str:
 
 ## ၆။ Enumeration — ထောင်ချောက်
 
-``python
+```python
 async with Client(mcp) as client:
     await client.list_tools()                 # actions
     await client.list_resources()             # ⭐ templates are absent here: []
     await client.list_resource_templates()    # ⭐ templates appear here
-``
+```
 
 | Server-side | Client-side |
 |---|---|
 | `FunctionResource` (`.uri`, `.mime_type`) | `Resource` (`.uri`, `.mime_type`) |
 | `FunctionResourceTemplate` (`.uri_template`, `.parameters`, `.matches(uri)`) | `ResourceTemplate` (`.uri_template`) |
 
-``text
+```text
 ⭐ attribute က `uri_template` (snake_case) — `.uriTemplate` သည် AttributeError
 ⭐ server resource.uri သည် AnyUrl; client resource.uri သည် str → `str(r.uri)` သုံးပါ
 ⭐ mcp.list_resource_templates() = server object; client.… = wire object
-``
+```
 
 ## ၇။ Read — contract
 
-``python
+```python
 items = await client.read_resource("runbook://postgres")   # LIST
 text  = items[0].text                                      # ⭐ [0]
 mime  = items[0].mime_type
 uri   = items[0].uri
-``
+```
 
 | လက္ခဏာ | အကြောင်းရင်း | ဖြေရှင်းနည်း |
 |---|---|---|
@@ -146,22 +146,22 @@ uri   = items[0].uri
 
 ## ၈။ Error taxonomy (တိုင်းတာချက်)
 
-``text
+```text
 Resource not found: 'runbook://a/b'                     → URI မကိုက် (router), function မခေါ်
 Error reading resource 'runbook://oracle': no runbook   → function ခေါ်ခဲ့သည်၊ raise လုပ်ခဲ့သည်
 Error reading resource '...': 1 validation error        → type hint မကိုက်
 (exception မရှိ) text='' len=0                           → ⭐ SILENT FAILURE
-``
+```
 
 ## ၉။ mime_type
 
-``text
+```text
 type/subtype — text/plain | text/markdown | application/json | image/png | …
 
 default = text/plain        (မထည့်လျှင်)
 ⭐ ဒါက ကြေညာချက် သာ — FastMCP က content ကို မစစ်ပါ
    shape://mismatch: mime=application/json, text='this is not JSON at all'
-``
+```
 
 | Content | mime | return |
 |---|---|---|
@@ -175,7 +175,7 @@ default = text/plain        (မထည့်လျှင်)
 
 ## ၁၀။ URI စည်းမျဉ်း
 
-``text
+```text
 ၁. noun သုံး, verb မသုံး        inventory://hosts ✅   get://hosts ❌
 ၂. စုစည်းမှု plural            inventory://hosts ✅
 ၃. lowercase (path အထူးသဖြင့်) config://MOTD → FAIL
@@ -183,7 +183,7 @@ default = text/plain        (မထည့်လျှင်)
 ၅. scheme ထဲ version မထည့်     runbook:// ✅  runbook-v2:// ❌
 ၆. path ၂ အဆင့်ထက် မပို
 ၇. variable ကို ကြိုသိနိုင်      runbook://{service} ✅  runbook://{anything} ❌
-``
+```
 
 | URI | ရလဒ် |
 |---|---|
@@ -198,7 +198,7 @@ default = text/plain        (မထည့်လျှင်)
 
 ## ၁၁။ pathlib
 
-``python
+```python
 DATA = Path(__file__).with_name("data")     # ⭐ independent of the CWD
 DATA.mkdir(exist_ok=True)
 
@@ -210,7 +210,7 @@ available = sorted(p.stem for p in DATA.glob("*.md"))   # stem + sorted (determi
 text = path.read_text(encoding="utf-8")                 # ⭐ always pass an encoding
 data = json.loads(text)                                 # verify it really is JSON
 blob = path.read_bytes()                                # binary
-``
+```
 
 | Method | အသုံး |
 |---|---|
@@ -223,14 +223,14 @@ blob = path.read_bytes()                                # binary
 
 ## ၁၂။ Failing loudly
 
-``python
+```python
 if not path.is_file():
     available = sorted(p.stem for p in DATA.glob("*.md"))
     raise FileNotFoundError(
         f"no runbook for {service!r}; available: {', '.join(available) or 'none'}")
-``
+```
 
-``text
+```text
 ✅ တန်ဖိုး အတိအကျ: {service!r}
 ✅ ဆက်လုပ်လို့ရသည့် အချက်: available: ...
 ✅ server-side path မပေါက်
@@ -238,29 +238,29 @@ if not path.is_file():
 ❌ {"ok": false}            → content သည် document; error channel မရှိ
 ⭐ custom exception type သည် wire မဖြတ် → message ထဲ အမည် ထည့်ပါ
 ⭐ raise ... from exc       → client: message ကောင်း; server log: အကြောင်းရင်း အပြည့်
-``
+```
 
 ## ၁၃။ Confinement
 
-``python
+```python
 ROOT = DATA.resolve()
 candidate = (ROOT / name).resolve()          # resolve FIRST
 if ROOT not in candidate.parents:            # the containment check SECOND
     raise ValueError(f"path escapes the runbook directory: {name!r}")
 return candidate
-``
+```
 
-``text
+```text
 အလွှာ ၁: router — segment variable တွင် `/` မကိုက် → `matches('runbook://a/b') -> None`
 အလွှာ ၂: resolve() + containment — path လက်ခံသည့် resource/tool အတွက် တစ်ခုတည်း
 မူ: ".. တားမြစ်" မဟုတ် — "ရလဒ်သည် root အတွင်း ရှိရမည်"
 ⭐ root ကိုယ်တိုင်: `candidate != ROOT and ROOT not in candidate.parents` (M10)
 ⚠️ symlink escape ကို M6 တွင် တိုင်းတာထားခြင်း မရှိ
-``
+```
 
 ## ၁၄။ Lab များ (run command များ)
 
-``bash
+```bash
 uv run python -m M6_resources.code.runbooks                 # the module's main code
 uv run python -m M6_resources.code.lab_1_static_text        # static text (.txt)
 uv run python -m M6_resources.code.lab_2_static_json        # static JSON (.json)
@@ -271,7 +271,7 @@ uv run python -m M6_resources.code.lab_6_confinement        # confinement
 uv run python -m M6_resources.code.lab_7_uri_edges          # URI edges
 uv run python -m M6_resources.code.lab_8_return_shapes      # return shapes
 uv run python -m M6_resources.code.lab_9_failure_shapes     # four failure shapes
-``
+```
 
 ## ၁၅။ အမှား ၁၂ ခု — လက္ခဏာ → ဖြေရှင်းနည်း
 
@@ -292,7 +292,7 @@ uv run python -m M6_resources.code.lab_9_failure_shapes     # four failure shape
 
 ## ၁၆။ Code review checklist (resource တစ်ခုစီအတွက်)
 
-``text
+```text
 ☐ primitive မှန်သလဲ? (resource vs tool — မေးခွန်း ၄ ခု)
 ☐ URI သည် noun, lowercase, version မပါ, path ≤ 2 segment?
 ☐ template ဖြစ်လျှင် variable ကို ကြိုသိနိုင်သလဲ? တန်ဖိုး စာရင်း ပေးသလဲ?
@@ -305,11 +305,11 @@ uv run python -m M6_resources.code.lab_9_failure_shapes     # four failure shape
 ☐ traversal ကာကွယ်မှု (confinement) ရှိသလဲ?
 ☐ state မပြောင်းစေကြောင်း သေချာသလဲ? (read-only ကတိ)
 ☐ ဈေးကြီးလျှင် cache / TTL ရှိသလဲ?
-``
+```
 
 ## ၁၇။ VERIFIED.md နှင့် ကိုက်ညီမှု
 
-``text
+```text
 ✅ @mcp.resource("runbook://{service}") registers a TEMPLATE, not a resource
 ✅ await mcp.list_resources() → [] for a template-only server
 ✅ await mcp.list_resource_templates() → objects whose uri_template is runbook://{service}
@@ -317,7 +317,7 @@ uv run python -m M6_resources.code.lab_9_failure_shapes     # four failure shape
 ✅ A resource with no content raises clearly (FileNotFoundError: no runbook for 'nginx';
    available: postgres, redis) — which is more useful to a model than an empty string
 ✅ 2.x template.uriTemplate → 4.x template.uri_template
-``
+```
 
 ⭐ မှတ်ချက်: `VERIFIED.md` က `FileNotFoundError` ဟု ရေးထားသည်; **client လက်ခံသည့်
 အရာမှာ `MCPError`** ဖြစ်ပြီး message ထဲတွင် မူရင်း `FileNotFoundError` ၏ စာသား
@@ -325,7 +325,7 @@ uv run python -m M6_resources.code.lab_9_failure_shapes     # four failure shape
 
 ## ၁၈။ သင့် server ၏ contract ကို README တွင် ရေးခြင်း
 
-``markdown
+```markdown
 # runbooks server
 
 ## Resources (read-only, addressed by URI)
@@ -344,21 +344,21 @@ available ones in the message.
 | Tool | What it changes |
 |---|---|
 | `restart_service(name)` | restarts a service; requires an allowlist |
-``
+```
 
 ⭐ ဒီ table နှစ်ခုသည် **host developer အတွက် လုံလောက်သည့် integration spec** ဖြစ်သည်။
 M11 capstone တွင် ဒီပုံစံကို တိုက်ရိုက် သုံးမည်။
 
 ## ၁၉။ နောက် module များသို့ ချိတ်ဆက်မှု
 
-``text
+```text
 M5 (ရှေ့)   → tool ၏ structured error; M6 ၏ raise နှင့် ဘာကြောင့် မဆန့်ကျင်သလဲ
 M7 (နောက်)  → @mcp.prompt — host/လူ ရွေးသည့် စာသား; resource နှင့် ကွာခြားချက်
 M8          → elicit — resource ၏ read-only ကတိကို ချိုးဖောက်လိုလျှင် tool လိုသည်
 M9          → orchestrating client — LAB 5 ၏ reader loop ကို ချဲ့သည်
 M10         → confinement ပြီးဆုံး; allowlist; MAX_BYTES; no shell
 M11         → capstone — resource စာရင်း + tool စာရင်း = server ၏ contract
-``
+```
 
 ## ကိုးကား
 

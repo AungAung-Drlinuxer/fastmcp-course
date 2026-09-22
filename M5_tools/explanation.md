@@ -16,7 +16,7 @@ Function ၏ အစိတ်အပိုင်း ၅ ခု (name, docstring, `
 
 ### ဥပမာ
 
-``python
+```python
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("calculator")
@@ -30,11 +30,11 @@ def add(a: float, b: float) -> float:
         b: The second number.
     """
     return a + b
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-ကုဒ်ရေးသာသူများအတွက် မဟုတ် — သင့် tool ကို ခေါ်ဆိုမည့် model အတွက် ဖြစ်သည်။ Schema ရှင်းလင်းလေ၊ model မှားလေ နည်းသည်။
+ကုဒ်ရေးသူများအတွက် မဟုတ် — သင့် tool ကို ခေါ်ဆိုမည့် model အတွက် ဖြစ်သည်။ Schema ရှင်းလင်းလေ၊ model မှားလေ နည်းသည်။
 
 ## အပိုင်း ၂ — Raise vs Return
 
@@ -52,7 +52,7 @@ Exception မြှင့်တင်ခြင်း (raise) နှင့် str
 
 ### ဥပမာ
 
-``python
+```python
 def _ok(data, hint=None):
     # Standard success envelope with an optional hint.
     result = {"ok": True, "data": data}
@@ -63,7 +63,7 @@ def _ok(data, hint=None):
 def _fail(code, message, hint=None):
     # Standard failure envelope the model can act on.
     return {"ok": False, "error": code, "message": message, "hint": hint}
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -103,7 +103,7 @@ Type rules (အမျိုးအစားစည်းမျဉ်း) ကိ Py
 
 ### ဥပမာ
 
-``python
+```python
 import asyncio
 
 async def fetch_one(client, name: str) -> dict:
@@ -122,11 +122,11 @@ async def main():
 
 asyncio.run(main())
 # Expected output: [{'name': 'a'}, {'name': 'b'}, {'name': 'c'}]
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-တိုင်းတာမှုများအရ sequential ၃ ခေါ်ဆိုမှုသည် စုစုပေါင်း ၃ စက္ကန့် ကြာလင့်၊ concurrent သည် ၁ စက္ကန့်သာ ကြာသည်။ External API tool များတွင် အရေးကြီးသည်။
+တိုင်းတာမှုများအရ sequential ၃ ခေါ်ဆိုမှုသည် စုစုပေါင်း ၃ စက္ကန့် ကြာလျှင်၊ concurrent သည် ၁ စက္ကန့်သာ ကြာသည်။ External API tool များတွင် အရေးကြီးသည်။
 
 ## အပိုင်း ၅ — httpx၊ Trio၊ Truncation၊ Clamping
 
@@ -148,7 +148,7 @@ Wikipedia wikitext သည် shape နှစ်မျိုးရှိပြီ
 
 ### ဥပမာ
 
-``python
+```python
 def get_content(title: str, offset: int = 0, limit: int = 4000) -> dict:
     # Window over a large document; never dump the whole thing.
     doc = load_document(title)
@@ -163,7 +163,7 @@ def get_content(title: str, offset: int = 0, limit: int = 4000) -> dict:
 
 print(get_content("long_page", 0, 10))
 # Expected output: {'content': 'The first t', 'offset': 0, 'truncated': True, 'next_offset': 10}
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -174,7 +174,7 @@ Context window သည် ကန့်သတ်ချက်ရှိသည်။ 
 - Tool တစ်ခု = action တစ်ခု၊ verb-first အမည်၊ narrow contract
 - Contract အစိတ်အပိုင်း ၅ ခုက JSON Schema ဖြစ်လာသည်
 - Bad REQUEST → raise/error၊ Bad SITUATION → data return
-- Hint သည် model ဆီလင့်စ်တစ်ခုဖြစ်သည် — retry-able လား permanent လား ဖော်ပြပါ
+- Hint သည် model အတွက် signal တစ်ခု ဖြစ်သည် — retry-able လား permanent လား ဖော်ပြပါ
 - Pydantic က type rules ကို စစ်ပေးသည်၊ ကိုယ်က domain rules ကိုသာ စစ်ရမည်
 - `async def` + `httpx` hygiene (timeout, User-Agent, `raise_for_status()`)
 - Trio pattern + truncation window ဖြင့် context window ကို ကာကွယ်ပါ

@@ -18,7 +18,7 @@ Server ဖိုင်ကို အပိုင်းလိုက် ဖွဲ�
 
 ### ဥပမာ
 
-``python
+```python
 # The allowlist roots define the security boundary of the server.
 ALLOWED_ROOTS = {
     "hosts": "/etc/devops/hosts",
@@ -33,7 +33,7 @@ def _resolve(kind: str, name: str) -> Path:
     if not str(target).startswith(str(base)):
         raise ValueError("path escapes allowlist")
     return target
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -43,11 +43,11 @@ LAB 1 (surface probe) တွင် server တစ်ခုကို ယုံက�
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Honesty rule ဆိုသည်မှာ — metric tool တစ်ခုက တိုင်းတာနိုင်ခြင်းမရှိပါက တု造假 တန်ဖိုး (fake value) မထုတ်ပေးဘဲ `null` ကို ရိုးသားစွာ ပြန်ရမည်။ Bounded output ဆိုသည်မှာ log tool များက တစ်ကြိမ်လျှင် ကန့်သတ်ထားသော အကြောင်းအရာ အရေအတွက်သာ ပြန်ရမည်။
+Honesty rule ဆိုသည်မှာ — metric tool တစ်ခုက တိုင်းတာနိုင်ခြင်းမရှိပါက အတု တန်ဖိုး (fake value) မထုတ်ပေးဘဲ `null` ကို ရိုးသားစွာ ပြန်ရမည်။ Bounded output ဆိုသည်မှာ log tool များက တစ်ကြိမ်လျှင် ကန့်သတ်ထားသော အကြောင်းအရာ အရေအတွက်သာ ပြန်ရမည်။
 
 ### ဘာကြောင့် လဲ
 
-`system_metrics` ကဲ့သို့သော tool သည် Python standard library မှ တကယ့်တန်ဖိုးများကိုသာ တိုင်းတာရသည်။ တိုင်းလို့မရပါက "အသံအတိုးဆုံး event" ကို ပြောပြခြင်းထက် `null` ပြန်ခြင်းက ပို၍ ယုံကြည်စိတ်ချရသည်။ Log ကြောင်း ရေမသော်ငွေ့ ထုတ်ပေးပါက client နှင့် token အားလုံး နစ်နာသွားမည်ဖြစ်သည်။
+`system_metrics` ကဲ့သို့သော tool သည် Python standard library မှ တကယ့်တန်ဖိုးများကိုသာ တိုင်းတာရသည်။ တိုင်းလို့မရပါက ဖြစ်နိုင်ခြေရှိသည့် event တစ်ခုကို လုပ်ကြံပြောခြင်းထက် `null` ပြန်ခြင်းက ပို၍ ယုံကြည်စိတ်ချရသည်။ Log ကို အကန့်အသတ်မဲ့ ထုတ်ပေးပါက client နှင့် token အားလုံး နစ်နာသွားမည်ဖြစ်သည်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
@@ -55,7 +55,7 @@ Honesty rule ဆိုသည်မှာ — metric tool တစ်ခုက တ�
 
 ### ဥပမာ
 
-``python
+```python
 @mcp.tool()
 def system_metrics(host: str) -> dict:
     # Read real values only from the standard library; no invention.
@@ -64,7 +64,7 @@ def system_metrics(host: str) -> dict:
         # Honesty rule: report null rather than a fabricated number.
         return {"host": host, "cpu_percent": None, "note": "not measurable"}
     return {"host": host, "cpu_percent": cpu}
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -86,7 +86,7 @@ Client သည် elicitation ကို `mode="legacy"` ဖြင့် တုံ
 
 ### ဥပမာ
 
-``python
+```python
 @mcp.tool()
 def restart_service(host: str, service: str) -> dict:
     # Guard: two paths — harmless services vs protected services.
@@ -101,11 +101,11 @@ def restart_service(host: str, service: str) -> dict:
                     "reason": "user declined confirmation"}
     _do_restart(host, service)
     return {"restarted": True, "service": service}
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-LAB 7 (estate resource guard) တွင် resource template အသစ်နှင့် guard အသစ်ကို ကိုယ်တိုင်ရေးရမည်။ M10 (security) မှ သင်ယူခဲ့သော အခြေခံမူများကို capstone အတွင်း عملیျှရေးနှင့် ပေါင်းစပ်ရခြင်းဖြစ်သည်။
+LAB 7 (estate resource guard) တွင် resource template အသစ်နှင့် guard အသစ်ကို ကိုယ်တိုင်ရေးရမည်။ M10 (security) မှ သင်ယူခဲ့သော အခြေခံမူများကို capstone အတွင်း လက်တွေ့ရေးနှင့် ပေါင်းစပ်ရခြင်းဖြစ်သည်။
 
 ## ခေါင်းစဉ် ၄ — Resource နှင့် Prompt
 
@@ -123,7 +123,7 @@ Prompt ရေးသားရာတွင် literal `{host}` ကို argument 
 
 ### ဥပမာ
 
-``python
+```python
 @mcp.prompt()
 def rca_error_log(host: str) -> str:
     # A prompt is guidance, not a schema; force the step order.
@@ -133,7 +133,7 @@ Steps (in order, do not skip):
 2. Call the log tool to find the first anomalous event.
 3. Propose one fix, citing only evidence you actually read.
 If a step cannot be completed, say so — do not guess."""
-``
+```
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
@@ -143,12 +143,47 @@ Client (ဥပမာ — Cline သို့မဟုတ် LangGraph) သည် 
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Self-test ဆိုသည်မှာ `main()` အတွင်းရှိ ညွှန်ကြားချက်တစ်ခုတည်းဖြင့် server တစ်ခုလုံး အလုပ်လုပ်ကြောင်း သက်သေပြနိုင်သော စနစ်ဖြစ်သည်။ `my_self_test.py` နှင့် `health_check.py` တွင် အကောင်အထည်ဖော်ထားသည်။ LAB 5 (autonomous client) တွင် scripted agent နှင့် LangGraph နှစ်ပိုင်းပါဝင်သည်။
+Self-test ဆိုသည်မှာ `main()` အတွင်းရှိ ညွှန်ကြားချက်တစ်ခုတည်းဖြင့် server တစ်ခုလုံး အလုပ်လုပ်ကြောင်း သက်သေပြနိုင်သော စနစ်ဖြစ်သည်။ `my_self_test.py` နှင့် `health_check.py` တွင် အကောင်အထည်ဖော်ထားသည်။ LAB 5 (autonomous client) တွင် scripted agent နှင့် LangGraph ဟူ၍ နှစ်ပိုင်းပါဝင်သည်။ Scripted agent ဆိုသည်မှာ client က ချဉ်းကပ်မှု အဆင့်ဆင့်ကို ကြိုတင်ရေးထားသော script အတိုင်း လိုက်နာခြင်းဖြစ်ပြီး၊ LangGraph ဆိုသည်မှာ graph ဖြင့် agent ၏ စဉ်းစားမှု အခြေအနေများကို စီမံခန့်ခွဲခြင်းဖြစ်သည်။
 
 ### ဘာကြောင့် လဲ
 
-Grader ရှာမည့် အရာ ၈ ခုကို ကျော်လွန်ရန် self-test သည် အသုံးဝင်ဆုံးဖြစ်သည်။ Linux VM ပေါ်တွင်မူ အချို့တန်ဖိုးများ မတူညီစွာ ပြန်နိုင်သည်ကိုလည်း နားလည်ရမည်။ Self-test သည် health check အဖြစ်လည်း အသုံးပြုနိုင်သည်။
+Grader ရှာမည့် အရာ ၈ ခုကို ကျော်လွန်ရန် self-test သည် အသုံးဝင်ဆုံးဖြစ်သည်။ Linux VM ပေါ်တွင်မူ အချို့တန်ဖိုးများ မတူညီစွာ ပြန်နိုင်သည်ကိုလည်း နားလည်ရမည်။ ဥပမာအားဖြင့် Windows ပေါ်တွင် `\\` ဖြင့် စတင်သော path တစ်ခုသည် Linux ပေါ်တွင် အလုပ်မလုပ်နိုင်ပါ။ Self-test သည် health check အဖြစ်လည်း အသုံးပြုနိုင်သည်။ Server ကို deploy ပြုလုပ်ပြီးတိုင်း တစ်ကြိမ် run ကြည့်ခြင်းဖြင့် tool များ၊ resource များနှင့် prompt များ အားလုံး မှန်ကန်စွာ တုံ့ပြန်နေခြင်းရှိမရှိ အလျင်အမြန် စစ်ဆေးနိုင်သည်။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Autonomy ၏ anti-pattern ၆ မျိုး (ဥပမာ — confirmation မဲ့ လုပ်ဆောင်ခြင်း၊ bounded output ကို လျစ်လျူရှုခြင်း) ကို ရှောင်ပြီး၊ client ဘက်မှ server ၏ surface အားလုံးကို တစ်ပြားဝင် မေးဖို့ script ရေးရသည်။ Client ၏ တာဝန်စာရင်းတွင် — confirm တောင်းခြင်း၊ null ကို လက်ခံခြင်း၊ output ကို ကန့်သတ
+Autonomy ၏ anti-pattern ၆ မျိုး (ဥပမာ — confirmation မဲ့ လုပ်ဆောင်ခြင်း၊ bounded output ကို လျစ်လျူရှုခြင်း) ကို ရှောင်ပြီး၊ client ဘက်မှ server ၏ surface အားလုံးကို တစ်ပြားဝင် မေးဖို့ script ရေးရသည်။ Client ၏ တာဝန်စာရင်းတွင် — confirm တောင်းခြင်း၊ null ကို လက်ခံခြင်း၊ output ကို ကန့်သတ်ခြင်းနှင့် error များကို ကျေညီစွာ ကိုင်တွယ်ခြင်းတို့ ပါဝင်သည်။ Self-test script တစ်ခု ရေးရာတွင် အောက်ပါ အဆင့်များကို လိုက်နာရမည် —
+
+```python
+# my_self_test.py -- one-shot self-test for the capstone server
+import asyncio
+from my_server import mcp
+
+async def run_checks():
+    # List the server surface first: tools, resources, prompts
+    tools = await mcp.list_tools()
+    resources = await mcp.list_resources()
+    prompts = await mcp.list_prompts()
+    print(f"tools={len(tools)} resources={len(resources)} prompts={len(prompts)}")
+
+    # Exercise one representative tool and verify a non-null result
+    result = await mcp.call_tool("get_flight_status", {"flight_id": "MM-101"})
+    assert result is not None, "tool returned None"
+    print("get_flight_status OK")
+
+    # Keep output bounded so logs stay readable
+    summary = str(result)[:200]
+    print(f"result preview: {summary}")
+
+if __name__ == "__main__":
+    asyncio.run(run_checks())
+    print("SELF-TEST PASSED")
+```
+
+Scripted agent ဘက်တွင် client သည် tool တစ်ခုချင်းစီကို အစီအစဉ်တကျ ခေါ်ဆိုပြီး ရလဒ်တစ်ခုချင်းစီကို စစ်ဆေးရသည်။ LangGraph ဘက်တွင်မူ node တစ်ခုချင်းစီသည် "decide → act → verify" ဟူ၍ သုံးအဆင့်ကို လိုက်နာသည် — decide node က နောက်ထပ် ခေါ်ရမည့် tool ကို ရွေးချယ်သည်၊ act node က ၎င်း tool ကို ခေါ်ဆိုသည်၊ verify node က ရလဒ်ကို သတ်မှတ်ထားသော ကန့်သတ်ဘောင်အတွင်း ရှိမရှိ စစ်ဆေးသည်။ Confirmation လိုအပ်သော action များအတွက် လူသုံးထောက်ပံ့ပေးသော `elicitation` ယန္တရားကို အသုံးပြုပြီး၊ ရလဒ်အကြောင်းအရာ ရှည်လွန်းသည့်အခါ bounded output စည်းမျဉ်းကို တင်းကျပ်စွာ လိုက်နာရမည်။ ဤသို့ဖြင့် autonomous client သည် လုံခြုံစွာ၊ ခန့်မှန်းနိုင်စွာ အလုပ်လုပ်နိုင်မည် ဖြစ်သည်။
+
+## အနှစ်ချုပ်
+
+- Self-test သည် `main()` အတွင်း ညွှန်ကြားချက်တစ်ခုတည်းဖြင့် server တစ်ခုလုံးကို စစ်ဆေးနိုင်သော အမြန်နည်းလမ်းဖြစ်ပြီး health check အဖြစ်လည်း အသုံးပြုနိုင်သည်။
+- Linux VM ပေါ်တွင် path နှင့် အခြားတန်ဖိုးများ ကွဲပြားနိုင်သဖြင့် platform အလိုက် ခြားနားမှုများကို သတိထား၍ စမ်းသပ်ရမည်။
+- Autonomy ၏ anti-pattern ၆ မျိုးကို ရှောင်ကြဉ်ပြီး confirm တောင်းခြင်း၊ null စစ်ဆေးခြင်း၊ bounded output တို့ကို client တာဝန်အဖြစ် ထည့်သွင်းရမည်။
+- LAB 5 ၏ scripted agent နှင့် LangGraph နှစ်ပိုင်းကို ပေါင်းစပ်ခြင်းအားဖြင့် decide → act → verify ဟူ၍ ယုံကြည်စိတ်ချရသော autonomous client တစ်ခု တည်ဆောက်နိုင်သည်။

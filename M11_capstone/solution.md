@@ -2,7 +2,7 @@
 
 ## LAB 1 — Surface probe
 
-``python
+```python
 from devops_assistant import mcp
 
 tools = []
@@ -29,13 +29,13 @@ assert "restart_service" in tools
 assert any(u.startswith("config://") for u in resources)
 assert "rca_error_log" in prompts
 print("LAB 1 OK")
-``
+```
 
 **အဓိကအယူအဆ** — Server ကို ယုံကြည်ရန် မတင်မကြသေးခင် သူ့ surface (tool, resource, prompt) အားလုံးကို အရင်ရေတွက်၍ စစ်ဆေးရမည်။
 
 ## LAB 2 — Metrics audit
 
-``python
+```python
 from devops_assistant import system_metrics
 
 result = system_metrics(host="web-01")
@@ -53,13 +53,13 @@ else:
 
 assert "memory_percent" in result
 print("LAB 2 OK")
-``
+```
 
 **အဓိကအယူအဆ** — Metric tool တစ်ခုသည် တိုင်းလို့ ရသော တန်ဖိုးကိုသာ ပြောရမည်၊ တိုင်းလို့ မရပါက `null` ဟု ရိုးသားစွာ ဖော်ပြရမည်။
 
 ## LAB 3 — Log forensics
 
-``python
+```python
 from devops_assistant import list_logs, read_log
 
 files = list_logs()
@@ -74,13 +74,13 @@ assert len(report) > 0
 first_line = report[0]
 print("first anomalous event:", first_line)
 print("LAB 3 OK")
-``
+```
 
 **အဓိကအယူအဆ** — Log စုံစမ်းရာတွင် အသံအကြီးဆုံး event ကို မယူဘဲ ပထမဆုံး ထူးဆန်းသော event ကို ရှာရမည်၊ ထို့ပြင် output ကို ကန့်သတ်ထားရမည်။
 
 ## LAB 4 — Confirm guard
 
-``python
+```python
 from devops_assistant import restart_service
 
 # Path 1: harmless service — allowed without elicitation.
@@ -92,13 +92,13 @@ r2 = restart_service(host="db-01", service="postgres", mode="legacy")
 print("protected:", r2)
 assert "did not" in r2 or "NOT" in r2.upper()
 print("LAB 4 OK")
-``
+```
 
 **အဓိကအယူအဆ** — Protected service ကို ပြန်စတင်ရန် elicitation လမ်းကို သုံးရမည်၊ လုပ်ဆောင်ချက်ကို မလုပ်ခဲ့ပါက မလုပ်ခဲ့ကြောင်း ရလဒ်ထဲ ထင်ရှားစွာ ဖော်ပြရမည်။
 
 ## LAB 5 — Autonomous client
 
-``python
+```python
 from lab_5_autonomous_client import run_agent
 
 # Part A: a scripted agent drives tools, resources and prompts
@@ -113,13 +113,13 @@ assert result["status"] == "ok"
 for entry in result["log"]:
     print(entry)
 print("LAB 5 OK")
-``
+```
 
 **အဓိကအယူအဆ** — Autonomous client ဆိုသည်မှာ ချိန်းကြပ်မထားသော လမ်းညွှန်ချက်အလိုက် တစ်ဆင့်ချင်း စစ်ဆောင်းပြီးမှ ဆက်သွားသော scripted agent ဖြစ်သည်၊ anti-pattern ၆ မျိုးကို ရှောင်ရမည်။
 
 ## LAB 6 — Estate memory tool
 
-``python
+```python
 from lab_6_estate_memory_tool import note_get, note_set, notes_list
 
 # Store a fact about the estate, then read it back.
@@ -132,13 +132,13 @@ keys = notes_list()
 assert "incident-2024-06-01" in keys
 print("keys:", keys)
 print("LAB 6 OK")
-``
+```
 
 **အဓိကအယူအဆ** — Extension tool တိုင်းသည် ရိုးရိုးရှင်းရှင်း set/get/list စာချုပ်ဖြင့် အဖြေပေးရမည်၊ ချဲ့ထွင်မှုတိုင်းအတွက် စစ်ဆေးမှု ၅ ခုကို ဖြေရမည်။
 
 ## LAB 7 — Estate resource guard
 
-``python
+```python
 from lab_7_estate_resource_guard import read_resource
 
 # Reading a normal resource works.
@@ -153,13 +153,13 @@ except ValueError as exc:
     print("guard blocked:", exc)
 
 print("LAB 7 OK")
-``
+```
 
 **အဓိကအယူအဆ** — Resource အသစ်တွင် allowlist root ပြင်ပကို ဖတ်လို့ မရစေရန် guard ထည့်ရမည်၊ ချိုးဖောက်မှုကို တိတ်တဆိတ် မထောက်ပါးဘဲ loud failure ဖြစ်ရမည်။
 
 ## LAB 8 — Incident review prompt
 
-``python
+```python
 from lab_8_incident_review_prompt import incident_review
 from devops_assistant import mcp
 
@@ -173,16 +173,13 @@ body = prompt.messages[0].content.text
 assert "web-01" in body
 assert "{host}" not in body
 print("LAB 8 OK")
-``
+```
 
 **အဓိကအယူအဆ** — Prompt တစ်ခုကို ရေးပြီးတိုင်း ပုံစံပေါ်လာသော output ထဲတွင် argument တွေ တကယ်ပေါင်းစည်းသွားခဲ့ကြောင်း၊ `{host}` ကဲ့သို့ စာလုံး မကျန်ကြောင်း၊ စမ်းသပ်ရမည်။
 
 ---
 
-### နိဒါန်း
-
-
-### ကိုးကား
+## ကိုးကား
 
 - `../code/devops_assistant.py` — Capstone server အဓိကဖိုင်
 - `../code/my_self_test.py` — တစ် command ဖြင့် server အားလုံးကို စစ်ဆေးသည့် self-test

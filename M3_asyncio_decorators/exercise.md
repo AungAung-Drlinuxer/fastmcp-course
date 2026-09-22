@@ -46,6 +46,6 @@ Wrapper function တစ်ခုက ပြင်ပက variable တစ်ခု�
 
 Blocking အလုပ်တစ်ခုကို `asyncio.to_thread` ဖြင့် လွှတ်ပြီး `asyncio.wait_for` ဖြင့် timeout တပ်ပါ။ ထို့နောက် `asyncio.TaskGroup` ထဲမှာ task ၃ ခု ထည့်ပြီး တစ်ခုက exception ပေးစေကား ကျန် task များ ဘယ်လိုဖြစ်သည်ကို ကြည့်ပါ။ နောက်ဆုံး `asyncio.iscoroutinefunction` ဖြင့် tool တစ်ခုသည် async ဖြစ်/မဖြစ် စစ်သော `audit_tool` ပုံစံ harness တစ်ခု ရေးပါ။ `lab_8_to_thread_timeout.py`, `lab_9_taskgroup_exceptions.py` နှင့် `lab_11_audit_tool.py` ကို ကိုးကားပါ။
 
-**Hints:** Timeout ကို မလွဲမရှောင်သာရမှုဖြစ်သည်မှာ ပြင်ပဆက်သွယ်မှုတိုင်း ရပ်တန့်နိုင်သောကြောင့်ဖြစ်သည်။ `TaskGroup` တွင် task တစ်ခု ကျရှုံးလျင် `ExceptionGroup` ရရှိပြီး ကျန် task များ cancel ခံရသည် — `gather` ၏ ကျရှုံးမှု အပြုအမူနှင့် မတူပါ။ Metadata တွေက်တောင် async ဖြစ်ခြင်းကို မမြင်နိုင်သောကြောင့် `iscoroutinefunction` ကို audit ထဲ ထည့်ရမည်။
+**Hints:** Timeout ကို မလွဲမရှောင်သာရမှုဖြစ်သည်မှာ ပြင်ပဆက်သွယ်မှုတိုင်း ရပ်တန့်နိုင်သောကြောင့်ဖြစ်သည်။ `TaskGroup` တွင် task တစ်ခု ကျရှုံးလျင် `ExceptionGroup` ရရှိပြီး ကျန် task များ cancel ခံရသည် — `gather` ၏ ကျရှုံးမှု အပြုအမူနှင့် မတူပါ။ Metadata တွေကတောင် async ဖြစ်ခြင်းကို မမြင်နိုင်သောကြောင့် `iscoroutinefunction` ကို audit ထဲ ထည့်ရမည်။
 
 **Expected behavior:** Timeout ကျော်လျင် `TimeoutError` ရပြီး TaskGroup တွင် `ExceptionGroup` ရရှိသည်။ Audit harness သည် sync နှင့် async tool နှစ်မျိုးကို တိုက်စစ်နိုင်ပြီး verdict ထုတ်ပြသည်။
