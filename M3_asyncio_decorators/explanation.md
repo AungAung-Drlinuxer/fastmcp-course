@@ -57,9 +57,9 @@ print(result)
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Decorator ဆိုတာ — function ရှေ့မှာ ထိုးပြီး အရာထပ်ဆောက်ပေးတဲ့ အလွှာလေးပါ။ Wrapper ဆိုတာ — မူလ function ကို အပြင်ကနေ ဖုံးပေးတဲ့ function အသစ်ပါ။ Metadata ဆိုတာ — function ရဲ့ အမည်၊ doc စာ၊ signature လို အချက်အလက်တွေပါ။
+Decorator ဆိုတာ — function ရှေ့မှာ ထိုးပြီး အရာထပ်ဆောက်ပေးတဲ့ အလွှာလေးပါ။ Wrapper ဆိုတာ — မူလ function ကို အပြင်ကနေ ဖုံးပေးတဲ့ function အသစ်ပါ။ Metadata ဆိုတာ — function ရဲ့ အမည်၊ docstring၊ signature လို အချက်အလက်တွေပါ။
 
-Decorator တစ်ခုက function ကို wrapper နဲ့ ဖုံးလိုက်ရင် မူလ function ရဲ့ `__name__`, `__doc__`, signature တွေ ပျောက်သွားတယ်။ အစားမှာ wrapper ရဲ့ metadata တွေပဲ ပေါ်လာတယ်။ `functools.wraps` က အဲဒီ metadata တွေကို မူလ function ကနေ ကူးပြန်ပေးတယ်။ လူပေးစာတစ်လုံးကို မှတ်မိအောင် ကူးရေးပေးတာနဲ့ တူတယ်။
+Decorator တစ်ခုက function ကို wrapper နဲ့ ဖုံးလိုက်ရင် မူလ function ရဲ့ `__name__`, `__doc__`, signature တွေ ပျောက်သွားတယ်။ အစားမှာ wrapper ရဲ့ metadata တွေပဲ ပေါ်လာတယ်။ `functools.wraps` က အဲဒီ metadata တွေကို မူလ function ကနေ ကူးပြန်ပေးတယ်။ လူတစ်ယောက်ပေးလိုက်တဲ့ စာတစ်စောင်ကို မှတ်မိအောင် ကူးရေးပေးတာနဲ့ တူတယ်။
 
 ### ဘာကြောင့် လဲ
 
