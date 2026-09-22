@@ -2,7 +2,7 @@
 
 ## မိတ်ဆက်
 
-ဒီ module မှာ MCP server တစ်ခုရဲ့ ပစ္စည်းသုံးမျိုးအနက် တတိယမြောက်ဖြစ်သော **prompt** အကြောင်းကို လေ့လာမည်။ Tool က model က ခေါ်သည်၊ resource က application က ဖတ်သည် — prompt ကတော့ **user က task မစခင် host မှတစ်ဆင့် ရွေးချယ်သည့် template** ဖြစ်သည်။ Duration ၂ နာရီ၊ Phase 2 — MCP Core Surfaces ဖြစ်သည်။
+ဒီ module မှာ MCP server ရဲ့ ပစ္စည်းသုံးမျိုးထဲက တတိယမြောက်ဖြစ်တဲ့ **prompt** အကြောင်းကို လေ့လာပါမယ်။ Tool က model က ခေါ်တာပါ။ Resource က application က ဖတ်တာပါ။ Prompt ကတော့ **user က task မစခင် host ကနေ ရွေးတဲ့ template** ပါ။ Duration ၂ နာရီ၊ Phase 2 — MCP Core Surfaces ဖြစ်ပါတယ်။
 
 ---
 
@@ -10,17 +10,26 @@
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Prompt ဆိုသည်မှာ server က declare လုပ်ထားပြီး host (client) က menu အဖြစ် ပြသည့် **အကြို-စာသား template** ဖြစ်သည်။ Function တစ်ခုကို `@mcp.prompt` decorator နှင့် အမှတ်အသားပြုပြီး argument များကို လက်ခံရရှိသည်။ Render လုပ်သောအခါ message list တစ်ခု ပြန်ထွက်လာပြီး host က conversation ရဲ့ အစတွင် ထည့်သွင်းရန် ဖြစ်သည်။
+Prompt ဆိုတာ — server က ကြိုပြီး ရေးထားတဲ့ **စာသား template** တစ်ခုပါ။ Host (ဆိုလိုတာ server ကို ခေါ်တဲ့ client အလွှာ) က ဒီ template တွေကို menu လို ပြပါတယ်။ ရနိုင်တဲ့ function တစ်ခုကို `@mcp.prompt` decorator နဲ့ အမှတ်အသားပြုပြီး argument တွေ လက်ခံပါတယ်။
 
 ### ဘာကြောင့် လဲ
 
-Model တစ်ခုကို တစ်နေ့တာလုံး တူညီသော အလုပ်မျိုးကို ထပ်ခါထပ်ခါ တောင်းဆိုသောအခါ user တိုင်းက မတူညီသော စာသားဖြင့် မေးလေ့ရှိသည်။ ရလဒ်မှာလည်း တစ်ခါနှင့်တစ်ခါ မတူညီတော့သည် — တစ်ခါက structure ကောင်းသည်၊ တစ်ခါက step တွေ ချန်လျက် အဖြေပေးသည်။ Prompt သည် ဒီ "ဘယ်လိုမေးမေး" ခြားနားမှုကို ဖျက်ပြီး **consistency** ကို အာမခံပေးသည်။ ဒါကြောင့် prompt ရဲ့ တန်ဖိုးအားလုံးဟာ consistency ပင်ဖြစ်သည်။
+တစ်နေ့တာလုံး တူတဲ့ အလုပ်မျိုးကို model ချက်ချင်း တောင်းရတိုင်း user တိုင်းရဲ့ စာသား မတူကြပါ။ ရလဒ်ကလည်း တစ်ခါက structure ကောင်းပေမယ့် တစ်ခါက step တွေ ကျော်လျက် အဖြေပေးတတ်ပါတယ်။ Prompt က ဒီ "ဘယ်လိုမေးသလဲ" ကွာခြားမှုကို ဖျက်ပြီး **consistency** — ဆိုလိုတာ အခါငယ်တိုင်း တူညီတဲ့ ရလဒ် — ကို အာမခံပေးပါတယ်။ ဒါကြောင့် prompt ရဲ့ တန်ဖိုးအားလုံးဟာ consistency ပါ။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Server ဘက်မှာ Python function တစ်ခုကို `@mcp.prompt` (bare) သို့မဟုတ် `@mcp.prompt("name")` (named) နှင့် သတ်မှတ်သည်။ Docstring သည် description ဖြစ်လာပြီး function signature ရဲ့ parameter တိုင်းသည် prompt ရဲ့ argument ဖြစ်လာသည်။ Host က `list_prompts()` ဖြင့် စာရင်းယူပြီး `get_prompt(name, arguments)` ဖြင့် render လုပ်သည်။ Server က declare၊ host က surface — ဒါသည် ကွဲပြားခြင်းနှစ်ရပ်ဖြစ်သည်။ Prompt မရှိလျှင် server ပျက်သည်မဟုတ် — မြင်ကွင်းထဲမှာ menu တစ်ခု ရှိမနေတော့သည်သာဖြစ်သည်။
+၁။ Server ဘက်မှာ Python function တစ်ခုကို `@mcp.prompt` (bare) ဒါမှမဟုတ် `@mcp.prompt("name")` (named) နဲ့ သတ်မှတ်ပါတယ်။
+၂။ Docstring ရေးတဲ့ စာသားက prompt ရဲ့ description ဖြစ်သွားပါတယ်။
+၃။ Function signature မှာရှိတဲ့ parameter တိုင်းက prompt ရဲ့ argument ဖြစ်လာပါတယ်။
+၄။ Host က `list_prompts()` နဲ့ စာရင်းယူပါတယ်။
+၅။ User ရွေးတဲ့အခါ host က `get_prompt(name, arguments)` နဲ့ render လုပ်ပါတယ်။
+၆။ Render ထွက်လာတဲ့ message list ကို host က conversation ရဲ့ အစမှာ ထည့်ပါတယ်။
+
+Server က declare တာပါ၊ host က surface လုပ်တာပါ — ဒါက ကွဲပြားခြင်းနှစ်ခုပါ။ Prompt မရှိရင် server ပျက်တာ မဟုတ်ပါ။ menu တစ်ခု မမြင်ရတော့တာပါ။
 
 ### ဥပမာ
+
+ဒီ snippet မှာ `@mcp.prompt` နဲ့ function တစ်ခု သတ်မှတ်ပုံနဲ့ သူ့ docstring နဲ့ parameter တွေ ဘယ်လို prompt metadata ဖြစ်သွားလဲ ကို ပြပါမယ်။ Docstring ရေးတဲ့ စာနဲ့ function signature ကို အထဲအထဲ ကြည့်ထားပါနော်။
 
 ```python
 from mcp.server.fastmcp import FastMCP
@@ -45,7 +54,7 @@ def rca_prompt(service: str) -> str:
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-ပထမဆုံး "LAB 1 — Prompt Anatomy" ကို လုပ်ရင်း prompt တစ်ခုရဲ့ အစိတ်အပိုင်းဖြစ်သော name, description, arguments, return value တို့ကို သီးသန့် မြင်ရမည်။ ဒါက prompt တစ်ခုကို ဘယ်လိုဖန်တီးမလဲဆိုသည့် အခြေခံ နားလည်မှုကို ပေးသည်။ အဲဒါမရှိလျှင် နောက်ပိုင်း topic အားလုံး — argument injection, multi-turn guidance, host contract — တွေကို ဆက်လက်လေ့လာဖို့ ခက်ခဲသွားမည်။
+ပထမဆုံး "LAB 1 — Prompt Anatomy" ကို လုပ်ရင် prompt တစ်ခုရဲ့ အစိတ်အပိုင်းတွေဖြစ်တဲ့ name, description, arguments, return value တို့ကို သီးသန့် မြင်ရတယ်။ Prompt ဆိုတာ — model ကို လမ်းပြပေးတဲ့ သီချင်းစာရွက်လိုမျိုးပါ။ ဒီမူတွေနားမလည်ရင် နောက်ပိုင်း topic တွေဖြစ်တဲ့ argument injection, multi-turn guidance, host contract တွေကို လိုက်လို့ မရတော့ပါဘူး။ အခြေခံမှတစ်ဆင့် အပေါ်ကို တက်ရတာပါ။
 
 ---
 
@@ -53,18 +62,23 @@ def rca_prompt(service: str) -> str:
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-သုံးမျိုးလုံး server က declare လုပ်သည်မှာ တူသော်လည်း **ဘယ်သူက ရွေးလဲ** (model, application, user) နှင့် **ဘယ်အချိန်မှာ ရွေးလဲ** (task အတွင်း / task မစခင်) ကွာသည်။ ရွေးသူသည် ဒီဇိုင်းဆုံးဖြတ်ချက်ဖြစ်သည်။ Timing အရ tool က task အတွင်း model က ဆုံးဖြတ်သည်၊ resource က application က ဖတ်သည်၊ prompt က task မစခင် user က host မှတစ်ဆင့် ရွေးသည်။
+သုံးမျိုးလုံးကို server က declare လုပ်တာ တူပေမယ့် **ဘယ်သူက ရွေးလဲ** နဲ့ **ဘယ်အချိန်မှာ ရွေးလဲ** က မတူပါဘူး။ Tool ဆိုတာ — model က task လုပ်နေစဉ် ခေါ်သုံးတဲ့ လုပ်ဆောင်ချက်၊ resource ဆိုတာ — application က ဖတ်ယူတဲ့ data၊ prompt ဆိုတာ — task မစခင် user က ရွေးတဲ့ လမ်းညွှန်ပါ။ ရွေးသူက ဒီဇိုင်းရဲ့ အဓိက ဆုံးဖြတ်ချက်ပါ။
 
 ### ဘာကြောင့် လဲ
 
-ရွေးမှားလျှင် အလုပ်လုပ်သည့်ပုံစံ ပြောင်းသွားသည် — ဥပမာအားဖြင့် anti-hallucination clause တစ်ခုကို tool ရဲ့ description ထဲမှာ ထည့်လိုက်လျှင် tool ကို model က ခေါ်သည့်အချိန်မှသာ အာရုံစိုက်မည်။ ဒါကြောင့် နှိုင်းယှဉ်ကြည့်ရန် `highlight.py` lab file က comparison output ထုတ်ပေးသည် — တစ်ခုတည်းသော အလုပ်ကို သုံးမျိုးနှင့် အသီးသီး လုပ်ကြည့်ပြီး ကွာခြားချက်ကို တိုင်းတာသည်။
+ရွေးမှားရင် အလုပ်လုပ်ပုံ တစ်ခုလုံးကို ပြောင်းသွားတယ်။ ဥပမာ — anti-hallucination clause (မမှန်တာ မပြောဆိုရ ဆိုတဲ့ စည်းကမ်း) ကို tool ရဲ့ description ထဲ ထည့်လိုက်ရင် model က tool ကို ခေါ်တဲ့အခါမှသာ အာရုံစိုက်တယ်။ ဒီကွာခြားချက်ကို တိုက်ရိုက်မြင်ဖို့ `highlight.py` lab file က comparison output ထုတ်ပေးတယ်။ အလုပ်တစ်ခုတည်းကို နည်းလမ်းသုံးမျိုးနဲ့ လုပ်ကြည့်ပြီး ခြားနားချက်ကို တိုင်းတာပေးတာပါ။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-ဆုံးဖြတ်ချက်ဇယား (decision table) အရ — action လိုသည် (effect) လျှင် tool၊ data ဖတ်ရမည် (read) ဆိုလျှင် resource၊ workflow ဦးတည်မှု (steering) ကို task မစခင် ထည့်ချင်လျှင် prompt ဖြစ်သည်။ Server-side object နှင့် client-side object ကလည်း ကွာသည် — server က Python object (function, return value) ကို ကိုင်သည်၊ client ဘက်မှာ protocol အရ JSON-like object ဖြစ်သည်။
+၁။ အရင်ဆုံး — လိုချင်တာက action (effect) လား ဆိုတာ မေးပါ။ ဖြစ်ရင် tool ပါ။
+၂။ data ဖတ်ရမယ် (read) ဆိုရင် resource ပါ။
+၃။ workflow ဦးတည်မှု (steering) ကို task မစခင် ထည့်ချင်ရင် prompt ပါ။
+၄။ Server ဘက်မှာ ကိုင်တာက Python object (function, return value) ဖြစ်တယ်။
+၅။ Client ဘက်မှာ protocol အရ JSON-like object အဖြစ် ရောက်လာတယ်။
 
 ### ဥပမာ
 
+ဒီ snippet မှာ အလုပ်တစ်ခုတည်းကို tool, resource, prompt သုံးမျိုးနဲ့ ရေးပြထားတာကို မြင်ရမယ်။ ရွေးသူက ဘယ်သူဖြစ်လဲ၊ ဘယ်အချိန် ခေါ်လဲ ဆိုတာကို သတိပြုကြည့်ပါ။
 ```python
 # The same task exposed through all three surfaces, for comparison.
 
@@ -88,7 +102,7 @@ def triage_prompt(service: str) -> str:
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-ဒီဇိုင်းဆုံးဖြတ်ချက်ကို မှားလိုက်လျှင် နောက်ပိုင်းမှာ prompt ထဲမှာ action ထည့်တာ၊ tool ထဲမှာ စာသားရှည် ထည့်တာ မျိုး ဖြစ်လာပြီး user ရဲ့ မျှော်လင့်ချက်နှင့် ကိုက်ညီတော့မည် မဟုတ်။ Module ရဲ့ LAB 5 (RCA Prompt Library) မှာ ဒီဇယားကို အသုံးချပြီး prompt library တစ်ခု တည်ဆောက်ရမည်။
+ဒီဇိုင်းကို မှားလိုက်ရင် နောက်ပိုင်းမှာ prompt ထဲမှာ action ထည့်တာ၊ tool ထဲမှာ စာသားရှည် ထည့်တာတွေ ဖြစ်လာပါတယ်။ အဲဒါဆို user ရဲ့ မျှော်လင့်ချက်နဲ့ မကိုက်တော့ပါဘူး။ Module ရဲ့ LAB 5 (RCA Prompt Library) မှာ ဒီဇယားကို သုံးပြီး prompt library တစ်ခု တည်ဆောက်ရမှာ ဖြစ်ပါတယ်။
 
 ---
 
@@ -96,18 +110,29 @@ def triage_prompt(service: str) -> str:
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-`@mcp.prompt` ဖြင့် သတ်မှတ်ထားသော function ရဲ့ parameter တိုင်းသည် host က `get_prompt` ဖြင့် render လုပ်ရန် ထည့်ပေးရမည့် argument တစ်ခု ဖြစ်လာသည်။ Type hint တစ်မျိုးစီအတွက် JSON Schema တစ်ခု ထွက်လာသည် — required ဖြစ်မဖြစ်က default ရှိမရှိအပေါ် မူတည်သည်။
+`@mcp.prompt` နဲ့ သတ်မှတ်ထားတဲ့ function ရဲ့ parameter တိုင်းက prompt ရဲ့ argument တစ်ခု ဖြစ်လာပါတယ်။ Argument ဆိုတာ — prompt ထဲ အလိုက်သင့် ထည့်ပေးရမယ့် အချက်အလက်လေးပါ။ Host က `get_prompt` နဲ့ render လုပ်တဲ့အခါ ဒီ argument တွေကို ထည့်ပေးရပါတယ်။ Type hint တစ်မျိုးစီအတွက် JSON Schema တစ်ခု ထွက်လာပါတယ်။ Required ဖြစ်မဖြစ်က default ရှိမရှိပေါ်မူတည်ပါတယ်။
 
 ### ဘာကြောင့် လဲ
 
-User က prompt တစ်ခုကို ရွေးလိုက်သောအခါ host က argument form တစ်ခု ဆွဲပြရမည်။ ဒါကို ဖြစ်စေရန် server က signature မှ `prompt.arguments` (name, required, schema) များကို ထုတ်ပေးရသည်။ Complex type များကို JSON string အဖြစ် ပို့ရမည် — list သို့ dict ကို argument အဖြစ် တိုက်ရိုက်မပေးရ။
+User က prompt တစ်ခုကို ရွေးလိုက်ရင် host က argument form တစ်ခု ဆွဲပြပေးရပါတယ်။ အဲဒါမျိုး ဖြစ်ဖို့ server က signature ကနေ `prompt.arguments` (name, required, schema) တွေကို ထုတ်ပေးရပါတယ်။ ဒါမှ form က အလိုအလျောက် ဆွဲနိုင်မှာ ဖြစ်ပါတယ်။ Complex type တွေကိုတော့ JSON string အဖြစ်ပဲ ပို့ရပါတယ်။ list ဒါမှမဟုတ် dict ကို argument အဖြစ် တိုက်ရိုက်မပေးရပါဘူး။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Required argument ကို host က မထည့်လျှင် render ချို့ယွင်းသည်၊ defaulted argument ကို မထည့်လျှင် default တန်ဖိုးနှင့် ဆက်လုပ်သည်၊ missing argument ကို `None` အဖြစ် coercion လုပ်ခြင်း၊ extra argument ကို ဖြတ်တောက်ခံရခြင်း (ignored) — ဒီလေးမျိုးကို LAB 2 နှင့် `extra_argument_tests.py` မှာ အသီးသီး တိုင်းတာသည်။ Mutable default (ဥပမာ `def f(items: list = [])`) ရဲ့ အန္တရာယ်ကိုလည်း သတိပြုရသည် — prompt တစ်ခုကို render တိုင်း default object အတူတူ နောက်ကျော်သွားနိုင်သောကြောင့် ဖြစ်သည်။ Argument ထည့်သည့်နေရာကို template ထဲမှာ တိုက်ရိုက် ဆုံးဖြတ်ရသည် — ထိပ်မှာလား၊ အလယ်မှာလဲ။
+၁။ Host က required argument ကို မထည့်ရင် render ချို့ယွင်းသွားပါတယ်။
+
+၂။ Default ရှိတဲ့ argument ကို မထည့်ရင် default တန်ဖိုးနဲ့ ဆက်လုပ်ပါတယ်။
+
+၃။ Missing argument ကို `None` အဖြစ် coercion လုပ်ပါတယ်။
+
+၄။ Extra argument ကိုတော့ ဖြတ်တောက်ခံရပါတယ် — ignored ဖြစ်သွားတာပါပဲ။
+
+၅။ ဒီလေးမျိုးကို LAB 2 နဲ့ `extra_argument_tests.py` မှာ အသီးသီး တိုင်းတာကြည့်ရမှာ ဖြစ်ပါတယ်။
+
+၆။ Mutable default (ဥပမာ `def f(items: list = [])`) ကိုတော့ သတိထားပါ — render တိုင်း default object အတူတူ နောက်ကျော်သွားနိုင်လို့ပါ။
+
+Argument ထည့်တဲ့နေရာကို template ထဲမှာ တိုက်ရိုက် ဆုံးဖြတ်ရပါတယ် — ထိပ်မှာလား၊ အလယ်မှာလား ဆိုတာပါ။
 
 ### ဥပမာ
-
 ```python
 @mcp.prompt
 def report_prompt(service: str, max_steps: int = 3, tags: str = "") -> str:
@@ -129,7 +154,7 @@ def report_prompt(service: str, max_steps: int = 3, tags: str = "") -> str:
 
 ### လက်တွေ့မှာ ဘာကြောင့် အရေးကြီးလဲ
 
-Host ဘက်မှ မဖြစ်မနေ ကိုင်တွယ်ရမည့် error လေးမျိုးထဲက သုံးမျိုး (missing required, bad coercion, extra argument) သည် argument injection အတွင်းမှ လာသည်။ Prompt တစ်ခုကို user က လွယ်ကူစွာ ဖြည့်နိုင်ရန် argument ဒီဇိုင်းကို အစပိုင်းမှာပင် မှန်ကန်စွာ ထည့်သွင်းရမည်။
+Host ဘက်မှ မဖြစ်မနေ ဖြေရှင်းရမယ့် error လေးမျိုး ရှိပါတယ်။ အဲဒီထဲက သုံးမျိုး — missing required, bad coercion, extra argument — က argument injection ကနေ လာတာပါ။ ဒါတွေက prompt ထဲမှာ အစပိုင်းကနေ မှန်မှန် ခပ်ပေးရင် ရှောင်လို့ရတယ်။ မှန်အောင် မခပ်ရင် debug အချိန် ကြာပြီး user တွေလည်း tool ကို မှားယွင်းစွာ သုံးမိတတ်ပါတယ်။
 
 ---
 
@@ -137,16 +162,19 @@ Host ဘက်မှ မဖြစ်မနေ ကိုင်တွယ်ရမ�
 
 ### ဘာကို ဆိုလိုတာလဲ
 
-Multi-turn guidance ဆိုသည်မှာ prompt တစ်ခုက model ကို အလှည့်များစွာ (multiple turns) ဖြတ်သန်း၍ လိုက်နာစေသည့် ဦးတည်မှုဖြစ်သည် — numbered procedure (အဆင့် ၁, ၂, ၃…)၊ forced ordering (အဆင့်များကို စဉ်စီးချက်ပေးခြင်း)၊ stop conditions (ဘယ်အချိန်ရပ်မလဲ သတ်မှတ်ခြင်း) ဟူ၍ ပုံစံသုံးမျိုး ရှိသည်။ Anti-hallucination clause ကတော့ "မသိလျှင် မဖန်တီးနှင့်၊ အချက်အလက် မရှိလျှင် အသိအမှတ်ပြု၍ ပြောပါ" ဟူသည့် စာသားတစ်ခုကို prompt ရဲ့ အစိတ်အပိုင်းအဖြစ် ထည့်ခြင်းဖြစ်သည်။
+Multi-turn guidance ဆိုတာ — prompt တစ်ခုက model ကို အလှည့်များစွာ ဖြတ်သန်းပြီး လိုက်နာစေတဲ့ ဦးတည်မှု ဖြစ်ပါတယ်။ သူ့ထဲမှာ ပုံစံ သုံးမျိုး ပါတယ် — numbered procedure (အဆင့် ၁, ၂, ၃… နဲ့ ရေးတာ)၊ forced ordering (အဆင့်တွေကို အစဉ်လိုက် လုပ်ခိုင်းတာ)၊ stop conditions (ဘယ်အချိန် ရပ်မလဲ သတ်မှတ်တာ) ပါ။ Anti-hallucination clause ကတော့ "မသိရင် မဖန်တီးနဲ့၊ အချက်အလက် မရှိရင် မရှိဘူးလို့ ပြော" ဆိုတဲ့ စာသားကို prompt ထဲ ထည့်တာ ဖြစ်ပါတယ်။ လူသူမသိတဲ့အချက်ကို မဖန်တီးပြောတာကို hallucination လို့ ခေါ်ပါတယ်။
 
 ### ဘာကြောင့် လဲ
 
-Model သည် အဖြေတစ်ခု အမြဲပေးလိုသည့် သဘာဝရှိသည်။ အချက်အလက် မလုံလောက်စဉ်တွင်ပင် ဖန်တီးဖြေရှင်းမှု တစ်ခုခု ထုတ်ပေးတတ်သည်။ ဒီ clause ကို tool ရဲ့ docstring ထဲမှာ ထားလျှင် tool ကို ခေါ်သည့်အချိန်မှသာ အသက်ဝင်မည် — task တစ်ခုလုံးရဲ့ အစတွင် model ကို ဦးစားပေးရန် နောက်ကျသွားသည်။ ဒါကြောင့် prompt သည် ဒီ clause အတွက် အမှန်တကယ် သင့်လျော်သည့်နေရာဖြစ်သည်။
+Model က အဖြေတစ်ခု အမြဲပေးချင်တဲ့ သဘာဝ ရှိပါတယ်။ ဒါကြောင့် အချက်အလက် မလုံလောက်ရင်တောင် ခန့်မှန်းဖြေရှင်းမှုတစ်ခု ထုတ်တတ်ပါတယ်။ ဒီ clause ကို tool ရဲ့ docstring ထဲမှာ ထားရင် tool ခေါ်တဲ့အချိန်မှာပဲ အသက်ဝင်ပါတယ်။ Task တစ်ခုလုံးရဲ့ အစမှာ အသက်မဝင်ဘူး ဆိုတာက နောက်ကျသွားတာပါ။ ဒါကြောင့် ဒီ clause အတွက် prompt က အမှန်တကယ် သင့်တဲ့နေရာပါ။
 
 ### ဘယ်လို အလုပ်လုပ်လဲ
 
-Numbered procedure ကို အသုံးချလျှင် အဆင့်များကို နံပါတ်တပ်၍ ရေးသည်၊ forced ordering က အဆင့်အားလုံး မပြီးခင် နောက်တစ်ဆင့်ကို မလုပ်နှင့်ဟု တားမြစ်သည်၊ stop condition က "ဒီအချက်ကို အတည်ပြုလို့မရလျှင် ရပ်တန့်ပြီး မသိကြောင်း ဖော်ပြပါ" ဟု သတ်မှတ်သည်။ Clause မလိုက်နာလျှင် ဘာလုပ်မလဲကိုပါ စာသားအပြည့်အစုံဖြင့် ရေးသွင်းသင့်သည် — ဥပမာ "အချက်အလက် မတွေ့လျှင် ခန့်မှန်းဖြေရှင်းမှု မပေးနှင့်၊ မတွေ့ကြောင်းသာ ဖော်ပြပါ" ဟူ၍ တိကျစွာ ဖော်ပြရမည်။ Prompt တစ်ခုကို system prompt အဖြစ် server အဆင့်မှာ သတ်မှတ်လျှင် client ဘယ်သူ့ဆီမှ ချိတ်ဆက်စေကာမစ တညီတည်း အသက်ဝင်မည်ဖြစ်သည်။
-
+၁။ Numbered procedure နဲ့ အဆင့်တွေကို နံပါတ်တပ်ပြီး ရေးပါ။
+၂။ Forced ordering နဲ့ "အဆင့်အားလုံး မပြီးခင် နောက်ဆင့်ကို မလုပ်နဲ့" လို့ တားပါ။
+၃။ Stop condition နဲ့ "ဒီအချက်ကို အတည်ပြုလို့မရရင် ရပ်ပြီး မသိကြောင်း ပြောပါ" လို့ သတ်မှတ်ပါ။
+၄။ Clause မလိုက်နာရင် ဘာလုပ်မလဲကိုပါ အပြည့်အစုံ ရေးပါ — ဥပမာ "အချက်အလက် မတွေ့ရင် ခန့်မှန်းဖြေ မပေးနဲ့၊ မတွေ့ကြောင်းပဲ ပြောပါ"။
+၅။ Prompt တစ်ခုကို system prompt အဖြစ် server အဆင့်မှာ သတ်မှတ်ရင် ဘယ် client ချိတ်ဆက်လာလာ တညီတည်း အသက်ဝင်ပါတယ်။
 ```python
 from fastmcp import FastMCP
 
@@ -180,16 +208,15 @@ def lookup_paper(title: str) -> dict:
         return {"found": True, "data": database[key]}
     return {"found": False, "data": None}
 ```
-
-အထက်ပါ ဥပမာတွင် `instructions` parameter ကို အသုံးပြု၍ numbered procedure လေးဆင့်၊ forced ordering (အဆင့်များ မပြီးခင် နောက်တစ်ဆင့်ကို မလုပ်နှင့်) နှင့် anti-hallucination clause တို့ကို တစ်ပေါင်းတည်း သတ်မှတ်ထားသည်ကို တွေ့ရမည်။ Tool ဘက်မှ `lookup_paper` သည် ရှာမတွေ့ပါက `{"found": False, "data": None}` ဟူ၍ တိကျသော ရလဒ်ပြန်ပေးသောကြောင့် model သည် "မတွေ့ကြောင်း" ဟု ဆိုရန် လုံလောက်သည့် အခြေအနေရှိသည် — ခန့်မှန်းဖန်တီးရန် အကြောင်းရင်း မရှိတော့ပေ။
+အထက်ပါ ဥပမာမှာ `instructions` parameter ထဲမှာ အဆင့်လေးဆင့်ပါတဲ့ numbered procedure လေးပေါင်းတာတွေ၊ forced ordering (ဆိုတာ — အဆင့်တစ်ခု မပြီးခင် နောက်တစ်ခုကို မလုပ်ရဘူးလို့ တားထားတာ) နဲ့ anti-hallucination clause (ဆိုတာ — model အလိုလို မှားယွင်းခန့်မှန်းတာကို တားထားတဲ့ စာကြောင်း) ကို တစ်ပေါင်းတည်း သတ်မှတ်ထားတာ တွေ့ရပါတယ်။ Tool ဘက်က `lookup_paper` ကလည်း ရှာမတွေ့ရင် `{"found": False, "data": None}` ဆိုပြီး တိကျတဲ့ အဖြေပြန်ပေးပါတယ်။ ဒါကြောင့် model လည်း "မတွေ့ဘူး" လို့ပြောဖို့ လုံလောက်တဲ့ အချက်အလက် ရှိသွားပါတယ်။ ခန့်မှန်းပြီး မှားယွင်းတာ ဖြစ်စရာ အကြောင်းရင်း မရှိတော့ပါဘူး။
 
 ### သတိထားစရာများ
 
-Clause ကို ရေးခဲ့ပါသော်လည်း model အားလုံးက ၁၀၀ ရာခိုင်မှု လိုက်နာမည် မဟုတ်ပါ။ ဒါကြောင့် အရေးကြီးသည့် အချက်အလက်များအတွက် tool ဘက်မှလည်း ခန့်မှန်းချက် မထုတ်ပေးနိုင်ရန် ပြင်ဆင်သင့်သည်။ တစ်ဖက်တွင်လည်း stop condition ပိုတင်းကျပ်လွန်းလျှင် model သည် အလွယ်တကူ "မသိပါ" ဟုသာ ပြောတတ်သွားပြီး တကယ်ရှိသင့်သည့် အဖြေကိုပါ မပေးတော့သည့် အခြေအနေ ဖြစ်စေနိုင်သည်။ ဒီကြားထဲ အဆင့်သင့် ချမှတ်နိုင်ရန် အတွက် clause ကို တိုတောင်း၍ တိကျစွာ ရေးခြင်းသည် အကောင်းဆုံး နည်းလမ်းဖြစ်သည်။
+Clause ရေးထားပေမယ့် model အားလုံးက ၁၀၀ ရာခိုင်နှုန်း လိုက်နာမှာ မဟုတ်ပါဘူး။ ဒါကြောင့် အရေးကြီးတဲ့ အချက်အလက်တွေအတွက် tool ဘက်ကလည်း ခန့်မှန်းချက် ထုတ်ပေးလို့ မရအောင် ကြိုတင်ပြင်ဆင်ထားသင့်ပါတယ်။ တစ်ဖက်မှာလည်း stop condition (ဆိုတာ — ဘယ်အချိန်မှာ ရပ်ရမလဲ ဆိုတာကို သတ်မှတ်တဲ့ စည်းမျဉ်း) ကို ပိုတင်းကျပ်လွန်းရင် model က "မသိဘူး" လို့ပဲ ပြောတတ်သွားပြီး တကယ်ရှိသင့်တဲ့ အဖြေကိုပါ မပေးတော့ပါဘူး။ ဒီနှစ်ခုကြားထဲ အဆင့်သင့် ချမှတ်နိုင်ဖို့ clause ကို တိုတောင်းပြီး တိကျတဲ့ စာလုံးတွေနဲ့ပဲ ရေးတာ အကောင်းဆုံးပါ။
 
 ## အနှစ်ချုပ်
 
-- **System prompt** သည် MCP server တစ်ခုလုံးရဲ့ အမူအကိုကို သတ်မှတ်ပေးသည့် အခြေခံကျသော နေရာဖြစ်ပြီး FastMCP ၌ `instructions` parameter ဖြင့် သတ်မှတ်သည်။
-- Prompt ရေးသည့်အခါ role၊ context၊ constraints နှင့် output format ဟူ၍ အစိတ်အပိုင်းလေးမျိုး ပါဝင်စေခြင်းဖြင့် model ၏ တုံ့ပြန်မှုကို ပိုမို ထိန်းချုပ်နိုင်သည်။
-- Few-shot examples ထည့်ခြင်းဖြင့် model ကို လိုချင်သည့် ပုံစံအတိအကျ အတုခိုးစေနိုင်ပြီး format တူညီမှု သိသိသာသာ တိုးတက်စေသည်။
-- Multi-turn guidance (numbered procedure, forced ordering, stop conditions) နှင့် anti-hallucination clause တို့ကို တွဲဖက်အသုံးချခြင်းဖြင့် မှားယွင်းခန့်မှန်းမှု (hallucination) ကို လျှော့ချနိုင်သည်။
+- **System prompt** ကို MCP server တစ်ခုလုံးရဲ့ အမူအကျင့်ကို သတ်မှတ်ပေးတဲ့ အခြေခံကျတဲ့ နေရာပါ။ FastMCP မှာတော့ `instructions` parameter နဲ့ သတ်မှတ်ပါတယ်။
+- Prompt ရေးတဲ့အခါ role၊ context၊ constraints နဲ့ output format ဆိုတဲ့ အစိတ်အပိုင်းလေးမျိုး ပါစေရင် model ရဲ့ တုံ့ပြန်မှုကို ပိုထိန်းချုပ်နိုင်ပါတယ်။
+- Few-shot examples (ဆိုတာ — နမူနာအဖြေတွေ ပြပြီး အတုခိုးစေတဲ့နည်း) ထည့်ရင် model ကို လိုချင်တဲ့ ပုံစံအတိအကျ အတုခိုးစေပြီး format တူညီမှုလည်း သိသိသာသာ တိုးပါတယ်။
+- Multi-turn guidance (numbered procedure, forced ordering, stop conditions) နဲ့ anti-hallucination clause ကို တွဲသုံးရင် မှားယွင်းခန့်မှန်းမှု (hallucination) ကို လျှော့ချနိုင်ပါတယ်။
